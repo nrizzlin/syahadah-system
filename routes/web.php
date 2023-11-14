@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\MualafController;
+use App\Http\Controllers\AttendanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,6 +101,17 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('/journals/{id}', [JournalController::class, 'update'])->name('journals.update');
     Route::get('/journals/{id}/view', [JournalController::class, 'view'])->name('journal.view');
     Route::delete('/journals/{id}', [JournalController::class, 'destroy'])->name('journals.destroy');
+});
+
+Route::middleware(['auth','role'])->group(function () {
+    // Clock-in Clock-out Section//
+    Route::get('/attendance/daie', [AttendanceController::class, 'indexDaie'])->name('attendance.index-daie');
+    Route::get('/attendance/mentor', [AttendanceController::class, 'indexMentor'])->name('attendance.index-mentor');
+    Route::get('/attendance/mualaf', [AttendanceController::class, 'indexMualaf'])->name('attendance.index-mualaf');
+    Route::get('/attendance/list/', [AttendanceController::class, 'listAttendanceUser'])->name('attendance.list-user');
+    Route::get('/attendance/report', [AttendanceController::class, 'ReportAttendance'])->name('attendance.list');
+    Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('clock-in');
+    Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('clock-out');
 });
 
 require __DIR__.'/auth.php';
