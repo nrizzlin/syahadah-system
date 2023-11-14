@@ -100,6 +100,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/journals/{id}/edit', [JournalController::class, 'edit'])->name('journals.edit');
     Route::put('/journals/{id}', [JournalController::class, 'update'])->name('journals.update');
     Route::get('/journals/{id}/view', [JournalController::class, 'view'])->name('journal.view');
+    Route::match(['get', 'post'],'/journals/{id}/download', [JournalController::class, 'downloadFile'])->name('journals.download');
     Route::delete('/journals/{id}', [JournalController::class, 'destroy'])->name('journals.destroy');
 });
 

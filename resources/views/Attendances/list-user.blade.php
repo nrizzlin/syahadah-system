@@ -17,6 +17,7 @@
                                 <thead>
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
+                                        <th class="px-2 py-3 text-left">Name</th>
                                         <th class="px-2 py-3 text-left">Task</th>
                                         <th class="px-2 py-3 text-left">Clock In </th>
                                         <th class="px-2 py-3 text-left">Clock Out </th>
@@ -27,6 +28,7 @@
                                     @forelse($attendances as $attendances)
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left">{{ $attendances->id }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $attendances->user->name }}</td>
                                             <td class="px-2 py-3 text-left" >
                                             @if(isset($attendances->tasks) && is_array($attendances->tasks))
                                                 @foreach($attendances->tasks as $task)

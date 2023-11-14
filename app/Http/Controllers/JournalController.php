@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Stroage;
 
 
 class JournalController extends Controller
@@ -34,7 +35,18 @@ class JournalController extends Controller
             'attachment' => 'nullable|file',
         ]);
 
-        Auth::user()->journals()->create($request->all());
+        $attachment = $request->file('attachment');
+        $filename = time() . '.' . $attachment->getClientOriginalExtension();
+        $attachment->move('assets', $filename);
+
+        Auth::user()->journals()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'place' => $request->place,
+            'status' => $request->status,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('journals.index')->with('success', 'Journal added successfully');
     }
@@ -48,16 +60,32 @@ class JournalController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            
+            'title' => 'required|string',
             'description' => 'required|string',
             'date' => 'required|date',
             'place' => 'required|string',
             'status' => 'required|string',
             'attachment' => 'nullable|file',
         ]);
-
+    
         $journal = Journal::findOrFail($id);
-        $journal->update($request->all());
+    
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $filename = time() . '.' . $attachment->getClientOriginalExtension();
+            $attachment->move('assets', $filename);
+        } else {
+            $filename = $journal->attachment;
+        }
+    
+        $journal->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'place' => $request->place,
+            'status' => $request->status,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('journals.index')->with('success', 'Journal updated successfully');
     }
@@ -74,5 +102,9 @@ class JournalController extends Controller
         $journal->delete();
 
         return redirect()->route('journals.index')->with('success', 'Journal deleted successfully');
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
     }
 }

@@ -29,6 +29,7 @@
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Date</th>
+                                        <th>File</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -40,6 +41,7 @@
                                             <td class="px-2 py-3 text-left">{{ $journal->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->description }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->date }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $journal->attachment }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">

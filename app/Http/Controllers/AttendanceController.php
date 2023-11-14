@@ -42,6 +42,7 @@ class AttendanceController extends Controller
         $attendances = Attendance::all();
         return view('Attendances.list-user', compact('attendances'));
     }
+    
 
     
 

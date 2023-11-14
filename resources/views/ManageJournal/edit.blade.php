@@ -13,7 +13,7 @@
                         <h2 class="text-lg font-medium text-gray-900 text-center">
                             {{ __('Edit  Journal') }}</h2>
 
-                        <form action="{{ route('daie.journals.update', $journal->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('journals.update', $journal->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                     
@@ -52,7 +52,9 @@
                                 <x-input-label for="attachment" :value="__('Attachment')" />
                                 <input type="file" class="form-control" id="attachment" name="attachment">
                                 <p class="mt-4">
-                                    <x-input-label for="attachment" :value="__('Current Attachment')" /> {{ $journal->attachment }}
+                                    <x-input-label for="attachment" :value="__('Current Attachment')" /> {{ $journal->attachment}}
+                                    <x-button-view><a href="">View</a></x-button-view>
+                                    <x-button-view><a href="{{ route('journals.download', $journal->attachment) }}">Download</a></x-button-view>
                                 </p>
                             </div>
                     

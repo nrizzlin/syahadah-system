@@ -13,7 +13,7 @@
                         <h2 class="text-lg font-medium text-gray-900 text-center">
                             {{ __('Create A New Journal') }}</h2>
 
-                        <form action="{{ route('daie.journals.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('journals.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <!-- Title of Journal -->
