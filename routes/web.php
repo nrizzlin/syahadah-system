@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\MualafController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\ProgressDailyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,6 +114,18 @@ Route::middleware(['auth','role'])->group(function () {
     Route::get('/attendance/report', [AttendanceController::class, 'ReportAttendance'])->name('attendance.list');
     Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('clock-in');
     Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('clock-out');
+});
+
+Route::middleware(['auth', 'role'])->group(function () {
+    
+    Route::get('/daily-progress', [ProgressDailyController::class, 'index'])->name('dailyprogress.index');
+    Route::get('/daily-progress/create', [ProgressDailyController::class, 'create'])->name('dailyprogress.create');
+    Route::post('/daily-progress/store', [ProgressDailyController::class, 'store'])->name('dailyprogress.store');
+    Route::get('/daily-progress/{id}/edit', [ProgressDailyController::class, 'edit'])->name('dailyprogress.edit');
+    Route::put('/daily-progress/{id}', [ProgressDailyController::class, 'update'])->name('dailyprogress.update');
+    Route::get('/daily-progress/{id}/view', [ProgressDailyController::class, 'view'])->name('dailyprogress.view');
+    Route::match(['get', 'post'],'/daily-progress/{id}/download', [ProgressDailyController::class, 'downloadFile'])->name('dailyprogress.download');
+    Route::delete('/daily-progress/{id}', [ProgressDailyController::class, 'destroy'])->name('dailyprogress.destroy');
 });
 
 require __DIR__.'/auth.php';

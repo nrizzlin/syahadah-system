@@ -146,8 +146,8 @@
                     @Auth
                     @if(auth()->user()->usertype == 'mualaf')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
-                                {{ __('Journal Progress') }}
+                            <x-nav-link :href="route('dailyprogress.index')" :hover="request()->routeIs('dailyprogress.index')">
+                                {{ __('Progress Daily') }}
                             </x-nav-link>
                             <div class="hidden sm:flex sm:items-center sm:ml-6">
                                 <x-dropdown align="right" width="48">

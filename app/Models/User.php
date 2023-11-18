@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->usertype; // Return the 'usertype' field from the database
     }
+
+    public function progressdaily()
+    {
+        return $this->hasMany(DailyProgress::class);
+    }
 }

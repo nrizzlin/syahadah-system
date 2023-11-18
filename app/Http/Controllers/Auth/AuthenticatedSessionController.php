@@ -37,15 +37,28 @@ class AuthenticatedSessionController extends Controller
         // Redirect to the appropriate home page based on user type
         if ($userType === 'admin') {
             return redirect()->route('home');
-        } elseif ($userType === 'daie') {
-            return redirect()->route('home');
-        } elseif ($userType === 'mentor') {
-            return redirect()->route('home');
-        } elseif ($userType === 'mualaf' || $userType==='admin') {
-            return redirect()->route('home');
-        } else {
+        } else{
             return redirect()->route('login')->with('error', 'Invalid user type or credentials.');
         }
+        
+        if ($userType === 'mentor') {
+            return redirect()->route('home');
+        } else{
+            return redirect()->route('login')->with('error', 'Invalid user type or credentials.');
+        }
+
+        if ($userType === 'daie') {
+            return redirect()->route('home');
+        } else{
+            return redirect()->route('login')->with('error', 'Invalid user type or credentials.');
+        }
+
+        if ($userType === 'mualaf') {
+            return redirect()->route('home');
+        } else{
+            return redirect()->route('login')->with('error', 'Invalid user type or credentials.');
+        }
+
     }
 
     /**
