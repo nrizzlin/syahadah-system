@@ -70,7 +70,13 @@
                                     <!-- Country -->
                                     <div class="mt-4" id="country">
                                         <x-input-label for="country" :value="__('Country')" />
-                                        <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" />
+                                        <select id="country" class="block mt-1 w-full" name="country" required onchange="toggleFields()">
+                                            <option value="">Select Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach 
+                                        </select>
+                                        
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
 

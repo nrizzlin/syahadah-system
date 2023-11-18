@@ -66,7 +66,11 @@
                                 <!-- Country -->
                                 <div class="mt-4" id="country">
                                     <x-input-label for="country" :value="__('Country')" />
-                                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="$users->country" />
+                                    <select id="country" class="block mt-1 w-full" name="country" required>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country }}" @if($users->country === $country) selected @endif>{{ $country }}</option>
+                                        @endforeach
+                                    </select>
                                     <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                 </div>
         
