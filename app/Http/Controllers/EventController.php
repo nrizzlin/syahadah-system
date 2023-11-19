@@ -15,7 +15,7 @@ class EventController extends Controller
         return view('ManageEvents.index', compact('events'));
     }
 
-    public function list()
+    public function indexUser()
     {
         // Retrieve journals for the logged-in Daie
         $events = Event::all();
@@ -37,7 +37,16 @@ class EventController extends Controller
             'attachment' => 'nullable|file',
         ]);
 
-        Auth::user()->events()->create($request->all());
+        $attachment = $request->file('attachment');
+        $filename = time() . '.' . $attachment->getClientOriginalExtension();
+        $attachment->move('assets', $filename);
+
+        Auth::user()->events()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
@@ -51,16 +60,28 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            
+            'title' => 'required|string',
             'description' => 'required|string',
             'date' => 'required|date',
-            'place' => 'required|string',
-            'status' => 'required|string',
             'attachment' => 'nullable|file',
         ]);
 
         $events = Event::findOrFail($id);
-        $events->update($request->all());
+    
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $filename = time() . '.' . $attachment->getClientOriginalExtension();
+            $attachment->move('assets', $filename);
+        } else {
+            $filename = $events->attachment;
+        }
+    
+        $events->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
@@ -79,9 +100,17 @@ class EventController extends Controller
         return redirect()->route('event.index')->with('success', 'Journal deleted successfully');
     }
 
-    public function viewlist($id)
+    public function eventInfo($id)
     {
         $events = Event::findOrFail($id);
-        return view('ManageEvents.view_list', compact('events'));
+        return view('ManageEvents.view_eventInfo', compact('events'));
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
     }
 }

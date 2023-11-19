@@ -110,4 +110,8 @@ class ProgressDailyController extends Controller
     public function downloadFile(Request $request, $attachment){
         return response()->download (public_path('assets/'.$attachment));
     }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
+    }
 }

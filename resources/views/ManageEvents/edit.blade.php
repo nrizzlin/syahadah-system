@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Event') }}
+            {{ __('Event Management') }}
         </h2>
     </x-slot>
 
@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <h2 class="text-lg font-medium text-gray-900 text-center">
-                            {{ __('Edit Update') }}</h2>
+                            {{ __('Update Event Information') }}</h2>
 
                         <form action="{{ route('event.update', $events->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -37,16 +37,21 @@
                             <div class="mt-4">
                                 <x-input-label for="attachment" :value="__('Attachment')" />
                                 <input type="file" class="form-control" id="attachment" name="attachment">
-                                <p class="mt-4">
-                                    <x-input-label for="attachment" :value="__('Current Attachment')" /> {{ $events->attachment }}
-                                </p>
+                            </div>
+
+                            <div class="mt-4">
+                                <x-input-label for="attachment" :value="__('Current Attachment')" />                        
+                                <div class="col-sm-6">
+                                    {{ $events->attachment}}
+                                    <x-button-view><a href="{{ route('event.viewfile', $events->attachment) }}">View</a></x-button-view>
+                                </div>
                             </div>
                     
-                            <!-- button -->
-                            <div class="mt-4">
-                                <x-button-edit class="ml-4">
-                                    {{ __('Update') }}
-                                </x-button-edit>
+                            <div class="flex items-center mt-4">
+                                <x-button-edit >{{ __('Update') }}</x-button-edit>
+                                <div class=" ml-2 flex items-center justify-end">
+                                    <x-button-back><a href="{{ route('event.index') }}">BACK</a></x-button-back>
+                                </div>
                             </div>
                         </form>
                     </div>

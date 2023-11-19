@@ -41,9 +41,9 @@
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('event.view', $events->id) }}">View</a></x-button-view>
+                                                        <x-button-edit ><a href="{{ route('event.edit', $events->id) }}">Edit</a></x-button-edit>
                                                     </div>
-                                                    <x-button-edit ><a href="{{ route('event.edit', $events->id) }}">Edit</a></x-button-edit>
+                                                    <x-button-view ><a href="{{ route('event.view', $events->id) }}">View</a></x-button-view>
                                                     <form action="{{ route('event.destroy', $events->id) }}" method="POST" class="px-4 py-2">
                                                         @csrf
                                                         @method('DELETE')

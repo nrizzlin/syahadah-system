@@ -63,8 +63,10 @@ Route::middleware(['auth','role'])->group(function () {
     Route::put('/event/{id}', [EventController::class, 'update'])->name('event.update');
     Route::get('/event/{id}/view', [EventController::class, 'view'])->name('event.view');
     Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
-    Route::get('/event/list', [EventController::class, 'list'])->name('event.list');
-    Route::get('/event/{id}/view', [EventController::class, 'viewlist'])->name('event.view');
+    Route::get('/event/event-list', [EventController::class, 'indexUser'])->name('event.index-user');
+    Route::get('/event/{id}/view-info', [EventController::class, 'eventInfo'])->name('view-event');
+    Route::match(['get', 'post'],'/event/{id}/download', [EventController::class, 'downloadFile'])->name('event.download');
+    Route::match(['get', 'post'],'/event/{id}/viewFile', [EventController::class, 'viewFile'])->name('event.viewfile');
 });
 
 Route::middleware(['auth', 'role'])->group(function () {
@@ -76,8 +78,10 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('/resources/{id}', [ResourcesController::class, 'update'])->name('resources.update');
     Route::get('/resources/{id}/view', [ResourcesController::class, 'view'])->name('resources.view');
     Route::delete('/resources/{id}', [ResourcesController::class, 'destroy'])->name('resources.destroy'); 
-    Route::get('/resources/list', [ResourcesController::class, 'list'])->name('resources.list');
-    Route::get('/resources/{id}/view', [ResourcesController::class, 'viewlist'])->name('resources.view'); 
+    Route::get('/resources/resources-list', [ResourcesController::class, 'indexUser'])->name('resources.index-user');
+    Route::get('/resources/{id}/view-info', [ResourcesController::class, 'viewlist'])->name('view-resources'); 
+    Route::match(['get', 'post'],'/resources/{id}/download', [ResourcesController::class, 'downloadFile'])->name('resources.download');
+    Route::match(['get', 'post'],'/resources/{id}/viewFile', [ResourcesController::class, 'viewFile'])->name('resources.viewfile');
 });
 
 Route::middleware(['auth', 'role'])->group(function () {
@@ -88,8 +92,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('/mualaf/{id}', [MualafController::class, 'update'])->name('mualaf.update');
     Route::get('/mualaf/{id}/show', [MualafController::class, 'view'])->name('mualaf.view');
     Route::delete('/mualaf/{id}', [MualafController::class, 'destroy'])->name('mualaf.delete');
-    Route::get('/mualaf/list', [MualafController::class, 'list'])->name('mualaf.list');
-    Route::get('/mualaf/{id}/show', [MualafController::class, 'viewlist'])->name('mualaf.view');
+    Route::get('/mualaf/list', [MualafController::class, 'Mualaflist'])->name('mualaf.list');
+    Route::get('/mualaf/{id}/mualaf-info', [MualafController::class, 'viewlist'])->name('mualaf.viewInfo');
 
 });
 
@@ -102,6 +106,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('/journals/{id}', [JournalController::class, 'update'])->name('journals.update');
     Route::get('/journals/{id}/view', [JournalController::class, 'view'])->name('journal.view');
     Route::match(['get', 'post'],'/journals/{id}/download', [JournalController::class, 'downloadFile'])->name('journals.download');
+    Route::match(['get', 'post'],'/journals/{id}/viewFile', [JournalController::class, 'viewFile'])->name('journals.viewfile');
     Route::delete('/journals/{id}', [JournalController::class, 'destroy'])->name('journals.destroy');
 });
 
@@ -125,6 +130,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('/daily-progress/{id}', [ProgressDailyController::class, 'update'])->name('dailyprogress.update');
     Route::get('/daily-progress/{id}/view', [ProgressDailyController::class, 'view'])->name('dailyprogress.view');
     Route::match(['get', 'post'],'/daily-progress/{id}/download', [ProgressDailyController::class, 'downloadFile'])->name('dailyprogress.download');
+    Route::match(['get', 'post'],'/daily-progress/{id}/viewFile', [ProgressDailyController::class, 'viewFile'])->name('dailyprogress.viewfile');
     Route::delete('/daily-progress/{id}', [ProgressDailyController::class, 'destroy'])->name('dailyprogress.destroy');
 });
 

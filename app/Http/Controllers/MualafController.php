@@ -15,7 +15,7 @@ class MualafController extends Controller
         return view('ManageMualaf.create', compact('mualafUsers'));
     }
 
-    public function list()
+    public function Mualaflist()
     {
         // Retrieve journals for the logged-in Daie
         $mualafUsers = User::where('usertype', 'mualaf')->get();

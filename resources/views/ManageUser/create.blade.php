@@ -14,7 +14,7 @@
                             <div class="flex justify-end">
                                 <x-button-add x-data=""
                                     x-on:click.prevent="$dispatch('open-modal', 'add-user')"
-                                    >{{ __('Add User') }}
+                                    >{{ __('Add New User') }}
                                 </x-button-add>
                             </div>
 
@@ -173,9 +173,9 @@
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('admin.view', $users->id) }}">View</a></x-button-view>
+                                                        <x-button-edit ><a href="{{ route('admin.edit', $users->id) }}">Edit</a></x-button-edit>
                                                     </div>
-                                                    <x-button-edit ><a href="{{ route('admin.edit', $users->id) }}">Edit</a></x-button-edit>
+                                                    <x-button-view ><a href="{{ route('admin.view', $users->id) }}">View</a></x-button-view>
                                                     <form action="{{ route('user.delete', $users->id) }}" method="POST" class="px-4 py-2">
                                                         @csrf
                                                         @method('DELETE')

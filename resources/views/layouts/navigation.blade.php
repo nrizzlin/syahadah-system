@@ -31,7 +31,7 @@
                                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                                     <x-dropdown align="right" width="48">
                                         <x-slot name="trigger">
-                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 <x-nav-link>
                                                     {{ __('Report') }}
                                                 </x-nav-link>
@@ -68,7 +68,7 @@
                                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                                     <x-dropdown align="right" width="48">
                                         <x-slot name="trigger">
-                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <button class="inline-flex items-center px-3 py-2  text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                                 <x-nav-link>
                                                     {{ __('Attendance') }}
                                                 </x-nav-link>
@@ -92,7 +92,7 @@
                                         </x-slot>
                                     </x-dropdown>
                                 </div>                     
-                                <x-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                                <x-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
                                     {{ __('Event') }}
                                 </x-nav-link>
                             </div>
@@ -105,7 +105,7 @@
                            <x-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
                                {{ __('Journal Progress') }}
                            </x-nav-link>
-                           <x-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                           <x-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
                             {{ __('Event Information') }}
                             </x-nav-link>
                             <x-nav-link :href="route('mualaf.list')" :hover="request()->routeIs('mualaf.list')">
@@ -114,7 +114,7 @@
                             <div class="hidden sm:flex sm:items-center sm:ml-6">
                                 <x-dropdown align="right" width="48">
                                     <x-slot name="trigger">
-                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                             <x-nav-link>
                                                 {{ __('Attendance') }}
                                             </x-nav-link>
@@ -176,10 +176,10 @@
                                     </x-slot>
                                 </x-dropdown>
                             </div> 
-                            <x-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                            <x-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
                                 {{ __('Event Information') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('resources.list')" :hover="request()->routeIs('resources.list')">
+                            <x-nav-link :href="route('resources.index-user')" :hover="request()->routeIs('resources.list')">
                                 {{ __('Resources Information') }}
                             </x-nav-link>
                         </div>

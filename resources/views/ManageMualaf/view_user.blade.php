@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Mualaf Management') }}
+            {{ __('Mualaf Registration') }}
         </h2>
     </x-slot>
 
@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                         <div class="w-full">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('Mualaf Detail') }}</h2>
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
+                                {{ __('Mualaf Information') }}</h2>
                             <form method="post"  class="p-6">
                                 @csrf
         
@@ -41,58 +41,54 @@
                                     <x-input-label for="gender" :value="__('Gender')" />
                                     <x-text-input id="gender" class="block mt-1 w-full" type="text" name="gender" :value="$users->gender" disabled />
                                 </div>
-        
-                                                            <!-- Additional Fields based on User Type -->
-                            @if($users->usertype == 'mentor' || $users->usertype == 'admin' || $users->usertype == 'daie')
-                            <!-- Age -->
-                            <div class="mt-4" id="age">
-                                <x-input-label for="age" :value="__('Age')" />
-                                <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="$users->age" disabled />
-                            </div>
 
-                            <!-- Country -->
-                            <div class="mt-4" id="country">
-                                <x-input-label for="country" :value="__('Country')" />
-                                <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="$users->country" disabled />
-                            </div>
+                                <!-- Age -->
+                                <div class="mt-4" id="age">
+                                    <x-input-label for="age" :value="__('Age')" />
+                                    <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="$users->age" disabled />
+                                </div>
 
-                            <!-- City -->
-                            <div class="mt-4" id="city">
-                                <x-input-label for="city" :value="__('City')" />
-                                <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="$users->city" disabled />
-                            </div>
+                                <!-- Country -->
+                                <div class="mt-4" id="country">
+                                    <x-input-label for="country" :value="__('Country')" />
+                                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="$users->country" disabled />
+                                </div>
 
-                            <!-- Phone Number -->
-                            <div class="mt-4" id="phone_number">
-                                <x-input-label for="phone_number" :value="__('Phone Number')" />
-                                <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$users->phone_number" disabled />
-                            </div>
+                                <!-- City -->
+                                <div class="mt-4" id="city">
+                                    <x-input-label for="city" :value="__('City')" />
+                                    <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="$users->city" disabled />
+                                </div>
 
-                            <!-- Additional Fields for mentor, admin, and daie -->
+                                <!-- Phone Number -->
+                                <div class="mt-4" id="phone_number">
+                                    <x-input-label for="phone_number" :value="__('Phone Number')" />
+                                    <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$users->phone_number" disabled />
+                                </div>
 
-                            @else($users->usertype == 'mualaf')
-                            <div class="mt-4" id="age">
-                                <x-input-label for="age" :value="__('Age')" />
-                                <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="$users->age" disabled />
-                            </div>
+                                <div class="mt-4" id="age">
+                                    <x-input-label for="age" :value="__('Age')" />
+                                    <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="$users->age" disabled />
+                                </div>
 
-                            <!-- Country -->
-                            <div class="mt-4" id="country">
-                                <x-input-label for="country" :value="__('Country')" />
-                                <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="$users->country" disabled />
-                            </div>
+                                <!-- Country -->
+                                <div class="mt-4" id="country">
+                                    <x-input-label for="country" :value="__('Country')" />
+                                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="$users->country" disabled />
+                                </div>
 
-                            <!-- City -->
-                            <div class="mt-4" id="city">
-                                <x-input-label for="city" :value="__('City')" />
-                                <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="$users->city" disabled />
-                            </div>
+                                <!-- City -->
+                                <div class="mt-4" id="city">
+                                    <x-input-label for="city" :value="__('City')" />
+                                    <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="$users->city" disabled />
+                                </div>
 
-                            <!-- Phone Number -->
-                            <div class="mt-4" id="phone_number">
-                                <x-input-label for="phone_number" :value="__('Phone Number')" />
-                                <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$users->phone_number" disabled />
-                            </div>
+                                <!-- Phone Number -->
+                                <div class="mt-4" id="phone_number">
+                                    <x-input-label for="phone_number" :value="__('Phone Number')" />
+                                    <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$users->phone_number" disabled />
+                                </div>
+
                                 <!-- Previous Religion (for Mualaf) -->
                                 <div class="mt-4" id="previous_religion">
                                     <x-input-label for="previous_religion" :value="__('Previous Religion')" />
@@ -106,33 +102,30 @@
                                     <x-text-input id="syahadah_date" class="block mt-1 w-full" type="text" name="syahadah_date" :value="$users->syahadah_date" disabled />
                                     <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                                 </div>
-                            @endif
 
-    
+                                <div class="mt-4" id="facebook_page">
+                                    <x-input-label for="facebook_page" :value="__('Facebook Page')" />
+                                    <x-text-input id="facebook_page" class="block mt-1 w-full" type="text" name="facebook_page" :value="$users->facebook_page" disabled />
+                                    <x-input-error :messages="$errors->get('facebook_page')" class="mt-2" />
+                                </div>
 
-                        <!-- Common Fields for all User Types -->
-                        <div class="mt-4" id="facebook_page">
-                            <x-input-label for="facebook_page" :value="__('Facebook Page')" />
-                            <x-text-input id="facebook_page" class="block mt-1 w-full" type="text" name="facebook_page" :value="$users->facebook_page" disabled />
-                            <x-input-error :messages="$errors->get('facebook_page')" class="mt-2" />
-                        </div>
+                                <div class="mt-4" id="status">
+                                    <x-input-label for="status" :value="__('Status')" />
+                                    <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="$users->status" disabled />
+                                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                </div>
 
-                        <div class="mt-4" id="status">
-                            <x-input-label for="status" :value="__('Status')" />
-                            <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="$users->status" disabled />
-                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                <div class="mt-4">
+                                    <x-input-label for="password" :value="__('Password')" />
+                                    <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="$users->password" disabled />
+                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                </div>
+                                
+                                <div class="flex items-center justify-end mt-4">
+                                    <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="password" :value="__('Password')" />
-                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="$users->password" disabled />
-                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                        </div>
-                        
-                        <div class="flex items-center justify-end mt-4">
-                            <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

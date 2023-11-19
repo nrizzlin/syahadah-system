@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Resources') }}
+            {{ __('Resources Management') }}
         </h2>
     </x-slot>
 
@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <h2 class="text-lg font-medium text-gray-900 text-center">
-                            {{ __('Update Resource Detail') }}</h2>
+                            {{ __('Update Resource Information') }}</h2>
 
                         <form action="{{ route('resources.update', $resources->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -28,20 +28,25 @@
                                 <x-input-label for="description" :value="__('Description')" />
                                 <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" required> {{ $resources->description }}</textarea>
                             </div>
-                    
+
                             <div class="mt-4">
                                 <x-input-label for="attachment" :value="__('Attachment')" />
                                 <input type="file" class="form-control" id="attachment" name="attachment">
-                                <p class="mt-4">
-                                    <x-input-label for="attachment" :value="__('Current Attachment')" /> {{ $resources->attachment }}
-                                </p>
                             </div>
-                    
-                            <!-- button -->
+
                             <div class="mt-4">
-                                <x-button-edit class="ml-4">
-                                    {{ __('Update') }}
-                                </x-button-edit>
+                                <x-input-label for="attachment" :value="__('Current Attachment')" />                        
+                                <div class="col-sm-6">
+                                    {{ $resources->attachment}}
+                                    <x-button-view><a href="{{ route('resources.viewfile', $resources->attachment) }}">View</a></x-button-view>
+                                </div>
+                            </div>
+                            <!-- button -->
+                            <div class="flex items-center mt-4">
+                                <x-button-edit >{{ __('Update') }}</x-button-edit>
+                                <div class=" ml-2 flex items-center justify-end">
+                                    <x-button-back><a href="{{ route('resources.index') }}">BACK</a></x-button-back>
+                                </div>
                             </div>
                         </form>
                     </div>

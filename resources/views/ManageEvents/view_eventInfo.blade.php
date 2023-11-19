@@ -36,11 +36,13 @@
                             <!-- Attachment -->
                             <div class="mt-4">
                                 <x-input-label for="attachment" :value="__('Attachment')" />
-                                <input type="file" class="form-control" id="attachment" name="attachment">
+                                <x-text-input id="attachment" class="block mt-1 " type="text" name="attachment" :value="$events->attachment" disabled />
+                                <x-button-view><a href="{{ route('event.download', $events->attachment) }}">Download</a></x-button-view>
+                                <x-button-view><a href="{{ route('event.viewfile', $events->attachment) }}">View</a></x-button-view>   
                             </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            <x-button-back><a href="{{ route('event.list') }}">BACK</a></x-button-back>
+                            <x-button-back><a href="{{ route('event.index-user') }}">BACK</a></x-button-back>
                         </div>
                     </div>
                 </div>

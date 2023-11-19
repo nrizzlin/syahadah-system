@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
-                        <h2 class="text-lg font-medium text-gray-900 text-center">
-                            {{ __('Edit  Journal') }}</h2>
+                        <h2 class="text-lg font-medium text-gray-900 text-lg font-medium text-gray-900 text-center">
+                            {{ __('Update Your Journal') }}</h2>
 
                         <form action="{{ route('journals.update', $journal->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -51,17 +51,21 @@
                             <div class="mt-4">
                                 <x-input-label for="attachment" :value="__('Attachment')" />
                                 <input type="file" class="form-control" id="attachment" name="attachment">
-                                <p class="mt-4">
-                                    <x-input-label for="attachment" :value="__('Current Attachment')" /> {{ $journal->attachment}}
-                                    <x-button-view><a href="{{ route('journals.download', $journal->attachment) }}">Download</a></x-button-view>
-                                </p>
                             </div>
-                    
-                            <!-- button -->
+
                             <div class="mt-4">
-                                <x-button-edit class="ml-4">
-                                    {{ __('Update') }}
-                                </x-button-edit>
+                                <x-input-label for="attachment" :value="__('Current Attachment')" />                        
+                                <div class="col-sm-6">
+                                    {{ $journal->attachment}}
+                                    <x-button-view><a href="{{ route('journals.viewfile', $journal->attachment) }}">View</a></x-button-view>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center mt-4">
+                                <x-button-edit >{{ __('Update') }}</x-button-edit>
+                                <div class=" ml-2 flex items-center justify-end">
+                                    <x-button-back><a href="{{ route('journals.index') }}">BACK</a></x-button-back>
+                                </div>
                             </div>
                         </form>
                     </div>

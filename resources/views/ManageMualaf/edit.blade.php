@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Mualaf Management') }}
+            {{ __('Mualaf Registration') }}
         </h2>
     </x-slot>
 
@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                         <div class="w-full">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('Update Mualaf Detail') }}</h2>
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
+                                {{ __('Update Mualaf Information') }}</h2>
                             <form method="post" action="{{ route('mualaf.update', $users->id) }}" class="p-6">
                                 @csrf
                                 
@@ -123,11 +123,14 @@
                                     <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                 </div>
-        
-                                <div class="flex items-center justify-end mt-4">
-                                    <x-button-edit class="ml-4">
-                                        {{ __('Update User') }}
-                                    </x-button-edit>
+
+                                <div class="flex items-center mt-4">
+                                    <x-button-edit >{{ __('Update') }}</x-button-edit>
+                                    <div class=" ml-2 flex items-center justify-end">
+                                        <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
+                                    </div>
+                                </div>
+
                                 </div>
                             </form>
                         </div>

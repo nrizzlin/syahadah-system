@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                         <div class="w-full">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('Journal Management') }}</h2>
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
+                                {{ __('Your Journal Information') }}</h2>
                             <form method="post"  class="p-6">
                                 @csrf
         
@@ -48,7 +48,9 @@
                             <!-- Attachment -->
                             <div class="mt-4">
                                 <x-input-label for="attachment" :value="__('Attachment')" />
-                                <input type="file" class="form-control" id="attachment" name="attachment">
+                                <x-text-input id="attachment" class="block mt-1 " type="text" name="attachment" :value="$journal->attachment" disabled />
+                                <x-button-view><a class="hover:no-underline" href="{{ route('journals.download', $journal->attachment) }}">Download</a></x-button-view>
+                                <x-button-view><a href="{{ route('journals.viewfile', $journal->attachment) }}">View</a></x-button-view>   
                             </div>
 
                         <div class="flex items-center justify-end mt-4">

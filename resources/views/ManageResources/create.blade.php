@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Resources') }}
+            {{ __('Resources Management') }}
         </h2>
     </x-slot>
 
@@ -25,7 +25,7 @@
                             <!-- Description of Journal -->
                             <div class="mt-4">
                                 <x-input-label for="description" :value="__('Description')" />
-                                <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" required></textarea>
+                                <textarea class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" required></textarea>
                             </div>
 
                             <!-- Attachment -->
@@ -35,10 +35,11 @@
                             </div>
 
                             <!-- button -->
-                            <div class="mt-4">
-                                <x-primary-button class="mt-4">
-                                    {{ __('Submit') }}
-                                </x-primary-button>
+                            <div class="flex items-center mt-4">
+                                <x-primary-button >{{ __('Submit') }}</x-primary-button>
+                                <div class=" ml-2 flex items-center justify-end">
+                                    <x-button-back><a href="{{ route('resources.index') }}">BACK</a></x-button-back>
+                                </div>
                             </div>
                         </form>     
                     </div><!--end card-body-->

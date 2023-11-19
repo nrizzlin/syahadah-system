@@ -130,10 +130,12 @@
                                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                 </div>
         
-                                <div class="flex items-center justify-end mt-4">
-                                    <x-button-edit class="ml-4">
-                                        {{ __('Update User') }}
-                                    </x-button-edit>
+                                <div class="flex items-center mt-4">
+                                    <x-button-edit >{{ __('Update') }}</x-button-edit>
+                                    <div class=" ml-2 flex items-center justify-end">
+                                        <x-button-back><a href="{{ route('list_users') }}">BACK</a></x-button-back>
+                                    </div>
+                                </div>
                                 </div>
                             </form>
                         </div>

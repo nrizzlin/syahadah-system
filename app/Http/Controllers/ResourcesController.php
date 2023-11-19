@@ -15,7 +15,7 @@ class ResourcesController extends Controller
         return view('ManageResources.index', compact('resources'));
     }
 
-    public function list()
+    public function indexUser()
     {
         // Retrieve journals for the logged-in Daie
         $resources = Resources::all();
@@ -29,9 +29,21 @@ class ResourcesController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'attachment' => 'nullable|file',
+        ]);
 
-        Auth::user()->resources()->create($request->all());
+        $attachment = $request->file('attachment');
+        $filename = time() . '.' . $attachment->getClientOriginalExtension();
+        $attachment->move('assets', $filename);
+
+        Auth::user()->resources()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
     }
@@ -39,22 +51,33 @@ class ResourcesController extends Controller
     public function edit($id)
     {
         $resources = Resources::findOrFail($id);
-        return view('ManageEvents.edit', compact('resources'));
+        return view('ManageResources.edit', compact('resources'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            
+                    
+            'title' => 'required|string',
             'description' => 'required|string',
-            'date' => 'required|date',
-            'place' => 'required|string',
-            'status' => 'required|string',
             'attachment' => 'nullable|file',
         ]);
 
         $resources = Resources::findOrFail($id);
-        $resources->update($request->all());
+    
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $filename = time() . '.' . $attachment->getClientOriginalExtension();
+            $attachment->move('assets', $filename);
+        } else {
+            $filename = $events->attachment;
+        }
+    
+        $resources->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
     }
@@ -77,5 +100,13 @@ class ResourcesController extends Controller
     {
         $resources = Resources::findOrFail($id);
         return view('ManageResources.view_list', compact('resources'));
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
     }
 }
