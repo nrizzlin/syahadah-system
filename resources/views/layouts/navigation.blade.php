@@ -166,7 +166,7 @@
                                     </x-slot>
                 
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('attendance.index-mentor')" :hover="request()->routeIs('attendance.index-daie')">
+                                        <x-dropdown-link :href="route('attendance.index-mualaf')" :hover="request()->routeIs('attendance.index-daie')">
                                             {{ __('Clock-in/Clock-out') }}
                                         </x-dropdown-link>
                                         <x-dropdown-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">

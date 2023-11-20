@@ -42,8 +42,8 @@
                                             <x-input-label class="col-sm-3 col-form-label" for="attachment" :value="__('Attachment')" />
                                             <div class="col-sm-6">
                                                 {{ $progressdaily->attachment}}
-                                                <x-button-view><a href="{{ route('dailyprogress.download', $dailyprogress->attachment) }}">Download</a></x-button-view>
-                                                <x-button-view><a href="{{ route('dailyprogress.viewfile', $dailyprogress->attachment) }}">View</a></x-button-view>
+                                                <x-button-view><a href="{{ route('dailyprogress.download', $progressdaily->attachment) }}">Download</a></x-button-view>
+                                                <x-button-view><a href="{{ route('dailyprogress.viewfile', $progressdaily->attachment) }}">View</a></x-button-view>
                                             </div>
                                         </div>
 

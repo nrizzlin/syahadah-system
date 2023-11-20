@@ -31,7 +31,7 @@
                                                     @csrf
                                                     <div class="flow-root px-4 py-2">
                                                         <label>
-                                                            <input class="rounded" type="checkbox" name="tasks[]" value="Create Daily Journal">
+                                                            <input class="rounded" type="checkbox" name="tasks[]" value="Create Daily Progress">
                                                             Create Daily Journal
                                                         </label>
                                                         <br>            

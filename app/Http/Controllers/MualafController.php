@@ -41,7 +41,7 @@ class MualafController extends Controller
         $users = User::findOrFail($id);
         $users->update($request->all());
 
-        return redirect()->route('list_users')->with('success', 'User updated successfully');
+        return redirect()->route('mualaf.index')->with('success', 'User updated successfully');
     }
 
     public function view($id)

@@ -12,8 +12,9 @@
                         <div class="w-full">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
                                 {{ __('Update Mualaf Information') }}</h2>
-                            <form method="post" action="{{ route('mualaf.update', $users->id) }}" class="p-6">
+                            <form method="POST" action="{{ route('mualaf.update', $users->id) }}" class="p-6">
                                 @csrf
+                                @method('PUT')
                                 
                                 <!-- Name -->
                                 <div>
@@ -129,8 +130,6 @@
                                     <div class=" ml-2 flex items-center justify-end">
                                         <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
                                     </div>
-                                </div>
-
                                 </div>
                             </form>
                         </div>

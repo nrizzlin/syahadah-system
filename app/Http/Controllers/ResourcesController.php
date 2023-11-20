@@ -70,7 +70,7 @@ class ResourcesController extends Controller
             $filename = time() . '.' . $attachment->getClientOriginalExtension();
             $attachment->move('assets', $filename);
         } else {
-            $filename = $events->attachment;
+            $filename = $resources->attachment;
         }
     
         $resources->update([

@@ -36,7 +36,7 @@
                                                         </label>
                                                         <br>            
                                                         <label>
-                                                            <input  class="rounded" type="checkbox" name="tasks[]" value="Add new jounal">
+                                                            <input  class="rounded" type="checkbox" name="tasks[]" value="Add new journal">
                                                             Add new jounal 
                                                         </label>
                                                         <br>
