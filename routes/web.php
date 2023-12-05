@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard-admin', [DashboardController::class, 'indexAdmin'])->name('dashboard.admin');
     Route::get('/dashboard-mentor', [DashboardController::class, 'indexMentor'])->name('dashboard.mentor');
+    Route::get('/dashboard-daie', [DashboardController::class, 'indexDaie'])->name('dashboard.daie');
+    Route::get('/dashboard-mualaf', [DashboardController::class, 'indexMualaf'])->name('dashboard.mualaf');
 });
 
 Route::middleware(['auth','role'])->group(function () {

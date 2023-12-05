@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-3 ml-4 sm:rounded-lg ">
-                        <div class="card bg-primary text-white mb-4 l">
+                        <div class="card  bg-purple-500 text-white mb-4 l">
                             <div class="card-body text-sm">Total of Daie
                                 <h2 class="text-6xl">{{$Totaldaie}}</h2>
                             </div>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-3 ml-4 sm:rounded-lg ">
-                        <div class="card bg-primary text-white mb-4 l">
+                        <div class="card bg-orange-500 text-white mb-4 l">
                             <div class="card-body text-sm">Total of Mentor
                                 <h2 class="text-6xl">{{$Totalmentor}}</h2>
                             </div>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-3 ml-4 sm:rounded-lg ">
-                        <div class="card bg-primary text-white mb-4 l">
+                        <div class="card bg-green-500 text-white mb-4 l">
                             <div class="card-body text-sm">Total of Mualaf
                                 <h2 class="text-6xl">{{$Totalmualaf}}</h2>
                             </div>

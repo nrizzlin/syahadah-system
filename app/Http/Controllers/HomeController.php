@@ -16,17 +16,12 @@ class HomeController extends Controller
             if ($usertype == 'admin') {
                 return redirect()->route('dashboard.admin');
             } else if ($usertype == 'daie') {
-                return view('dashboard.daie');
+                return redirect()->route('dashboard.daie');
             } else if ($usertype == 'mentor') {
                 return redirect()->route('dashboard.mentor');
             } else if ($usertype == 'mualaf') {
-                return view('dashboard.mualaf');
+                return redirect()->route('dashboard.mualaf');
             }
         }
-    }
-
-    public function admin()
-    {
-        return view('admin.adminhome');
     }
 }

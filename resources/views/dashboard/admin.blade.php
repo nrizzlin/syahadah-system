@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-3 ml-4">
-                        <div class="card bg-primary text-white mb-4">
+                        <div class="card  bg-orange-500 text-white mb-4">
                             <div class="card-body text-sm">Total Resources
                                 <h2 class="text-6xl">{{$resources}}</h2>
                             </div>

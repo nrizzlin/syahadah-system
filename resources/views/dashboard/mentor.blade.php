@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-3 ml-4">
-                            <div class="card bg-purple-500 text-white mb-4">
+                            <div class="card bg-orange-500 text-white mb-4">
                                 <div class="card-body text-sm">Total Your Attendances
                                     <h2 class="text-6xl">{{$attendanceCount}}</h2>
                                 </div>

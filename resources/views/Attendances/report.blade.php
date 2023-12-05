@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-3 ml-4 ">
-                        <div class="card bg-primary text-white mb-4 l">
+                        <div class="card  bg-orange-500 text-white mb-4 l">
                             <div class="card-body text-sm">Total User Attendances 
                                 <h2 class="text-6xl">{{$usersWithAttendanceCount}}</h2>
                             </div>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-3 ml-4">
-                        <div class="card bg-purple-500 text-white mb-4">
+                        <div class="card bg-green-500 text-white mb-4">
                             <div class="card-body text-sm">Total User Not Attendances 
                                 <h2 class="text-6xl">{{$usersWithoutAttendanceCount}}</h2>
                             </div>
