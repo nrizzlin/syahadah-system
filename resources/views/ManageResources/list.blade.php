@@ -16,7 +16,6 @@
   
                         <div class="table-responsive dash-social">
                         
-                            @if($resources)
                             <table id="datatable" class="w-full bg-white">
                                 <thead class="thead-light">
                                     <tr class="border-b-2">
@@ -28,7 +27,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($resources as $resources)
+                                    @forelse($Resources as $resources)
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left" >{{ $resources->id }}</td>
                                             <td class="px-2 py-3 text-left">{{ $resources->title }}</td>
@@ -48,11 +47,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No event found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$Resources->links()}}</div>
                 </div>
             </div>
         </div>

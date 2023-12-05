@@ -33,7 +33,7 @@ class AttendanceController extends Controller
     {
         // Retrieve journals for the logged-in Daie
         $user = Auth::user();
-        $attendances = $user->attendances;
+        $attendances = $user->attendances()->paginate(5); // Use paginate here
         return view('Attendances.list-user', compact('attendances'));
     }
 
@@ -43,18 +43,17 @@ class AttendanceController extends Controller
         $totalUsers = User::count();
 
         // Retrieve all attendance records
-        $attendances = Attendance::paginate(5);
+        $attendancesD = Attendance::paginate(5);
 
         // Count the number of users with attendance
         $usersWithAttendanceCount = Attendance::distinct('user_id')->count();
-
         // Calculate the number of users without attendance
         $usersWithoutAttendanceCount = $totalUsers - $usersWithAttendanceCount;
         
         $clockInCount = Attendance::whereNotNull('clockIn')->count();
         $clockOutCount = Attendance::whereNotNull('clockOut')->count();;
 
-        return view('Attendances.list-user', compact('attendances','clockInCount','clockOutCount','usersWithAttendanceCount','usersWithoutAttendanceCount'));
+        return view('Attendances.report', compact('attendancesD','clockInCount','clockOutCount','usersWithAttendanceCount','usersWithoutAttendanceCount'));
     }
     
 
@@ -90,19 +89,51 @@ class AttendanceController extends Controller
         return redirect()->back()->with('success', 'Clock out successfully');
     }
 
-    public function search(Request $request)
+    public function searchData(Request $request)
     {
         $search = $request->input('search');
     
         // Check if there is a search query
         if ($search) {
             // Use a join to search based on the 'name' column in the 'users' table
-            $attendances = Attendance::join('users', 'users.id', '=', 'attendances.user_id')
+            $attendancesD = Attendance::join('users', 'users.id', '=', 'attendances.user_id')
             ->where('users.name', 'like', "%$search%")
             ->paginate(5);
         } else {
             // If there's no search query, retrieve all users with pagination
-            $attendances = Attendance::paginate(5);
+            $attendancesD = Attendance::paginate(5);
+        }
+
+        $clockInCount = Attendance::whereNotNull('clockIn')->count();
+        $clockOutCount = Attendance::whereNotNull('clockOut')->count();
+        $totalUsers = User::count();
+        // Count the number of users with attendance
+        $usersWithAttendanceCount = Attendance::distinct('user_id')->count();
+
+        // Calculate the number of users without attendance
+        $usersWithoutAttendanceCount = $totalUsers - $usersWithAttendanceCount;
+
+       return view('Attendances.report', compact('attendancesD', 'clockInCount', 'clockOutCount', 'usersWithAttendanceCount', 'usersWithoutAttendanceCount'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Get the ID of the logged-in user
+        $userId = Auth::id();
+
+        // Check if there is a search query
+        if ($search) {
+            // Use whereHas to search based on the 'tasks' column for the specific user
+            $attendances = Attendance::where('user_id', $userId)
+                ->where(function ($query) use ($search) {
+                    $query->where('tasks', 'like', "%$search%");
+                })
+                ->paginate(5);
+        } else {
+            // If there's no search query, retrieve all attendance records for the specific user with pagination
+            $attendances = Attendance::where('user_id', $userId)->paginate(5);
         }
 
         $clockInCount = Attendance::whereNotNull('clockIn')->count();

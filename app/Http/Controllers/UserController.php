@@ -59,6 +59,18 @@ class UserController extends Controller
         return view('ManageUser.create', compact('users','countries'));
     }
 
+    public function ReportUser()
+    {
+        // Retrieve all users
+        $usersD = User::paginate(5);
+        $Totalusers = User::count();
+        $Totalmentor = User::where('usertype','mentor')->count();
+        $Totaldaie = User::where('usertype','daie')->count();
+        $Totalmualaf = User::where('usertype','mentor')->count();
+
+        return view('ManageUser.report', compact('Totalusers','usersD','Totalmentor','Totaldaie','Totalmualaf'));
+    }
+
     public function store(Request $request)
     {
         // Validate and store the new journal entry
@@ -196,6 +208,27 @@ class UserController extends Controller
     ];
 
     return view('ManageUser.create', compact('users', 'countries'));
+}
+
+public function searchData(Request $request)
+{
+    $search = $request->input('search');
+
+
+    // Check if there is a search query
+    if ($search) {
+        $usersD = User::where('name', 'like', "%$search%")->paginate(5);
+    } else {
+        // If there's no search query, retrieve all users with pagination
+        $usersD = User::paginate(5);
+    }
+
+    $Totalusers = User::count();
+    $Totalmentor = User::where('usertype','mentor')->count();
+    $Totaldaie = User::where('usertype','daie')->count();
+    $Totalmualaf = User::where('usertype','mentor')->count();
+
+    return view('ManageUser.report', compact('Totalusers','usersD','Totalmentor','Totaldaie','Totalmualaf'));
 }
     
 }

@@ -48,8 +48,20 @@
                                             <x-dropdown-link :href="route('attendance.list')" :hover="request()->routeIs('attendance.list')">
                                                 {{ __('Report Clock-in/Clock-out') }}
                                             </x-dropdown-link>
+                                            <x-dropdown-link :href="route('user.list')" :hover="request()->routeIs('user.list')">
+                                                {{ __('Report Users') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('journal.list')" :hover="request()->routeIs('journal.list')">
+                                                {{ __('Report Journal Daie/Mentor') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('dailyprogress.list')" :hover="request()->routeIs('dailyprogress.list')">
+                                                {{ __('Report Progress Daily Mualaf') }}
+                                            </x-dropdown-link>
                                             <x-dropdown-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
                                                 {{ __('Report Event') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('resources.list')" :hover="request()->routeIs('resources.list')">
+                                                {{ __('Report Resources') }}
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>

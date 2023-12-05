@@ -11,7 +11,12 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div class="table-responsive dash-social">
-                            <div class="flex justify-end">
+                            <div class="flex justify-end items-center">
+                                <form action="{{ route('search.mualaf') }}" method="GET" class="px-4 py-2">
+                                    <x-text-input for="search" name="search"/>
+                                    <x-primary-button>{{ __('Search') }}</x-primary-button>
+                                </form>
+
                                 <x-button-add x-data=""
                                     x-on:click.prevent="$dispatch('open-modal', 'add-user')"
                                     >{{ __('Add New Mualaf') }}

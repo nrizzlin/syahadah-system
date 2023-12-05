@@ -33,9 +33,6 @@ Route::get('/', function () {
 
 Route :: get('/home',[HomeController::class,'index'])->middleware(['auth'])->name('home');
 
-Route :: get('/home',[DashboardController::class,'indexAdmin'])->middleware(['auth'])->name('home');
-
-
 //Route::get('post',[HomeController::class,'admin'])->middleware(['auth','admin'])->name('admin');
 
 
@@ -43,12 +40,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard-admin', [DashboardController::class, 'indexAdmin'])->name('dashboard.admin');
+    Route::get('/dashboard-mentor', [DashboardController::class, 'indexMentor'])->name('dashboard.mentor');
 });
 
 Route::middleware(['auth','role'])->group(function () {
     // Register Section//
     Route::get('/manage-user/list', [UserController::class, 'index'])->name('list_users');
     Route::get('/manage-user/search', [UserController::class, 'search'])->name('search.user');
+    Route::get('/manage-user/search-data', [UserController::class, 'searchData'])->name('user.search-data');
+    Route::get('/manage-user/report', [UserController::class, 'ReportUser'])->name('user.list');
     Route::post('/manage-user/create', [UserController::class, 'store'])->name('user.add');
     Route::get('/manage-user/{id}/edit', [UserController::class, 'edit'])->name('admin.edit');
     Route::put('/manage-user/{id}', [UserController::class, 'update'])->name('user.update');
@@ -60,7 +61,7 @@ Route::middleware(['auth','role'])->group(function () {
     // Event Section// 
     Route::get('/event', [EventController::class, 'index'])->name('event.index');
     Route::get('/event/search', [EventController::class, 'search'])->name('search.event');
-    // Route::get('/event/search', [EventController::class, 'searchData'])->name('search.event');
+    Route::get('/event/search-data', [EventController::class, 'searchData'])->name('event.search-data');
     Route::get('/event/report', [EventController::class, 'ReportEvent'])->name('event.list');
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
@@ -78,6 +79,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     // Resources Section// 
     Route::get('/resources', [ResourcesController::class, 'index'])->name('resources.index');
     Route::get('/resources/search', [ResourcesController::class, 'search'])->name('search.resources');
+    Route::get('/resources/search-data', [ResourcesController::class, 'searchData'])->name('resources.search-data');
+    Route::get('/resources/report', [ResourcesController::class, 'ReportResources'])->name('resources.list');
     Route::get('/resources/create', [ResourcesController::class, 'create'])->name('resources.create');
     Route::post('/resources', [ResourcesController::class, 'store'])->name('resources.store');
     Route::get('/resources/{id}/edit', [ResourcesController::class, 'edit'])->name('resources.edit');
@@ -93,6 +96,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 Route::middleware(['auth', 'role'])->group(function () {
     // Register Mualaf Section//
     Route::get('/mualaf', [MualafController::class, 'index'])->name('mualaf.index');
+    Route::get('/mualaf/search', [MualafController::class, 'search'])->name('search.mualaf');
     Route::post('/mualaf/create', [MualafController::class, 'store'])->name('mualaf.add');
     Route::get('/mualaf/{id}/edit', [MualafController::class, 'edit'])->name('mualaf.edit');
     Route::put('/mualaf/{id}', [MualafController::class, 'update'])->name('mualaf.update');
@@ -111,6 +115,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/journals/{id}/edit', [JournalController::class, 'edit'])->name('journals.edit');
     Route::put('/journals/{id}', [JournalController::class, 'update'])->name('journals.update');
     Route::get('/journals/{id}/view', [JournalController::class, 'view'])->name('journal.view');
+    Route::get('/journals/report', [JournalController::class, 'ReportJournal'])->name('journal.list');
+    Route::get('/journals/search-data', [JournalController::class, 'searchData'])->name('journal.search-data');
+    Route::get('/journals/search', [JournalController::class, 'search'])->name('search.journal');
     Route::match(['get', 'post'],'/journals/{id}/download', [JournalController::class, 'downloadFile'])->name('journals.download');
     Route::match(['get', 'post'],'/journals/{id}/viewFile', [JournalController::class, 'viewFile'])->name('journals.viewfile');
     Route::delete('/journals/{id}', [JournalController::class, 'destroy'])->name('journals.destroy');
@@ -123,6 +130,7 @@ Route::middleware(['auth','role'])->group(function () {
     Route::get('/attendance/mualaf', [AttendanceController::class, 'indexMualaf'])->name('attendance.index-mualaf');
     Route::get('/attendance/list/', [AttendanceController::class, 'listAttendanceUser'])->name('attendance.list-user');
     Route::get('/attendance/report', [AttendanceController::class, 'ReportAttendance'])->name('attendance.list');
+    Route::get('/attendance/search-data', [AttendanceController::class, 'searchData'])->name('attendance.search-data');
     Route::get('/attendance/search', [AttendanceController::class, 'search'])->name('search.attendance');
     Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('clock-in');
     Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('clock-out');
@@ -136,6 +144,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/daily-progress/{id}/edit', [ProgressDailyController::class, 'edit'])->name('dailyprogress.edit');
     Route::put('/daily-progress/{id}', [ProgressDailyController::class, 'update'])->name('dailyprogress.update');
     Route::get('/daily-progress/{id}/view', [ProgressDailyController::class, 'view'])->name('dailyprogress.view');
+    Route::get('/daily-progress/report', [ProgressDailyController::class, 'ReportDailyProgress'])->name('dailyprogress.list');
+    Route::get('/daily-progress/search', [ProgressDailyController::class, 'search'])->name('search.dailyprogress');
+    Route::get('/daily-progress/search-data', [ProgressDailyController::class, 'searchData'])->name('dailyprogress.search-data');
     Route::match(['get', 'post'],'/daily-progress/{id}/download', [ProgressDailyController::class, 'downloadFile'])->name('dailyprogress.download');
     Route::match(['get', 'post'],'/daily-progress/{id}/viewFile', [ProgressDailyController::class, 'viewFile'])->name('dailyprogress.viewfile');
     Route::delete('/daily-progress/{id}', [ProgressDailyController::class, 'destroy'])->name('dailyprogress.destroy');

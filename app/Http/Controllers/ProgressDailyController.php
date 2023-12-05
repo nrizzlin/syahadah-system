@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\DailyProgress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Stroage;
+use Carbon\Carbon;
 
 class ProgressDailyController extends Controller
 {
@@ -13,8 +14,18 @@ class ProgressDailyController extends Controller
     {
         // Retrieve journals for the logged-in Daie
         $user = Auth::user();
-        $progressdaily = $user->progressdaily;
+        $progressdaily = $user->progressdaily()->paginate(5); 
         return view('ManageDailyProgress.index', compact('progressdaily'));
+    }
+
+    public function ReportDailyProgress()
+    {
+        // Retrieve all users
+        $progressdailyD = DailyProgress::paginate(5);
+        $TotalDP = DailyProgress::count();
+        $TotalDPMonth = DailyProgress::whereMonth('created_at', Carbon::now()->month)->count();
+
+        return view('ManageDailyProgress.report', compact('TotalDP','progressdailyD','TotalDPMonth'));
     }
 
     public function create()
@@ -113,5 +124,39 @@ class ProgressDailyController extends Controller
 
     public function viewFile(Request $request, $attachment){
         return response()->file (public_path('assets/'.$attachment));
+    }
+
+    public function searchData(Request $request)
+    {
+        $search = $request->input('search');
+
+    
+        // Check if there is a search query
+        if ($search) {
+            $progressdailyD = DailyProgress::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $progressdailyD = DailyProgress::paginate(5);
+        }
+
+        $TotalDP = DailyProgress::count();
+        $TotalDPMonth = DailyProgress::whereMonth('created_at', Carbon::now()->month)->count();
+
+        return view('ManageDailyProgress.report', compact('TotalDP','progressdailyD','TotalDPMonth'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+    
+        // Check if there is a search query
+        if ($search) {
+            $progressdaily = DailyProgress::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $progressdaily = DailyProgress::paginate(5);
+        }
+
+        return view('ManageDailyProgress.index', compact('progressdaily'));
     }
 }

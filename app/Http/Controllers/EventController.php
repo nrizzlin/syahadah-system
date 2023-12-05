@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -18,17 +19,18 @@ class EventController extends Controller
     public function indexUser()
     {
         // Retrieve journals for the logged-in Daie
-        $events = Event::all();
-        return view('ManageEvents.list', compact('events'));
+        $Events = Event::paginate(5);
+        return view('ManageEvents.list', compact('Events'));
     }
 
     public function ReportEvent()
     {
         // Retrieve all users
-        $events = Event::all();
+        $eventsD = Event::paginate(5);
         $Totalevents = Event::count();
+        $TotalEventMonth = Event::whereMonth('created_at', Carbon::now()->month)->count();
 
-        return view('ManageEvents.report', compact('Totalevents','events'));
+        return view('ManageEvents.report', compact('Totalevents','eventsD','TotalEventMonth'));
     }
 
     public function create()
@@ -130,17 +132,15 @@ class EventController extends Controller
     
         // Check if there is a search query
         if ($search) {
-            $events = Event::where('title', 'like', "%$search%")->paginate(5);
+            $eventsD = Event::where('title', 'like', "%$search%")->paginate(5);
         } else {
             // If there's no search query, retrieve all users with pagination
-            $events = Event::paginate(5);
+            $eventsD = Event::paginate(5);
         }
 
-
-        $Events = Event::all();
         $Totalevents = Event::count();
 
-        return view('ManageEvents.report', compact('Totalevents','Events'));
+        return view('ManageEvents.report', compact('Totalevents','eventsD'));
     }
 
     public function search(Request $request)
@@ -157,5 +157,6 @@ class EventController extends Controller
 
         return view('ManageEvents.index', compact('events'));
     }
+    
 
 }

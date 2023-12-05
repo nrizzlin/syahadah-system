@@ -10,28 +10,16 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if(Auth::id())
-        {
-
-            $usertype=Auth()->user()->usertype;
-
-            if($usertype=='admin')
-            {
-                return view('dashboard.admin');
-            }
-
-            else if ($usertype=='daie')
-            {
+        if (Auth::id()) {
+            $usertype = Auth()->user()->usertype;
+    
+            if ($usertype == 'admin') {
+                return redirect()->route('dashboard.admin');
+            } else if ($usertype == 'daie') {
                 return view('dashboard.daie');
-            }
-
-            else if($usertype=='mentor')
-            {
-                return view('dashboard.mentor');
-            }
-
-            else if($usertype=='mualaf')
-            {
+            } else if ($usertype == 'mentor') {
+                return redirect()->route('dashboard.mentor');
+            } else if ($usertype == 'mualaf') {
                 return view('dashboard.mualaf');
             }
         }

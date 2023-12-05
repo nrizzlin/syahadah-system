@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Resources;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ResourcesController extends Controller
 {
@@ -17,8 +18,18 @@ class ResourcesController extends Controller
     public function indexUser()
     {
         // Retrieve journals for the logged-in Daie
-        $resources = Resources::all();
-        return view('ManageResources.list', compact('resources'));
+        $Resources = Resources::paginate(5);
+        return view('ManageResources.list', compact('Resources'));
+    }
+
+
+    public function ReportResources()
+    {
+        // Retrieve all users
+        $resourcesD = Resources::paginate(5);
+        $Totalresources = Resources::count();
+
+        return view('ManageResources.report', compact('Totalresources','resourcesD'));
     }
 
     public function create()
@@ -107,6 +118,24 @@ class ResourcesController extends Controller
 
     public function viewFile(Request $request, $attachment){
         return response()->file (public_path('assets/'.$attachment));
+    }
+
+    public function searchData(Request $request)
+    {
+        $search = $request->input('search');
+
+    
+        // Check if there is a search query
+        if ($search) {
+            $resourcesD = Resources::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $resourcesD = Resources::paginate(5);
+        }
+
+        $Totalresources = Resources::count();
+
+        return view('ManageResources.report', compact('Totalresources','resourcesD'));
     }
 
     public function search(Request $request)

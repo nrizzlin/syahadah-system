@@ -11,14 +11,14 @@ class MualafController extends Controller
     public function index()
     {
         // Retrieve journals for the logged-in Daie
-        $mualafUsers = User::where('usertype', 'mualaf')->get();
+        $mualafUsers = User::where('usertype', 'mualaf')->paginate(5);
         return view('ManageMualaf.create', compact('mualafUsers'));
     }
 
     public function Mualaflist()
     {
         // Retrieve journals for the logged-in Daie
-        $mualafUsers = User::where('usertype', 'mualaf')->get();
+        $mualafUsers = User::where('usertype', 'mualaf')->paginate(2);
         return view('ManageMualaf.list', compact('mualafUsers'));
     }
 
@@ -63,4 +63,23 @@ class MualafController extends Controller
 
         return redirect()->back()->with('success', 'Journal deleted successfully');
     }
+
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+    
+        // Check if there is a search query
+        if ($search) {
+            $mualafUsers = User::where('usertype', 'mualaf')
+            ->where('name', 'like', "%$search%")
+            ->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $mualafUsers = User::where('usertype', 'mualaf')->paginate(5);
+        }
+
+        return view('ManageMualaf.create', compact('mualafUsers'));
+    }
+
 }

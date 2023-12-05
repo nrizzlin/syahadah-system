@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Stroage;
+use Carbon\Carbon;
 
 
 class JournalController extends Controller
@@ -14,8 +15,18 @@ class JournalController extends Controller
     {
         // Retrieve journals for the logged-in Daie
         $user = Auth::user();
-        $journals = $user->journals;
+        $journals = $user->journals()->paginate(5);
         return view('ManageJournal.index', compact('journals'));
+    }
+
+    public function ReportJournal()
+    {
+        // Retrieve all users
+        $journalsD = Journal::paginate(5);
+        $Totaljournal = Journal::count();
+        $TotalJournalMonth = Journal::whereMonth('created_at', Carbon::now()->month)->count();
+
+        return view('ManageJournal.report', compact('Totaljournal','journalsD','TotalJournalMonth'));
     }
 
     public function create()
@@ -110,5 +121,41 @@ class JournalController extends Controller
 
     public function viewFile(Request $request, $attachment){
         return response()->file (public_path('assets/'.$attachment));
+    }
+
+
+    public function searchData(Request $request)
+    {
+        $search = $request->input('search');
+
+    
+        // Check if there is a search query
+        if ($search) {
+            $journalsD = Journal::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $journalsD = Journal::paginate(5);
+        }
+
+        $Totaljournal = Journal::count();
+        $TotalJournalMonth = Journal::whereMonth('created_at', Carbon::now()->month)->count();
+
+        return view('ManageJournal.report', compact('Totaljournal','journalsD','TotalJournalMonth'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+    
+        // Check if there is a search query
+        if ($search) {
+            $journals = Journal::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $journals = Journal::paginate(5);
+        }
+
+        return view('ManageJournal.index', compact('journals'));
     }
 }

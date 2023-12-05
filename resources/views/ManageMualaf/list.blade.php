@@ -11,8 +11,6 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div class="table-responsive dash-social">
-                            
-                            @if($mualafUsers)
                             <table id="datatable" class="w-full bg-white">
                                 <thead>
                                     <tr class="border-b-2">
@@ -44,11 +42,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No user found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$mualafUsers->links()}}</div>
                 </div>
             </div>
         </div>

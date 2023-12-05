@@ -12,16 +12,22 @@
                     <div class="w-full">
 
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('Your Journal') }}s</h2>
+                            {{ __('Your Journal') }}</h2>
 
-                            <div class="flex justify-end">
-                                <x-button-add><a href="{{ route('journals.create') }}">Add Journal</a></x-button-add>
+                            <div class="flex justify-end items-center">
+                                <form action="{{ route('search.journal') }}" method="GET" class="px-4 py-2">
+    
+                                    <x-text-input for="search" name="search"/>
+                                    <x-primary-button>{{ __('Search') }}</x-primary-button>
+    
+                                </form>
+                                <div class="flex justify-end">
+                                    <x-button-add><a href="{{ route('journals.create') }}">Add Journal</a></x-button-add>
+                                </div>
                             </div>
                         {{-- <a href="{{ route('daie.journals.create') }}" class="btn btn-success">Add Journal</a> --}}
                         
                         <div class="table-responsive dash-social">
-                        
-                            @if($journals)
                             <table id="datatable" class="w-full bg-white">
                                 <thead class="thead-light">
                                     <tr class="border-b-2">
@@ -63,11 +69,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No journals found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$journals->links()}}</div>
                 </div>
             </div>
         </div>

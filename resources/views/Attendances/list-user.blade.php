@@ -8,54 +8,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="row p-6 m-4 text-gray-900 justify-center">
-                    {{-- {{ __("You're logged in as Admin!") }} --}}
-                    <div class="col-xl-2 col-md-3 mr-4 sm:rounded-lg ">
-                        <div class="card bg-primary text-white mb-4 l">
-                            <div class="card-body text-sm">Total User Clock-in 
-                                <h2 class="text-6xl">{{$clockInCount}}</h2>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class=" text-xs text-white stretched-link" href="#">View Details</a>
-                                <div class=" text-xs text-white"><i class="fas fa-angle-right"></i> </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-md-3 ml-4">
-                        <div class="card bg-purple-500 text-white mb-4">
-                            <div class="card-body text-sm">Total User Clock-out 
-                                <h2 class="text-6xl">{{$clockOutCount}}</h2>
-                            </div>
-                            <div class=" card-footer d-flex align-items-center justify-content-between">
-                                <a class=" text-xs text-white stretched-link text-end" href="#">View Details</a>
-                                <div class=" text-xs text-white"><i class="fas fa-angle-right"></i> </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-md-3 ml-4 ">
-                        <div class="card bg-primary text-white mb-4 l">
-                            <div class="card-body text-sm">Total User Attendances 
-                                <h2 class="text-6xl">{{$usersWithAttendanceCount}}</h2>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class=" text-xs text-white stretched-link" href="#">View Details</a>
-                                <div class=" text-xs text-white"><i class="fas fa-angle-right"></i> </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-3 ml-4">
-                        <div class="card bg-purple-500 text-white mb-4">
-                            <div class="card-body text-sm">Total User Not Attendances 
-                                <h2 class="text-6xl">{{$usersWithoutAttendanceCount}}</h2>
-                            </div>
-                            <div class=" card-footer d-flex align-items-center justify-content-between">
-                                <a class=" text-xs text-white stretched-link text-end" href="#">View Details</a>
-                                <div class=" text-xs text-white"><i class="fas fa-angle-right"></i> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="p-6 m-2 text-gray-900">
                     <div class="w-fit">
                         <div class="flex justify-end items-center">
