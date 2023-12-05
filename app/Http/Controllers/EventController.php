@@ -11,7 +11,7 @@ class EventController extends Controller
     public function index()
     {
         // Retrieve journals for the logged-in Daie
-        $events = Event::all();
+        $events = Event::paginate(5);
         return view('ManageEvents.index', compact('events'));
     }
 
@@ -20,6 +20,15 @@ class EventController extends Controller
         // Retrieve journals for the logged-in Daie
         $events = Event::all();
         return view('ManageEvents.list', compact('events'));
+    }
+
+    public function ReportEvent()
+    {
+        // Retrieve all users
+        $events = Event::all();
+        $Totalevents = Event::count();
+
+        return view('ManageEvents.report', compact('Totalevents','events'));
     }
 
     public function create()
@@ -113,4 +122,40 @@ class EventController extends Controller
     public function viewFile(Request $request, $attachment){
         return response()->file (public_path('assets/'.$attachment));
     }
+
+    public function searchData(Request $request)
+    {
+        $search = $request->input('search');
+
+    
+        // Check if there is a search query
+        if ($search) {
+            $events = Event::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $events = Event::paginate(5);
+        }
+
+
+        $Events = Event::all();
+        $Totalevents = Event::count();
+
+        return view('ManageEvents.report', compact('Totalevents','Events'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+    
+        // Check if there is a search query
+        if ($search) {
+            $events = Event::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $events = Event::paginate(5);
+        }
+
+        return view('ManageEvents.index', compact('events'));
+    }
+
 }

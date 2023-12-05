@@ -10,8 +10,7 @@ class ResourcesController extends Controller
 {
     public function index()
     {
-        // Retrieve journals for the logged-in Daie
-        $resources = Auth::user()->resources;
+        $resources = Resources::paginate(5);
         return view('ManageResources.index', compact('resources'));
     }
 
@@ -108,5 +107,21 @@ class ResourcesController extends Controller
 
     public function viewFile(Request $request, $attachment){
         return response()->file (public_path('assets/'.$attachment));
+    }
+
+    public function search(Request $request)
+    {
+
+        $search = $request->input('search');
+    
+        // Check if there is a search query
+        if ($search) {
+            $resources = Resources::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $resources = Resources::paginate(5);
+        }
+
+        return view('ManageResources.index', compact('resources'));
     }
 }

@@ -48,7 +48,9 @@
                                             <x-dropdown-link :href="route('attendance.list')" :hover="request()->routeIs('attendance.list')">
                                                 {{ __('Report Clock-in/Clock-out') }}
                                             </x-dropdown-link>
-                                            </form>
+                                            <x-dropdown-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                                                {{ __('Report Event') }}
+                                            </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>
                                 </div>

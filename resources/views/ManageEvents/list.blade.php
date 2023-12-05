@@ -12,7 +12,7 @@
                     <div class="w-full">
 
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('List of Event') }}s</h2>
+                            {{ __('List of Event') }}</h2>
                         
                         <div class="table-responsive dash-social">
                         

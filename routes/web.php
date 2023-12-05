@@ -11,7 +11,7 @@ use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\MualafController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProgressDailyController;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +33,7 @@ Route::get('/', function () {
 
 Route :: get('/home',[HomeController::class,'index'])->middleware(['auth'])->name('home');
 
+Route :: get('/home',[DashboardController::class,'indexAdmin'])->middleware(['auth'])->name('home');
 
 
 //Route::get('post',[HomeController::class,'admin'])->middleware(['auth','admin'])->name('admin');
@@ -47,6 +48,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth','role'])->group(function () {
     // Register Section//
     Route::get('/manage-user/list', [UserController::class, 'index'])->name('list_users');
+    Route::get('/manage-user/search', [UserController::class, 'search'])->name('search.user');
     Route::post('/manage-user/create', [UserController::class, 'store'])->name('user.add');
     Route::get('/manage-user/{id}/edit', [UserController::class, 'edit'])->name('admin.edit');
     Route::put('/manage-user/{id}', [UserController::class, 'update'])->name('user.update');
@@ -57,6 +59,9 @@ Route::middleware(['auth','role'])->group(function () {
 Route::middleware(['auth','role'])->group(function () {
     // Event Section// 
     Route::get('/event', [EventController::class, 'index'])->name('event.index');
+    Route::get('/event/search', [EventController::class, 'search'])->name('search.event');
+    // Route::get('/event/search', [EventController::class, 'searchData'])->name('search.event');
+    Route::get('/event/report', [EventController::class, 'ReportEvent'])->name('event.list');
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
     Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
@@ -72,6 +77,7 @@ Route::middleware(['auth','role'])->group(function () {
 Route::middleware(['auth', 'role'])->group(function () {
     // Resources Section// 
     Route::get('/resources', [ResourcesController::class, 'index'])->name('resources.index');
+    Route::get('/resources/search', [ResourcesController::class, 'search'])->name('search.resources');
     Route::get('/resources/create', [ResourcesController::class, 'create'])->name('resources.create');
     Route::post('/resources', [ResourcesController::class, 'store'])->name('resources.store');
     Route::get('/resources/{id}/edit', [ResourcesController::class, 'edit'])->name('resources.edit');
@@ -117,6 +123,7 @@ Route::middleware(['auth','role'])->group(function () {
     Route::get('/attendance/mualaf', [AttendanceController::class, 'indexMualaf'])->name('attendance.index-mualaf');
     Route::get('/attendance/list/', [AttendanceController::class, 'listAttendanceUser'])->name('attendance.list-user');
     Route::get('/attendance/report', [AttendanceController::class, 'ReportAttendance'])->name('attendance.list');
+    Route::get('/attendance/search', [AttendanceController::class, 'search'])->name('search.attendance');
     Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('clock-in');
     Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('clock-out');
 });
