@@ -14,13 +14,11 @@
                             <div class="flex justify-end items-center">
                                 <form action="{{ route('search.user') }}" method="GET" class="px-4 py-2">
 
-                                    <x-text-input for="search" name="search"/>
+                                    <x-text-input for="search" name="search" />
                                     <x-primary-button>{{ __('Search') }}</x-primary-button>
 
                                 </form>
-                                <x-button-add x-data=""
-                                    x-on:click.prevent="$dispatch('open-modal', 'add-user')"
-                                    >{{ __('Add New User') }}
+                                <x-button-add x-data="" x-on:click.prevent="$dispatch('open-modal', 'add-user')">{{ __('Add New User') }}
                                 </x-button-add>
                             </div>
 
@@ -44,14 +42,33 @@
                                     <!-- User Type -->
                                     <div class="mt-4">
                                         <x-input-label for="usertype" :value="__('User Type')" />
-                                        <select id="usertype" class="block mt-1 w-full" name="usertype" required onchange="toggleFields()">
-                                            <option value="mualaf">Mualaf</option>
-                                            <option value="daie">Daie</option>
-                                            <option value="mentor">Mentor</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                        <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
+
+                                        <div class="grid grid-cols-2 gap-4 mt-1">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="mualaf" name="usertype[]" value="mualaf" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="mualaf" class="ml-2 text-sm font-medium text-gray-700">Mualaf</label>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="daie" name="usertype[]" value="daie" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="daie" class="ml-2 text-sm font-medium text-gray-700">Daie</label>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="mentor" name="usertype[]" value="mentor" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="mentor" class="ml-2 text-sm font-medium text-gray-700">Mentor</label>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="admin" name="usertype[]" value="admin" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="admin" class="ml-2 text-sm font-medium text-gray-700">Admin</label>
+                                            </div>
+                                        </div>
+
+                                        <x-input-error :messages="$errors->get('usertype')" class="mt-2 text-red-500 text-sm" />
                                     </div>
+
+
 
                                     <!-- Gender -->
                                     <div class="mt-4" id="gender">
@@ -79,10 +96,10 @@
                                         <select id="country" class="block mt-1 w-full" name="country" required onchange="toggleFields()">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country }}">{{ $country }}</option>
-                                            @endforeach 
+                                            <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach
                                         </select>
-                                        
+
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
 
@@ -131,10 +148,7 @@
                                     <!-- Password -->
                                     <div class="mt-4">
                                         <x-input-label for="password" :value="__('Password')" />
-                                        <x-text-input id="password" class="block mt-1 w-full"
-                                            type="password"
-                                            name="password"
-                                            required autocomplete="new-password" />
+                                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
 
                                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                     </div>
@@ -142,9 +156,7 @@
                                     <!-- Confirm Password -->
                                     <div class="mt-4">
                                         <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                        <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                                        type="password"
-                                                        name="password_confirmation" required autocomplete="new-password" />
+                                        <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
 
                                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
@@ -156,8 +168,8 @@
                                     </div>
                                 </form>
                             </x-modal>
-                            
-                            
+
+
                             <table id="datatable" class="w-full bg-white">
                                 <thead>
                                     <tr class="border-b-2">
@@ -170,30 +182,30 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($users  as $user)
-                                        <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $user->id }}</td>
-                                            <td class="px-2 py-3 text-left" >{{ $user->name }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $user->email }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
-                                            <td class="px-2 py-3 text-left">
-                                                <div class="flex justify-start inline-flex items-center px-4 py-2">
-                                                    <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-edit ><a href="{{ route('admin.edit', $user->id) }}">Edit</a></x-button-edit>
-                                                    </div>
-                                                    <x-button-view ><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
-                                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" class="px-4 py-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
-                                                    </form>
+                                    @forelse($users as $user)
+                                    <tr class="border-b-2">
+                                        <td class="px-2 py-3 text-left">{{ $user->id }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $user->name }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $user->email }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
+                                        <td class="px-2 py-3 text-left">
+                                            <div class="flex justify-start inline-flex items-center px-4 py-2">
+                                                <div class="inline-flex items-center px-4 py-2">
+                                                    <x-button-edit><a href="{{ route('admin.edit', $user->id) }}">Edit</a></x-button-edit>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                                <x-button-view><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
+                                                <form action="{{ route('user.delete', $user->id) }}" method="POST" class="px-4 py-2">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="8">No user found.</td>
-                                        </tr>
+                                    <tr>
+                                        <td colspan="8">No user found.</td>
+                                    </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -228,13 +240,13 @@
         }
 
         function hideFields(fields) {
-            fields.forEach(function (field) {
+            fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'none';
             });
         }
 
         function showFields(fields) {
-            fields.forEach(function (field) {
+            fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'block';
             });
         }

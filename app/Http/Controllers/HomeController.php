@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         if (Auth::id()) {
             $usertype = Auth()->user()->usertype;
-    
+
             if ($usertype == 'admin') {
                 return redirect()->route('dashboard.admin');
             } else if ($usertype == 'daie') {
@@ -23,5 +23,11 @@ class HomeController extends Controller
                 return redirect()->route('dashboard.mualaf');
             }
         }
+    }
+
+    public function chooseDashboard($userType)
+    {
+        session(['selected_user_type' => $userType]);
+        return redirect()->route('dashboard.' . $userType);
     }
 }
