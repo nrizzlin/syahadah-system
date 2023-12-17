@@ -26,21 +26,16 @@
                                     <x-input-label for="description" :value="__('Description')" />
                                     <x-input-textarea id="description" name="description" disabled>{{ $resources->description }}</x-input-textarea>
                                 </div>
-    
-                                <!-- Date -->
-                                <div class="mt-4">
-                                    <x-input-label for="date" :value="__('Date')" />
-                                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$resources->date" disabled />
-                                    </div>
-    
-                                <!-- Attachment -->
+
                                 <div class="mt-4">
                                     <x-input-label for="attachment" :value="__('Attachment')" />
-                                    <input type="file" class="form-control" id="attachment" name="attachment">
+                                    <x-text-input id="attachment" class="block mt-1 " type="text" name="attachment" :value="$resources->attachment" disabled />
+                                    <x-button-view><a href="{{ route('resources.download', $resources->attachment) }}">Download</a></x-button-view>
+                                    <x-button-view><a href="{{ route('resources.viewfile', $resources->attachment) }}">View</a></x-button-view>   
                                 </div>
     
                             <div class="flex items-center justify-end mt-4">
-                                <x-button-back><a href="{{ route('resources.list') }}">BACK</a></x-button-back>
+                                <x-button-back><a href="{{ route('resources.index-user') }}">BACK</a></x-button-back>
                             </div>
                     </div>
                 </div>

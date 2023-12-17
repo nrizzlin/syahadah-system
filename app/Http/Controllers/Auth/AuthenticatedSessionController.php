@@ -26,26 +26,38 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
 
-        $request->session()->regenerate();
-
-        // return redirect()->intended(RouteServiceProvider::HOME);
-        $user = Auth::user();
-        $userType = $user->userType();
-
-        // Redirect to the appropriate home page based on user type
-        if ($userType === 'admin') {
-            return redirect()->route('home');
-        } elseif ($userType === 'daie') {
-            return redirect()->route('home');
-        } elseif ($userType === 'mentor') {
-            return redirect()->route('home');
-        } elseif ($userType === 'mualaf' || $userType==='admin') {
-            return redirect()->route('home');
-        } else {
-            return redirect()->route('login')->with('error', 'Invalid user type or credentials.');
+        try {
+            $request->authenticate();
+    
+            $request->session()->regenerate();
+    
+            $user = Auth::user();
+    
+            if (!$user) {
+                // Authentication failed, redirect back with an error message
+                return redirect()->route('login')->with('error', trans('auth.failed'));
+            }
+    
+            $userType = $user->userType();
+    
+            // Redirect to the appropriate home page based on user type
+            if ($userType === 'admin') {
+                return redirect()->route('home');
+            } elseif ($userType === 'mentor') {
+                return redirect()->route('home');
+            } elseif ($userType === 'daie') {
+                return redirect()->route('home');
+            } elseif ($userType === 'mualaf') {
+                return redirect()->route('home');
+            } else {
+                return redirect()->route('login')->with('error', trans('auth.failed'));
+            }
+        } catch (AuthenticationException $exception) {
+            // Handle authentication exception
+            return redirect()->route('login')->with('error', trans('auth.failed'));
         }
+
     }
 
     /**

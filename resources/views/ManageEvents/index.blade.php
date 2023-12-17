@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Event') }}
+            {{ __('Event Management') }}
         </h2>
     </x-slot>
 
@@ -10,18 +10,22 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('List of Event') }}</h2>
 
-                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('List of Event') }}s</h2>
+                        <div class="flex justify-end items-center">
+                            <form action="{{ route('search.event') }}" method="GET" class="px-4 py-2">
 
+                                <x-text-input for="search" name="search"/>
+                                <x-primary-button>{{ __('Search') }}</x-primary-button>
+
+                            </form>
                             <div class="flex justify-end">
                                 <x-button-add><a href="{{ route('event.create') }}">Add New Event</a></x-button-add>
                             </div>
-                        {{-- <a href="{{ route('daie.journals.create') }}" class="btn btn-success">Add Journal</a> --}}
-                        
+                        </div>
+
                         <div class="table-responsive dash-social">
                         
-                            @if($events)
                             <table id="datatable" class="w-full bg-white">
                                 <thead class="thead-light">
                                     <tr class="border-b-2">
@@ -33,18 +37,18 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($events as $events)
+                                    @forelse($events as $event)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left" >{{ $events->id }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $events->title }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $events->description }}</td>
+                                            <td class="px-2 py-3 text-left" >{{ $event->id }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $event->title }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $event->description }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('event.view', $events->id) }}">View</a></x-button-view>
+                                                        <x-button-edit ><a href="{{ route('event.edit', $event->id) }}">Edit</a></x-button-edit>
                                                     </div>
-                                                    <x-button-edit ><a href="{{ route('event.edit', $events->id) }}">Edit</a></x-button-edit>
-                                                    <form action="{{ route('event.destroy', $events->id) }}" method="POST" class="px-4 py-2">
+                                                    <x-button-view ><a href="{{ route('event.view', $event->id) }}">View</a></x-button-view>
+                                                    <form action="{{ route('event.destroy', $event->id) }}" method="POST" class="px-4 py-2">
                                                         @csrf
                                                         @method('DELETE')
                                                         <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
@@ -59,11 +63,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No event found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$events->links()}}</div>
                 </div>
             </div>
         </div>

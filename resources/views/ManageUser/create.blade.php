@@ -11,10 +11,16 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div class="table-responsive dash-social">
-                            <div class="flex justify-end">
+                            <div class="flex justify-end items-center">
+                                <form action="{{ route('search.user') }}" method="GET" class="px-4 py-2">
+
+                                    <x-text-input for="search" name="search"/>
+                                    <x-primary-button>{{ __('Search') }}</x-primary-button>
+
+                                </form>
                                 <x-button-add x-data=""
                                     x-on:click.prevent="$dispatch('open-modal', 'add-user')"
-                                    >{{ __('Add User') }}
+                                    >{{ __('Add New User') }}
                                 </x-button-add>
                             </div>
 
@@ -70,7 +76,13 @@
                                     <!-- Country -->
                                     <div class="mt-4" id="country">
                                         <x-input-label for="country" :value="__('Country')" />
-                                        <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" />
+                                        <select id="country" class="block mt-1 w-full" name="country" required onchange="toggleFields()">
+                                            <option value="">Select Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach 
+                                        </select>
+                                        
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
 
@@ -145,30 +157,32 @@
                                 </form>
                             </x-modal>
                             
-                            @if($users)
+                            
                             <table id="datatable" class="w-full bg-white">
                                 <thead>
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
                                         <th class="px-2 py-3 text-left">Name</th>
                                         <th class="px-2 py-3 text-left">Email</th>
+                                        <th class="px-2 py-3 text-left">Roles</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @forelse($users as $users)
+                                    @forelse($users  as $user)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $users->id }}</td>
-                                            <td class="px-2 py-3 text-left" >{{ $users->name }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $users->email }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $user->id }}</td>
+                                            <td class="px-2 py-3 text-left" >{{ $user->name }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $user->email }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('admin.view', $users->id) }}">View</a></x-button-view>
+                                                        <x-button-edit ><a href="{{ route('admin.edit', $user->id) }}">Edit</a></x-button-edit>
                                                     </div>
-                                                    <x-button-edit ><a href="{{ route('admin.edit', $users->id) }}">Edit</a></x-button-edit>
-                                                    <form action="{{ route('user.delete', $users->id) }}" method="POST" class="px-4 py-2">
+                                                    <x-button-view ><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
+                                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" class="px-4 py-2">
                                                         @csrf
                                                         @method('DELETE')
                                                         <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
@@ -183,11 +197,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No user found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$users->links()}}</div>
                 </div>
             </div>
         </div>

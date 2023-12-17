@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(Resources::class);
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
         /**
      * Get the user's type.
      *
@@ -76,5 +81,10 @@ class User extends Authenticatable
     public function userType()
     {
         return $this->usertype; // Return the 'usertype' field from the database
+    }
+
+    public function progressdaily()
+    {
+        return $this->hasMany(DailyProgress::class);
     }
 }

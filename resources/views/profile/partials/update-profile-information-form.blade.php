@@ -47,6 +47,36 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="age" :value="__('Age')" />
+            <x-text-input id="age" name="age" type="number" class="mt-1 block w-full" :value="old('name', $user->age)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('age')" />
+        </div>
+
+        <div class="mt-4" id="country">
+            <x-input-label for="country" :value="__('Country')" />
+            <select id="country" class="block mt-1 w-full" name="country" required>
+                @foreach ($countries as $country)
+                    <option value="{{ $country }}" @if($user->country === $country) selected @endif>{{ $country }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('country')" class="mt-2" />
+        </div>
+
+        <!-- City -->
+        <div class="mt-4" id="city">
+            <x-input-label for="city" :value="__('City')" />
+            <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="$user->city" />
+            <x-input-error :messages="$errors->get('city')" class="mt-2" />
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mt-4" id="phone_number">
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
+            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$user->phone_number" />
+            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

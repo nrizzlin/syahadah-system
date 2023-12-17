@@ -13,7 +13,7 @@
                         <h2 class="text-lg font-medium text-gray-900 text-center">
                             {{ __('Create A New Journal') }}</h2>
 
-                        <form action="{{ route('daie.journals.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('journals.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <!-- Title of Journal -->
@@ -56,11 +56,11 @@
                                 <input type="file" class="form-control" id="attachment" name="attachment">
                             </div>
 
-                            <!-- button -->
-                            <div class="mt-4">
-                                <x-primary-button class="mt-4">
-                                    {{ __('Submit') }}
-                                </x-primary-button>
+                            <div class="flex items-center mt-4">
+                                <x-primary-button >{{ __('Submit') }}</x-primary-button>
+                                <div class=" ml-2 flex items-center justify-end">
+                                    <x-button-back><a href="{{ route('journals.index') }}">BACK</a></x-button-back>
+                                </div>
                             </div>
                         </form>     
                     </div><!--end card-body-->

@@ -12,11 +12,10 @@
                     <div class="w-full">
 
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('List of Event') }}s</h2>
+                            {{ __('List of Event') }}</h2>
                         
                         <div class="table-responsive dash-social">
                         
-                            @if($events)
                             <table id="datatable" class="w-full bg-white">
                                 <thead class="thead-light">
                                     <tr class="border-b-2">
@@ -28,7 +27,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($events as $events)
+                                    @forelse($Events as $events)
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left" >{{ $events->id }}</td>
                                             <td class="px-2 py-3 text-left">{{ $events->title }}</td>
@@ -36,7 +35,7 @@
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('event.view', $events->id) }}">View</a></x-button-view>
+                                                        <x-button-view ><a href="{{ route('view-event', $events->id) }}">View</a></x-button-view>
                                                     </div>
                                                 </div>
                                             </td>
@@ -48,11 +47,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No event found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$Events->links()}}</div>
                 </div>
             </div>
         </div>

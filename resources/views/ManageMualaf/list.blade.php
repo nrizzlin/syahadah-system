@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Mualaf Management') }}
+            {{ __('Mualaf Information') }}
         </h2>
     </x-slot>
 
@@ -11,8 +11,6 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div class="table-responsive dash-social">
-                            
-                            @if($mualafUsers)
                             <table id="datatable" class="w-full bg-white">
                                 <thead>
                                     <tr class="border-b-2">
@@ -32,7 +30,7 @@
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('mualaf.view', $users->id) }}">View</a></x-button-view>
+                                                        <x-button-view ><a href="{{ route('mualaf.viewInfo', $users->id) }}">View</a></x-button-view>
                                                     </div>
                                                 </div>
                                             </td>
@@ -44,11 +42,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            @else
-                                <p>No user found.</p>
-                            @endif
                         </div>
                     </div>
+                    <div class="p-2">{{$mualafUsers->links()}}</div>
                 </div>
             </div>
         </div>

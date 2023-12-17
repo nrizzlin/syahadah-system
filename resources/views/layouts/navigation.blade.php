@@ -28,6 +28,44 @@
                                 <x-nav-link :href="route('resources.index')" :hover="request()->routeIs('resources.index')">
                                     {{ __('Resources Management') }}
                                 </x-nav-link>
+                                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                                    <x-dropdown align="right" width="48">
+                                        <x-slot name="trigger">
+                                            <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                                <x-nav-link>
+                                                    {{ __('Report') }}
+                                                </x-nav-link>
+                    
+                                                <div class="ml-1">
+                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                            </button>
+                                        </x-slot>
+                    
+                                        <x-slot name="content">
+                                            <x-dropdown-link :href="route('attendance.list')" :hover="request()->routeIs('attendance.list')">
+                                                {{ __('Report Clock-in/Clock-out') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('user.list')" :hover="request()->routeIs('user.list')">
+                                                {{ __('Report Users') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('journal.list')" :hover="request()->routeIs('journal.list')">
+                                                {{ __('Report Journal Daie/Mentor') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('dailyprogress.list')" :hover="request()->routeIs('dailyprogress.list')">
+                                                {{ __('Report Progress Daily Mualaf') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                                                {{ __('Report Event') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('resources.list')" :hover="request()->routeIs('resources.list')">
+                                                {{ __('Report Resources') }}
+                                            </x-dropdown-link>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </div>
                             </div>
                         @endif
                     @endauth
@@ -41,10 +79,34 @@
                                 <x-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
                                     {{ __('Journal Progress') }}
                                 </x-nav-link>
-                                {{-- <x-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
-                                    {{ __('Clock-in/Clock-out') }}
-                                </x-nav-link> --}}
-                                <x-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                                    <x-dropdown align="right" width="48">
+                                        <x-slot name="trigger">
+                                            <button class="inline-flex items-center px-3 py-2  text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                                <x-nav-link>
+                                                    {{ __('Attendance') }}
+                                                </x-nav-link>
+                    
+                                                <div class="ml-1">
+                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                            </button>
+                                        </x-slot>
+                    
+                                        <x-slot name="content">
+                                            <x-dropdown-link :href="route('attendance.index-daie')" :hover="request()->routeIs('attendance.index-daie')">
+                                                {{ __('Clock-in/Clock-out') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">
+                                                {{ __('List Clock-in/Clock-out') }}
+                                            </x-dropdown-link>
+                                            </form>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </div>                     
+                                <x-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
                                     {{ __('Event') }}
                                 </x-nav-link>
                             </div>
@@ -57,12 +119,39 @@
                            <x-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
                                {{ __('Journal Progress') }}
                            </x-nav-link>
-                           <x-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                           <x-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
                             {{ __('Event Information') }}
                             </x-nav-link>
                             <x-nav-link :href="route('mualaf.list')" :hover="request()->routeIs('mualaf.list')">
                                 {{ __('Mualaf Information') }}
                             </x-nav-link>
+                            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                                <x-dropdown align="right" width="48">
+                                    <x-slot name="trigger">
+                                        <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <x-nav-link>
+                                                {{ __('Attendance') }}
+                                            </x-nav-link>
+                
+                                            <div class="ml-1">
+                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </x-slot>
+                
+                                    <x-slot name="content">
+                                        <x-dropdown-link :href="route('attendance.index-mentor')" :hover="request()->routeIs('attendance.index-daie')">
+                                            {{ __('Clock-in/Clock-out') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">
+                                            {{ __('List Clock-in/Clock-out') }}
+                                        </x-dropdown-link>
+                                        </form>
+                                    </x-slot>
+                                </x-dropdown>
+                            </div> 
                        </div>
                     @endif
                     @endauth
@@ -71,16 +160,40 @@
                     @Auth
                     @if(auth()->user()->usertype == 'mualaf')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
-                                {{ __('Journal Progress') }}
+                            <x-nav-link :href="route('dailyprogress.index')" :hover="request()->routeIs('dailyprogress.index')">
+                                {{ __('Progress Daily') }}
                             </x-nav-link>
-                            {{-- <x-nav-link :href="route('daie.journals.index')" :hover="request()->routeIs('daie.journals.index')">
-                                {{ __('Clock-in/Clock-out') }}
-                            </x-nav-link> --}}
-                            <x-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                                <x-dropdown align="right" width="48">
+                                    <x-slot name="trigger">
+                                        <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <x-nav-link>
+                                                {{ __('Attendance') }}
+                                            </x-nav-link>
+                
+                                            <div class="ml-1">
+                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </x-slot>
+                
+                                    <x-slot name="content">
+                                        <x-dropdown-link :href="route('attendance.index-mualaf')" :hover="request()->routeIs('attendance.index-daie')">
+                                            {{ __('Clock-in/Clock-out') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">
+                                            {{ __('List Clock-in/Clock-out') }}
+                                        </x-dropdown-link>
+                                        </form>
+                                    </x-slot>
+                                </x-dropdown>
+                            </div> 
+                            <x-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
                                 {{ __('Event Information') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('resources.list')" :hover="request()->routeIs('resources.list')">
+                            <x-nav-link :href="route('resources.index-user')" :hover="request()->routeIs('resources.list')">
                                 {{ __('Resources Information') }}
                             </x-nav-link>
                         </div>
@@ -93,7 +206,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">

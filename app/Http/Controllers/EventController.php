@@ -5,21 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
     public function index()
     {
         // Retrieve journals for the logged-in Daie
-        $events = Event::all();
+        $events = Event::paginate(5);
         return view('ManageEvents.index', compact('events'));
     }
 
-    public function list()
+    public function indexUser()
     {
         // Retrieve journals for the logged-in Daie
-        $events = Event::all();
-        return view('ManageEvents.list', compact('events'));
+        $Events = Event::paginate(5);
+        return view('ManageEvents.list', compact('Events'));
+    }
+
+    public function ReportEvent()
+    {
+        // Retrieve all users
+        $eventsD = Event::paginate(5);
+        $Totalevents = Event::count();
+        $TotalEventMonth = Event::whereMonth('created_at', Carbon::now()->month)->count();
+
+        return view('ManageEvents.report', compact('Totalevents','eventsD','TotalEventMonth'));
     }
 
     public function create()
@@ -37,7 +48,16 @@ class EventController extends Controller
             'attachment' => 'nullable|file',
         ]);
 
-        Auth::user()->events()->create($request->all());
+        $attachment = $request->file('attachment');
+        $filename = time() . '.' . $attachment->getClientOriginalExtension();
+        $attachment->move('assets', $filename);
+
+        Auth::user()->events()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
@@ -51,16 +71,28 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            
+            'title' => 'required|string',
             'description' => 'required|string',
             'date' => 'required|date',
-            'place' => 'required|string',
-            'status' => 'required|string',
             'attachment' => 'nullable|file',
         ]);
 
         $events = Event::findOrFail($id);
-        $events->update($request->all());
+    
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $filename = time() . '.' . $attachment->getClientOriginalExtension();
+            $attachment->move('assets', $filename);
+        } else {
+            $filename = $events->attachment;
+        }
+    
+        $events->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'attachment' => $filename,
+        ]);
 
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
@@ -79,9 +111,52 @@ class EventController extends Controller
         return redirect()->route('event.index')->with('success', 'Journal deleted successfully');
     }
 
-    public function viewlist($id)
+    public function eventInfo($id)
     {
         $events = Event::findOrFail($id);
-        return view('ManageEvents.view_list', compact('events'));
+        return view('ManageEvents.view_eventInfo', compact('events'));
     }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
+    }
+
+    public function searchData(Request $request)
+    {
+        $search = $request->input('search');
+
+    
+        // Check if there is a search query
+        if ($search) {
+            $eventsD = Event::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $eventsD = Event::paginate(5);
+        }
+
+        $Totalevents = Event::count();
+
+        return view('ManageEvents.report', compact('Totalevents','eventsD'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+    
+        // Check if there is a search query
+        if ($search) {
+            $events = Event::where('title', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $events = Event::paginate(5);
+        }
+
+        return view('ManageEvents.index', compact('events'));
+    }
+    
+
 }

@@ -7,21 +7,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-<h3>Admin</h3>
-<p>Email : admin@gmail.com</p>
-<p>Password : 11111111</p>
-
-<h3>Daie</h3>
-<p>Email : daie@gmail.com</p>
-<p>Password : 11111111</p>
-
-<h3>Mentor</h3>
-<p>Email : mentor@gmail.com</p>
-<p>Password : 11111111</p>
-
-<h3>Mualaf</h3>
-<p>Email : mualaf@gmail.com</p>
-<p>Password : 11111111</p>
 
 ## About Laravel
 
