@@ -26,7 +26,7 @@
 
         
         <!-- User Type -->
-        <div class="mt-4">
+        <!-- <div class="mt-4">
             <x-input-label for="usertype" :value="__('User Type')" />
             <select id="usertype" class="block mt-1 w-full" name="usertype" required>
                 <option value="mualaf">Mualaf</option>
@@ -35,7 +35,7 @@
                 <option value="admin">Admin</option>
             </select>
             <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
-        </div>
+        </div> -->
 
         <!-- Remember Me -->
         <div class="block mt-4">

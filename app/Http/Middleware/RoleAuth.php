@@ -15,22 +15,25 @@ class RoleAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
+
+        $selectedUserType = session('selected_user_type');
+
         if (Auth()->user()->usertype=='admin')
         {
         return $next($request);
         }
 
-        if (Auth()->user()->usertype=='daie')
+        if ($selectedUserType=='daie')
         {
         return $next($request);
         }
 
-        if (Auth()->user()->usertype=='mentor')
+        if ($selectedUserType=='mentor')
         {
         return $next($request);
         }
 
-        if (Auth()->user()->usertype=='mualaf')
+        if ($selectedUserType=='mualaf')
         {
         return $next($request);
         }
