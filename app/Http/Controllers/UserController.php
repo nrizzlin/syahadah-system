@@ -64,11 +64,11 @@ class UserController extends Controller
         // Retrieve all users
         $usersD = User::paginate(5);
         $Totalusers = User::count();
-        $Totalmentor = User::where('usertype', 'mentor')->count();
-        $Totaldaie = User::where('usertype', 'daie')->count();
-        $Totalmualaf = User::where('usertype', 'mentor')->count();
+        $Totalmentor = User::where('usertype', 'like', '%mentor%')->count();
+        $Totaldaie = User::where('usertype', 'like', '%daie%')->count();
+        $Totalmualaf = User::where('usertype', 'like', '%mualaf%')->count();
 
-        return view('ManageUser.report', compact('Totalusers', 'usersD', 'Totalmentor', 'Totaldaie', 'Totalmualaf'));
+        return view('ManageUser.report', compact('Totalusers','usersD','Totalmentor','Totaldaie','Totalmualaf'));
     }
 
     // public function store(Request $request)
