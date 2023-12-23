@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Specialist;
 
 class User extends Authenticatable
 {
@@ -18,19 +19,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'usertype',
-        'gender',
-        'age',
-        'country',
-        'city',
-        'phone_number',
-        'previous_religion',
-        'syahadah_date',
-        'facebook_page',
-        'status',
-        'password',
+        'name', 'email', 'usertype', 'specialist_id', 'gender', 'age', 'country',
+        'city', 'phone_number', 'previous_religion', 'syahadah_date',
+        'facebook_page', 'status', 'password',
     ];
 
     /**
@@ -86,5 +77,24 @@ class User extends Authenticatable
     public function progressdaily()
     {
         return $this->hasMany(DailyProgress::class);
+    }
+
+    // mentors relationship
+    public function mentors()
+    {
+        return $this->belongsToMany(User::class, 'assigned_mualaf', 'mualaf_id', 'mentor_id')
+            ->withTimestamps();
+    }
+
+    // mualafs relationship
+    public function mualafs()
+    {
+        return $this->belongsToMany(User::class, 'assigned_mualaf', 'mentor_id', 'mualaf_id')
+            ->withTimestamps();
+    }
+
+    public function specialist()
+    {
+        return $this->belongsTo(Specialist::class, 'specialist_id');
     }
 }

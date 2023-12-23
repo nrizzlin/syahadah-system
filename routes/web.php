@@ -13,6 +13,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProgressDailyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AssignedMualafController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -156,5 +157,16 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::match(['get', 'post'], '/daily-progress/{id}/viewFile', [ProgressDailyController::class, 'viewFile'])->name('dailyprogress.viewfile');
     Route::delete('/daily-progress/{id}', [ProgressDailyController::class, 'destroy'])->name('dailyprogress.destroy');
 });
+
+Route::middleware(['auth', 'role'])->group(function () {
+    // Other routes...
+
+    Route::get('/admin/assign', [AssignedMualafController::class, 'assignMualafToMentor'])->name('assign.index');
+    Route::post('/admin/store', [AssignedMualafController::class, 'storeAssigned'])->name('admin.store-assign');
+    Route::get('/admin/list', [AssignedMualafController::class, 'listAssign'])->name('assign.list');
+    Route::get('/admin/viewAssign/{id}', [AssignedMualafController::class, 'viewDetail'])->name('assign.viewInfo');
+});
+
+
 
 require __DIR__ . '/auth.php';

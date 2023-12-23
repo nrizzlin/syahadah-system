@@ -26,21 +26,21 @@
                                 <form method="post" action="{{ route('user.add') }}" class="p-6">
                                     @csrf
                                     <!-- Name -->
-                                    <div>
+                                    <div class="mt-4" id="name">
                                         <x-input-label for="name" :value="__('Name')" />
                                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                     </div>
 
                                     <!-- Email Address -->
-                                    <div class="mt-4">
+                                    <div class="mt-4" id="email">
                                         <x-input-label for="email" :value="__('Email')" />
                                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                     </div>
 
                                     <!-- User Type -->
-                                    <div class="mt-4">
+                                    <div class="mt-4" id="usertype" >
                                         <x-input-label for="usertype" :value="__('User Type')" />
 
                                         <div class="grid grid-cols-2 gap-4 mt-1">
@@ -68,7 +68,16 @@
                                         <x-input-error :messages="$errors->get('usertype')" class="mt-2 text-red-500 text-sm" />
                                     </div>
 
-
+                                    <div class="mt-4" id="specialist_id">
+                                        <x-input-label for="specialist_id" :value="__('Specialist Category')" />
+                                        <select id="specialist_id" class="block mt-1 w-full" name="specialist_id" required>
+                                            <option value="">Select Specialist Category</option>
+                                            @foreach ($specialists as $specialist)
+                                                <option value="{{ $specialist->id }}">{{ $specialist->category }}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-input-error :messages="$errors->get('specialist_category')" class="mt-2" />
+                                    </div>
 
                                     <!-- Gender -->
                                     <div class="mt-4" id="gender">
@@ -219,32 +228,33 @@
 
     <script>
         function toggleFields() {
-            var userType = document.getElementById('usertype').value;
-
+            var userTypeCheckboxes = document.getElementsByName('usertype[]');
+            var selectedUserTypes = Array.from(userTypeCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+    
             // Hide all fields first
             hideAllFields();
-
-            // Show fields based on user type
-            if (userType === 'mentor' || userType === 'admin' || userType === 'daie') {
-                showFields(['gender', 'age', 'country', 'city', 'email', 'phone_number', 'facebook_page', 'status']);
+    
+            // Show fields based on selected user types
+            if (selectedUserTypes.includes('mualaf')) {
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
             }
-
-            if (userType === 'mualaf') {
-                showFields(['gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
+    
+            if (selectedUserTypes.includes('mentor') || selectedUserTypes.includes('admin') || selectedUserTypes.includes('daie')) {
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'facebook_page', 'status','specialist_id']);
             }
         }
-
+    
         function hideAllFields() {
-            var allFields = ['gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status'];
+            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id'];
             hideFields(allFields);
         }
-
+    
         function hideFields(fields) {
             fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'none';
             });
         }
-
+    
         function showFields(fields) {
             fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'block';

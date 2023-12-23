@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Specialist;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -12,6 +13,7 @@ class UserController extends Controller
     {
         // Retrieve journals for the logged-in Daie
         $users = User::paginate(5);
+        $specialists = Specialist::all();
 
         // Array of countries
         $countries = [
@@ -56,7 +58,7 @@ class UserController extends Controller
             'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
         ];
 
-        return view('ManageUser.create', compact('users', 'countries'));
+        return view('ManageUser.create', compact('users', 'countries','specialists'));
     }
 
     public function ReportUser()
@@ -85,6 +87,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'usertype' => 'required',
+            'specialist_id'=>'required',
             'gender' => 'required',
             'age' => 'required|numeric|min:0',
             'country' => 'required',
@@ -111,7 +114,7 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         // Array of countries
-
+        $specialists = Specialist::all();
         $userTypes = explode(',', $users->userType());
         $countries = [
             'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
@@ -155,26 +158,14 @@ class UserController extends Controller
             'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
         ];
 
-        return view('ManageUser.edit', compact('users', 'countries', 'userTypes'));
+        return view('ManageUser.edit', compact('users', 'countries', 'userTypes','specialists'));
     }
 
     public function update(Request $request, $id)
     {
         $users = User::findOrFail($id);
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'usertype' => 'required',
-            'gender' => 'required',
-            'age' => 'required|numeric|min:0',
-            'country' => 'required',
-            'city' => 'required|string|max:255',
-            'phone_number' => 'required|numeric|digits:10',
-            'previous_religion' => 'nullable|string|max:255',
-            'syahadah_date' => 'nullable|date',
-            'facebook_page' => 'nullable|string|max:255',
-            'status' => 'nullable|string|max:255',
-            'password' => 'required|string|max:255',
+            'specialist_id'=>'required',
         ]);
 
         $validatedData['usertype'] = implode(',', $request->input('usertype'));
@@ -187,6 +178,7 @@ class UserController extends Controller
     public function view($id)
     {
         $users = User::findOrFail($id);
+        $specialists = Specialist::all();
         return view('ManageUser.view_user', compact('users'));
     }
 
@@ -212,6 +204,7 @@ class UserController extends Controller
             // If there's no search query, retrieve all users with pagination
             $users = User::paginate(5);
         }
+        $specialists = Specialist::all();
 
         $countries = [
             'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
@@ -255,7 +248,7 @@ class UserController extends Controller
             'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
         ];
 
-        return view('ManageUser.create', compact('users', 'countries'));
+        return view('ManageUser.create', compact('users', 'countries','specialists'));
     }
 
     public function searchData(Request $request)

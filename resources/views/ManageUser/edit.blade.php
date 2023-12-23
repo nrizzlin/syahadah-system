@@ -61,6 +61,17 @@
                                 <x-input-error :messages="$errors->get('usertype')" class="mt-2 text-red-500 text-sm" />
                             </div>
 
+                            <div class="mt-4" id="specialist_id">
+                                <x-input-label for="specialist_id" :value="__('Specialist Category')" />
+                                <select id="specialist_id" class="block mt-1 w-full" name="specialist_id" required>
+                                    <option value="">Select Specialist Category</option>
+                                    @foreach ($specialists as $specialist)
+                                        <option value="{{ $specialist->id }}">{{ $specialist->category }}</option>
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('specialist_category')" class="mt-2" />
+                            </div>
+
 
                             <!-- Gender -->
                             <div class="mt-4" id="gender">
@@ -167,28 +178,33 @@
 
     <script>
         function toggleFields() {
-            var userType = document.getElementById('usertype').value;
-
+            var userTypeCheckboxes = document.getElementsByName('usertype[]');
+            var selectedUserTypes = Array.from(userTypeCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+    
             // Hide all fields first
             hideAllFields();
-
-            // Show fields based on user type
-            if (userType === 'mentor' || userType === 'admin' || userType === 'daie') {
-                showFields(['gender', 'age', 'country', 'city', 'email', 'phone_number', 'facebook_page', 'status']);
+    
+            // Show fields based on selected user types
+            if (selectedUserTypes.includes('mualaf')) {
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
             }
-
-            if (userType === 'mualaf') {
-                showFields(['gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
+    
+            if (selectedUserTypes.includes('mentor') || selectedUserTypes.includes('admin') || selectedUserTypes.includes('daie')) {
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'facebook_page', 'status','specialist_id']);
             }
         }
-
+    
         function hideAllFields() {
-            var allFields = ['gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status'];
-            allFields.forEach(function(field) {
+            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id'];
+            hideFields(allFields);
+        }
+    
+        function hideFields(fields) {
+            fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'none';
             });
         }
-
+    
         function showFields(fields) {
             fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'block';
