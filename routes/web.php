@@ -165,6 +165,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::post('/admin/store', [AssignedMualafController::class, 'storeAssigned'])->name('admin.store-assign');
     Route::get('/admin/list', [AssignedMualafController::class, 'listAssign'])->name('assign.list');
     Route::get('/admin/viewAssign/{id}', [AssignedMualafController::class, 'viewDetail'])->name('assign.viewInfo');
+    Route::get('/mentor/mualafList', [AssignedMualafController::class, 'indexMentor'])->name('assign.listMentor');
+    Route::get('/mentor/mualaf-assign/{id}', [AssignedMualafController::class, 'MualafInfo'])->name('assign.MualafDetail');
+    Route::get('/mentor/mualaf-assign/evaluate-form/{assignment}', [AssignedMualafController::class, 'create'])->name('assign.evaluateForm');
 });
 
 

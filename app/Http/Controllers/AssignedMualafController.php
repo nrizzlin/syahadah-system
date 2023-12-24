@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Specialist;
 use App\Models\AssignedMualaf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class AssignedMualafController extends Controller
@@ -16,6 +17,17 @@ class AssignedMualafController extends Controller
         $mualafUsers = User::where('usertype', 'mualaf')->get();
 
         return view('AssignedMualaf.index', compact('mentors', 'mualafs','mualafUsers'));
+    }
+
+    public function indexMentor()
+    {
+        $mentorId = Auth::id();
+
+        // Fetch the assigned Mualaf data for the current mentor
+        $assignedMualaf = AssignedMualaf::with(['mentor', 'mualaf'])->where('mentor_id', $mentorId)->get();
+        
+        // Pass the assigned Mualaf data to the view
+        return view('AssignedMualaf.indexMentor', compact('assignedMualaf'));
     }
 
     public function storeAssigned(Request $request)
@@ -55,6 +67,23 @@ class AssignedMualafController extends Controller
         
         // Pass details to the view
         return view('AssignedMualaf.view', compact('assignment','specialists'));
+    }
+
+    public function MualafInfo($id)
+    {
+        // Fetch details of the Mualaf and Mentor based on the assigned ID
+        $assignment = AssignedMualaf::with(['mentor', 'mualaf'])->find($id);
+        $dailyProgress = $assignment->mualaf->progressDaily;
+        
+        // Pass details to the view
+        return view('AssignedMualaf.mualafInfo', compact('assignment','dailyProgress'));
+    }
+
+    public function create($assignmentId)
+    {
+        $assignment = AssignedMualaf::with(['mentor', 'mualaf'])->find($assignmentId);
+
+        return view('AssignedMualaf.evaluateMualaf', compact('assignment'));
     }
 }
 

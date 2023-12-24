@@ -69,7 +69,7 @@
                                         <div class="form-group row p-3">
                                             <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Date of Syahadah')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignment->mualaf->previous_religion" disabled />
+                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignment->mualaf->syahadah_date" disabled />
                                             </div>
                                         </div>
                                     </div>
