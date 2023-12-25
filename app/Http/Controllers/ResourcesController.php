@@ -43,6 +43,7 @@ class ResourcesController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'attachment' => 'nullable|file',
+            'category' => 'required|string',
         ]);
 
         $attachment = $request->file('attachment');
@@ -53,6 +54,7 @@ class ResourcesController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'attachment' => $filename,
+            'category' => $request->category,
         ]);
 
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');

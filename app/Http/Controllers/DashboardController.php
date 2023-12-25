@@ -20,9 +20,9 @@ class DashboardController extends Controller
         $event = Event::count();
         $resources = Resources::count();
 
-        $mentorCount = User::where('usertype','mentor')->count();
-        $daieCount = User::where('usertype','daie')->count();
-        $mualafCount = User::where('usertype','mualaf')->count();
+        $mentorCount = User::where('usertype', 'like', '%mentor%')->count();
+        $daieCount = User::where('usertype','like', '%daie%')->count();
+        $mualafCount = User::where('usertype','like', '%mualaf%')->count();
 
         $events = Event::all();
         //User data for the chart 

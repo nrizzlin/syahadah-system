@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Specialist;
 use App\Models\AssignedMualaf;
+use App\Models\EvaluatedMualaf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +31,20 @@ class AssignedMualafController extends Controller
         return view('AssignedMualaf.indexMentor', compact('assignedMualaf'));
     }
 
+    public function reportPerformance()
+    {
+        $poorCount = EvaluatedMualaf::where('result_status', 'Poor')->count();
+        $goodCount = EvaluatedMualaf::where('result_status', 'Good')->count();
+        $excellentCount = EvaluatedMualaf::where('result_status', 'Excellent')->count();
+    
+        // Fetch data for the table
+        $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations']) // Change 'mentors' to 'mentor'
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        return view('AssignedMualaf.report', compact('poorCount', 'goodCount', 'excellentCount', 'assignedMualafs'));
+    }
+
     public function storeAssigned(Request $request)
     {
         // Validate the request
@@ -44,7 +59,7 @@ class AssignedMualafController extends Controller
     
         // Attach mentors to the mualaf
         $user = User::find($mualafId);
-        $user->mentors()->sync($mentorIds);
+        $user->mentors()->attach($mentorIds);
     
         // Redirect or return a response
         return redirect()->route('assign.index')->with('success', 'Mentors assigned successfully.');
@@ -85,5 +100,78 @@ class AssignedMualafController extends Controller
 
         return view('AssignedMualaf.evaluateMualaf', compact('assignment'));
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'performance' => 'required|array',
+            'note' => 'required|string',
+            'assigned_id' => 'required|exists:assigned_mualaf,id',
+        ]);
+
+        // Count the total number of performance categories
+        $totalPerformanceCategories = count(config('performance.categories'));
+
+        // Calculate the total performance based on the checked checkboxes
+        $checkedPerformanceCount = count($request->input('performance'));
+
+        // Calculate the percentage
+        $percentage = ($checkedPerformanceCount / $totalPerformanceCategories) * 100;
+
+        // Determine the result status
+        $resultStatus = 'Poor';
+        if ($percentage >= 70) {
+            $resultStatus = 'Excellent';
+        } elseif ($percentage >= 50) {
+            $resultStatus = 'Good';
+        }
+
+        // Create a new EvaluatedMualaf instance with the result status
+        $evaluation = new EvaluatedMualaf([
+            'date' => $request->input('date'),
+            'performance' => implode(',', $request->input('performance')),
+            'note' => $request->input('note'),
+            'assigned_id' => $request->input('assigned_id'),
+            'result_status' => $resultStatus,
+        ]);
+
+        // Save the evaluation
+        $evaluation->save();
+
+        // You can redirect the user to a success page or do something else
+        return redirect()->route('assign.listMentor')->with('success', 'Evaluation stored successfully.');
+    }
+
+
+        public function listPerformance()
+    {
+        // Get the current mentor's ID
+        $mentorId = Auth::id();
+
+        // Fetch the assigned Mualaf IDs for the current mentor
+        $assignedMualafIds = AssignedMualaf::where('mentor_id', $mentorId)
+            ->pluck('mualaf_id');
+
+        // Fetch performances for all mentors associated with the same Mualaf IDs
+        $assignedMualafs = AssignedMualaf::with(['mentor', 'mualaf', 'evaluations'])
+        ->whereIn('mualaf_id', $assignedMualafIds)
+        ->get();
+
+        // Pass the assigned Mualaf data to the view
+        return view('AssignedMualaf.listPerformance', compact('assignedMualafs'));
+    }
+
+
+    public function viewPerformanceDetail($id)
+    {
+        // Fetch details of the Mualaf and Mentor based on the assigned ID
+        $assignedMualaf = AssignedMualaf::with(['mentor', 'mualaf', 'evaluations'])->find($id);
+        $specialists = Specialist::all();
+
+        // Pass details to the view
+        return view('AssignedMualaf.performanceInfo', compact('assignedMualaf', 'specialists'));
+    }
+
 }
 

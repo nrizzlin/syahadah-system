@@ -32,4 +32,15 @@ class AssignedMualaf extends Model
     {
         return $this->belongsTo(User::class, 'mualaf_id');
     }
+
+        public function evaluations()
+    {
+        return $this->hasMany(EvaluatedMualaf::class, 'assigned_id');
+    }
+    
+    public function mentors()
+{
+    return $this->belongsToMany(User::class, 'assigned_mualaf', 'mualaf_id', 'mentor_id');
+}
+    
 }

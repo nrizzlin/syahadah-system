@@ -97,4 +97,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Specialist::class, 'specialist_id');
     }
+
+    public function madu()
+    {
+        return $this->hasMany(Madu::class);
+    }
 }

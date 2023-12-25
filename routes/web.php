@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProgressDailyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AssignedMualafController;
+use App\Http\Controllers\MaduController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -168,8 +169,19 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/mentor/mualafList', [AssignedMualafController::class, 'indexMentor'])->name('assign.listMentor');
     Route::get('/mentor/mualaf-assign/{id}', [AssignedMualafController::class, 'MualafInfo'])->name('assign.MualafDetail');
     Route::get('/mentor/mualaf-assign/evaluate-form/{assignment}', [AssignedMualafController::class, 'create'])->name('assign.evaluateForm');
+    Route::post('/mentor/evaluate-mualaf/store', [AssignedMualafController::class, 'store'])->name('assign.evaluate');
+    Route::get('/mentor/mualaf-performance', [AssignedMualafController::class, 'listPerformance'])->name('assign.listPerformance');
+    Route::get('/assigned-mualaf/{id}/performance-detail', [AssignedMualafController::class, 'viewPerformanceDetail'])->name('assign.viewDetail');
+    Route::get('/admin/report/performance-mualaf', [AssignedMualafController::class, 'reportPerformance'])->name('performance.list');
 });
 
+Route::middleware(['auth', 'role'])->group(function () {
+    // Other routes...
+
+    Route::get('/madu/registration', [MaduController::class, 'index'])->name('madu.index');
+    Route::post('/madu/store', [MaduController::class, 'store'])->name('madu.add');
+    Route::get('/madu/{id}/show', [MaduController::class, 'show'])->name('madu.detail');
+});
 
 
 require __DIR__ . '/auth.php';

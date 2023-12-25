@@ -28,7 +28,7 @@
                                     <tbody>
                                         @forelse ($assignedMualaf as $assignment)
                                             <tr class="border-b-2">
-                                                <td class="px-2 py-3 text-left">{{ $assignment->id}}</td>
+                                                <td class="px-2 py-3 text-left">{{ $loop->iteration}}</td>
                                                 <td class="px-2 py-3 text-left">{{ $assignment->mentor->name }}</td>
                                                 <td class="px-2 py-3 text-left">{{ $assignment->mualaf->name }}</td>
                                                 <td class="px-2 py-3 text-left">{{ $assignment->created_at}}</td>

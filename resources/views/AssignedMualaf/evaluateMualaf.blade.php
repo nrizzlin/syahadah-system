@@ -15,6 +15,7 @@
                             <hr>
                             <form action="{{ route('assign.evaluate') }}" method="POST" enctype="multipart/form-data" class="p-6">
                                 @csrf
+                                <input type="hidden" name="assigned_id" value="{{ optional($assignment)->id }}">
                                 <div class="row">
                                     <div class="col-6 p-2">
                                         <div class="form-group row p-3">
@@ -25,25 +26,25 @@
                                         </div>
 
                                         <div class="form-group row p-3">
-                                            <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Syahadah Date')" />
+                                            <x-input-label class="col-sm-3 col-form-label" for="syahadah_date" :value="__('Syahadah Date')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignment->mualaf->phone_number" disabled />
+                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="syahadah_date" :value="$assignment->mualaf->syahadah_date" disabled />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-6">
                                         <div class="form-group row p-3">
-                                            <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Age')" />
+                                            <x-input-label class="col-sm-3 col-form-label" for="age" :value="__('Age')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignment->mualaf->age" disabled />
+                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="age" :value="$assignment->mualaf->age" disabled />
                                             </div>
                                         </div>
 
                                         <div class="form-group row p-3">
-                                            <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Date')" />
+                                            <x-input-label class="col-sm-3 col-form-label" for="date" :value="__('Date')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="date" name="name" :value="old('date')" required autofocus autocomplete="name" />
+                                                <x-text-input id="name" class="block mt-1 w-full" type="date" name="date" :value="old('date')" required autofocus autocomplete="name" />
                                             </div>
                                         </div>
                                     </div>
@@ -52,7 +53,7 @@
                                 <div class="row">
                                     <div class="col-6 p-2">
                                         <div class="form-group row p-3" id="performance">
-                                            <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Mualaf Performance')" />
+                                            <x-input-label class="col-sm-3 col-form-label" for="performance" :value="__('Mualaf Performance')" />
                                             <div class="col-sm-6">
                                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                                     <div class="items-center">
@@ -112,9 +113,9 @@
                                     <div class="col-6">
 
                                         <div class="form-group row p-3">
-                                            <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Note')" />
+                                            <x-input-label class="col-sm-3 col-form-label" for="note" :value="__('Note')" />
                                             <div class="col-sm-6">
-                                                <textarea class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="question_desc" name="question_desc" required></textarea>
+                                                <textarea class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="note" name="note" required></textarea>
                                             </div>
                                         </div>
                                     </div>
