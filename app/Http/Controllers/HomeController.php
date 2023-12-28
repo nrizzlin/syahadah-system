@@ -13,13 +13,15 @@ class HomeController extends Controller
         if (Auth::id()) {
             $usertype = Auth()->user()->usertype;
 
-            if ($usertype == 'admin') {
+            $selectedUserType = session('selected_user_type');
+
+            if ($selectedUserType == 'admin') {
                 return redirect()->route('dashboard.admin');
-            } else if ($usertype == 'daie') {
+            } else if ($selectedUserType == 'daie') {
                 return redirect()->route('dashboard.daie');
-            } else if ($usertype == 'mentor') {
+            } else if ($selectedUserType== 'mentor') {
                 return redirect()->route('dashboard.mentor');
-            } else if ($usertype == 'mualaf') {
+            } else if ($selectedUserType == 'mualaf') {
                 return redirect()->route('dashboard.mualaf');
             }
         }
