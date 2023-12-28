@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="col-sm-6 flex items-center">
-                                        <x-button-back><a href="{{ route('dailyprogress.index') }}">BACK</a></x-button-back>
+                                        <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                     </div>
                                 </div>
                             </form>
