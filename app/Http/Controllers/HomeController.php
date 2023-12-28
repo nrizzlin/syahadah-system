@@ -15,7 +15,7 @@ class HomeController extends Controller
 
             $selectedUserType = session('selected_user_type');
 
-            if ($selectedUserType == 'admin') {
+            if ($selectedUserType == 'admin' || $usertype == 'admin') {
                 return redirect()->route('dashboard.admin');
             } else if ($selectedUserType == 'daie') {
                 return redirect()->route('dashboard.daie');
