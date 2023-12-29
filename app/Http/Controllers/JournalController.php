@@ -7,6 +7,7 @@ use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Stroage;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class JournalController extends Controller
@@ -58,7 +59,7 @@ class JournalController extends Controller
             'status' => $request->status,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Added the data Successfully');
         return redirect()->route('journals.index')->with('success', 'Journal added successfully');
     }
 
@@ -97,7 +98,7 @@ class JournalController extends Controller
             'status' => $request->status,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('journals.index')->with('success', 'Journal updated successfully');
     }
 

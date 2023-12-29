@@ -5,6 +5,7 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AttendanceController extends Controller
 {
@@ -66,7 +67,7 @@ class AttendanceController extends Controller
             'clockIn' => now(),
             'tasks' => $request->input('tasks') ?? [],
         ]);
-
+        Alert::success('Congrats','You have Clock-in your attendances');
         return redirect()->back()->with('success', 'Clock in successfully');
     }
 
@@ -85,7 +86,7 @@ class AttendanceController extends Controller
         $attendance->update([
             'clockOut' => now(),
         ]);
-
+        Alert::success('Congrats','You have Clock-out your attendances');
         return redirect()->back()->with('success', 'Clock out successfully');
     }
 

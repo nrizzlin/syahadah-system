@@ -94,7 +94,7 @@
                                         <div class="flex items-center justify-end">
                                             <x-button-edit >{{ __('Update') }}</x-button-edit>
                                             <div class="col-sm-6 flex items-center justify-end">
-                                                <x-button-back><a href="{{ route('dailyprogress.index') }}">BACK</a></x-button-back>
+                                                <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                             </div>
                                         </div>
                                     </div>

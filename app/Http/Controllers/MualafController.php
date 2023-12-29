@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MualafController extends Controller
 {
@@ -26,6 +27,7 @@ class MualafController extends Controller
     {
         // Validate and store the new journal entry
         User::create($request->all());
+        Alert::success('Congrats','You have Added the data Successfully');
 
         return redirect()->back()->with('success', 'User added successfully');
     }
@@ -40,6 +42,7 @@ class MualafController extends Controller
     {
         $users = User::findOrFail($id);
         $users->update($request->all());
+        Alert::success('Congrats','You have Updated the data Successfully');
 
         return redirect()->route('mualaf.index')->with('success', 'User updated successfully');
     }

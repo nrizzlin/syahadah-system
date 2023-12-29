@@ -7,6 +7,7 @@ use App\Models\AssignedMualaf;
 use App\Models\EvaluatedMualaf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class AssignedMualafController extends Controller
@@ -60,7 +61,7 @@ class AssignedMualafController extends Controller
         // Attach mentors to the mualaf
         $user = User::find($mualafId);
         $user->mentors()->attach($mentorIds);
-    
+        Alert::success('Congrats','You Already Assign The Mualaf Successfully');
         // Redirect or return a response
         return redirect()->route('assign.index')->with('success', 'Mentors assigned successfully.');
     }
@@ -97,7 +98,7 @@ class AssignedMualafController extends Controller
     public function create($assignmentId)
     {
         $assignment = AssignedMualaf::with(['mentor', 'mualaf'])->find($assignmentId);
-
+        
         return view('AssignedMualaf.evaluateMualaf', compact('assignment'));
     }
 
@@ -138,7 +139,7 @@ class AssignedMualafController extends Controller
 
         // Save the evaluation
         $evaluation->save();
-
+        Alert::success('Congrats','You have evaluate mualaf the data Successfully');
         // You can redirect the user to a success page or do something else
         return redirect()->route('assign.listMentor')->with('success', 'Evaluation stored successfully.');
     }

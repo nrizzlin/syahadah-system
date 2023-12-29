@@ -59,7 +59,7 @@
                             <div class="flex items-center mt-4">
                                 <x-primary-button >{{ __('Submit') }}</x-primary-button>
                                 <div class=" ml-2 flex items-center justify-end">
-                                    <x-button-back><a href="{{ route('journals.index') }}">BACK</a></x-button-back>
+                                    <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                 </div>
                             </div>
                         </form>     

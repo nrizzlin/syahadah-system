@@ -122,7 +122,7 @@
                                 </div>
                                 
                                 <div class="flex items-center justify-end mt-4">
-                                    <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
+                                    <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                 </div>
                             </form>
                         </div>

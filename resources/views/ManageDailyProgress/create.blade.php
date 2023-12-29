@@ -85,7 +85,7 @@
                                     <div class="flex items-center justify-end">
                                         <x-primary-button >{{ __('Submit') }}</x-primary-button>
                                         <div class="col-sm-6 flex items-center justify-end">
-                                            <x-button-back><a href="{{ route('dailyprogress.index') }}">BACK</a></x-button-back>
+                                            <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                         </div>
                                     </div>
                                 </div>

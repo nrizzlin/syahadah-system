@@ -120,8 +120,12 @@
                                             <div class="col-sm-6">
                                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignedMualaf->evaluations->first()->result_status" disabled />
                                             </div>
-                                        </div>                                    
+                                        </div>                                   
                                     </div>
+
+                                    <div class="flex items-center justify-end mt-4">
+                                        <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
+                                    </div> 
                                 </div>
                             </form>
                         </div> 

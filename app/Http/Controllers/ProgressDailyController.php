@@ -7,6 +7,7 @@ use App\Models\DailyProgress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Stroage;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProgressDailyController extends Controller
 {
@@ -59,7 +60,7 @@ class ProgressDailyController extends Controller
             'status' => $request->status,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Added the data Successfully');
         return redirect()->route('dailyprogress.index')->with('success', 'Daily Progress added successfully');
     }
 
@@ -100,7 +101,7 @@ class ProgressDailyController extends Controller
             'status' => $request->status,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('dailyprogress.index')->with('success', 'Daily Progress updated successfully');
     }
 

@@ -144,7 +144,6 @@ Route::middleware(['auth', 'role'])->group(function () {
 });
 
 Route::middleware(['auth', 'role'])->group(function () {
-
     Route::get('/daily-progress', [ProgressDailyController::class, 'index'])->name('dailyprogress.index');
     Route::get('/daily-progress/create', [ProgressDailyController::class, 'create'])->name('dailyprogress.create');
     Route::post('/daily-progress/store', [ProgressDailyController::class, 'store'])->name('dailyprogress.store');
@@ -176,8 +175,6 @@ Route::middleware(['auth', 'role'])->group(function () {
 });
 
 Route::middleware(['auth', 'role'])->group(function () {
-    // Other routes...
-
     Route::get('/madu/registration', [MaduController::class, 'index'])->name('madu.index');
     Route::post('/madu/store', [MaduController::class, 'store'])->name('madu.add');
     Route::get('/madu/{id}/show', [MaduController::class, 'show'])->name('madu.detail');

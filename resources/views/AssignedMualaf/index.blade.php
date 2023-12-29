@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include('sweetalert::alert')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Assign Mualaf') }}

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EventController extends Controller
 {
@@ -58,7 +59,7 @@ class EventController extends Controller
             'date' => $request->date,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Added the data Successfully');
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
 
@@ -93,7 +94,7 @@ class EventController extends Controller
             'date' => $request->date,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
 

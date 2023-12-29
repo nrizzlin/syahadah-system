@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Resources;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ResourcesController extends Controller
 {
@@ -92,7 +93,7 @@ class ResourcesController extends Controller
             'description' => $request->description,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Added the data Successfully');
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
     }
 

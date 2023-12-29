@@ -50,7 +50,7 @@
                             <div class="flex items-center mt-4">
                                 <x-button-edit >{{ __('Update') }}</x-button-edit>
                                 <div class=" ml-2 flex items-center justify-end">
-                                    <x-button-back><a href="{{ route('event.index') }}">BACK</a></x-button-back>
+                                    <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                 </div>
                             </div>
                         </form>
