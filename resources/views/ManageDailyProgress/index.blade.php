@@ -44,7 +44,7 @@
                                 <tbody>
                                     @forelse($progressdaily as $progressdailys)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left" >{{ $progressdailys->id }}</td>
+                                            <td class="px-2 py-3 text-left" >{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $progressdailys->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $progressdailys->description }}</td>
                                             <td class="px-2 py-3 text-left">{{ $progressdailys->date }}</td>

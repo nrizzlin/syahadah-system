@@ -57,6 +57,8 @@ class ResourcesController extends Controller
             'category' => $request->category,
         ]);
 
+        Alert::success('Congrats','You have Added the data Successfully');
+
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
     }
 

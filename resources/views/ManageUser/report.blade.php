@@ -81,7 +81,7 @@
                                 <tbody>
                                     @forelse($usersD  as $user)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $user->id }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left" >{{ $user->name }}</td>
                                             <td class="px-2 py-3 text-left">{{ $user->email }}</td>
                                             <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>

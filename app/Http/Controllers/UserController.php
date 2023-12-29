@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Specialist;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -106,6 +107,8 @@ class UserController extends Controller
         // Create the new user
         User::create($validatedData);
 
+        Alert::success('Congrats','You have Added the data Successfully');
+
         return redirect()->back()->with('success', 'User added successfully');
     }
 
@@ -165,12 +168,26 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'usertype' => 'required',
             'specialist_id'=>'required',
+            'gender' => 'required',
+            'age' => 'required|numeric|min:0',
+            'country' => 'required',
+            'city' => 'required|string|max:255',
+            'phone_number' => 'required|numeric|digits:10',
+            'previous_religion' => 'nullable|string|max:255',
+            'syahadah_date' => 'nullable|date',
+            'facebook_page' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
         ]);
 
         $validatedData['usertype'] = implode(',', $request->input('usertype'));
 
+        
         $users->update($validatedData);
+
+        Alert::success('Congrats','You have Updated the data Successfully');
 
         return redirect()->route('list_users')->with('success', 'User updated successfully');
     }

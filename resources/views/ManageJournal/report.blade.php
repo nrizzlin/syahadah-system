@@ -60,7 +60,7 @@
                                 <tbody>
                                     @forelse($journalsD as $journal)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left" >{{ $journal->id }}</td>
+                                            <td class="px-2 py-3 text-left" >{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->description }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->date }}</td>

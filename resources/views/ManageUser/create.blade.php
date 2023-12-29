@@ -1,4 +1,7 @@
+
 <x-app-layout>
+    @include('sweetalert::alert')
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('User Management') }}
@@ -193,7 +196,7 @@
                                 <tbody>
                                     @forelse($users as $user)
                                     <tr class="border-b-2">
-                                        <td class="px-2 py-3 text-left">{{ $user->id }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                         <td class="px-2 py-3 text-left">{{ $user->name }}</td>
                                         <td class="px-2 py-3 text-left">{{ $user->email }}</td>
                                         <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
@@ -205,8 +208,8 @@
                                                 <x-button-view><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
                                                 <form action="{{ route('user.delete', $user->id) }}" method="POST" class="px-4 py-2">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <x-button-delete class="confirm-button">Delete</x-button-delete>
                                                 </form>
                                             </div>
                                         </td>
@@ -261,4 +264,27 @@
             });
         }
     </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+    $('.confirm-button').click(function(event) {
+        var form =  $(this).closest("form");
+        event.preventDefault();
+        swal({
+            title: `Are you sure you want to delete this row?`,
+            text: "It will gone forevert",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
+
+</script>
 </x-app-layout>

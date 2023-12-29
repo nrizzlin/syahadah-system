@@ -29,7 +29,7 @@
                                 <tbody>
                                     @forelse($Resources as $resources)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left" >{{ $resources->id }}</td>
+                                            <td class="px-2 py-3 text-left" >{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $resources->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $resources->description }}</td>
                                             <td class="px-2 py-3 text-left">
