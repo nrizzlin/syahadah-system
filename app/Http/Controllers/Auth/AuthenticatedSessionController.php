@@ -9,6 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Cache;
+use App\Models\User;
 
 
 class AuthenticatedSessionController extends Controller
@@ -96,6 +98,7 @@ class AuthenticatedSessionController extends Controller
             }
 
             return redirect()->route('dashboard.choose');
+
         } catch (AuthenticationException $exception) {
             // Handle authentication exception
             return redirect()->route('login')->with('error', trans('auth.failed'));
@@ -107,11 +110,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+
+        if (Auth::check()) {
+            Cache::forget('user-online-' . Auth::user()->id);
+    
+            // Update last_seen timestamp
+            User::where('id', Auth::user()->id)->update(['last_seen' => now()]);
+        }
+
         Auth::guard('web')->logout();
         $request->session()->forget('selected_user_type');
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

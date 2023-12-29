@@ -53,7 +53,6 @@
                             </div>
                         </div>
                     </div>
-            
                 </div>
 
                 <div class="p-4 m-1 text-gray-900">
@@ -74,6 +73,8 @@
                                         <th class="px-2 py-3 text-left">Name</th>
                                         <th class="px-2 py-3 text-left">Email</th>
                                         <th class="px-2 py-3 text-left">Roles</th>
+                                        <th class="px-2 py-3 text-left">Last Seen</th>
+                                        <th class="px-2 py-3 text-left">Status Last Seen</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
                                 </thead>
@@ -85,6 +86,14 @@
                                             <td class="px-2 py-3 text-left" >{{ $user->name }}</td>
                                             <td class="px-2 py-3 text-left">{{ $user->email }}</td>
                                             <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
+                                            <td class="px-2 py-3 text-left">{{ Carbon\Carbon::parse($user->last_seen)->diffForHumans() }}</td>
+                                            <td class="px-2 py-3 text-left">
+                                                @if(Cache::has('user-online-' . $user->id))
+                                                <span class=" bg-green-500 text-white text-sm rounded-full p-2.5">Online</span>
+                                                @else
+                                                <span class=" bg-red-600 text-white text-sm rounded-full p-2.5">Offline</span>
+                                                @endif
+                                            </td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <x-button-view ><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
