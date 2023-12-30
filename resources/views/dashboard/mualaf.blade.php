@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="row p-6 text-gray-900">                   
-                    <div class="col-xl-6 ">
+                    <div class="p-6 col-xl-6 ">
                         <!-- Bar Chart -->
                         <canvas id="attendanceChart" width="500" height="400"></canvas>
                     </div>

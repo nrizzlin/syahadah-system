@@ -356,20 +356,98 @@
             <x-responsive-nav-link :href="route('list_users')" :active="request()->routeIs('list_users')">
                 {{ __('User Management') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('assign.index')" :hover="request()->routeIs('assign.index')">
+            {{ __('Apply Assign Mualaf') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('event.index')" :hover="request()->routeIs('event.index')">
+                {{ __('Event Management') }}
+            </x-responsive-nav-link>            
+            <x-responsive-nav-link :href="route('resources.index')" :hover="request()->routeIs('resources.index')">
+                {{ __('Resources Management') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.list')" :hover="request()->routeIs('attendance.list')">
+                {{ __('Report Clock-in/Clock-out') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.list')" :hover="request()->routeIs('user.list')">
+                {{ __('Report Users') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('performance.list')" :hover="request()->routeIs('performance.list')">
+                {{ __('Report Mualaf Performance') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('journal.list')" :hover="request()->routeIs('journal.list')">
+                {{ __('Report Journal Daie/Mentor') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dailyprogress.list')" :hover="request()->routeIs('dailyprogress.list')">
+                {{ __('Report Progress Daily Mualaf') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('event.list')" :hover="request()->routeIs('event.list')">
+                {{ __('Report Event') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('resources.list')" :hover="request()->routeIs('resources.list')">
+                {{ __('Report Resources') }}
+                </x-responsive-nav-link>
+    
             @endif
 
             @if($selectedUserType === 'daie')
-            <x-responsive-nav-link :href="route('list_users')" :active="request()->routeIs('list_users')">
-                {{ __('List of Mualaf') }}
+            <x-responsive-nav-link :href="route('mualaf.index')" :hover="request()->routeIs('mualaf.index')">
+                {{ __('Mualaf Registration') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('madu.index')" :hover="request()->routeIs('madu.index')">
+                {{ __('Mad`u Registration') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
+                {{ __('Journal Progress') }}
+            </x-responsive-nav-link>            
+            <x-responsive-nav-link :href="route('attendance.index-daie')" :hover="request()->routeIs('attendance.index-daie')">
+                {{ __('Clock-in/Clock-out') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">
+                {{ __('List Clock-in/Clock-out') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
+                {{ __('Event') }}
+            </x-responsive-nav-link>
+            @endif
+
+            @if($selectedUserType === 'mentor')
+            <x-responsive-nav-link :href="route('journals.index')" :hover="request()->routeIs('journals.index')">
+                {{ __('Journal Progress') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
+                {{ __('Event Information') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('assign.listMentor')" :hover="request()->routeIs('assign.listMentor')">
+                {{ __('Mualaf list') }}
+            </x-responsive-nav-link>            
+            <x-responsive-nav-link :href="route('assign.listPerformance')" :hover="request()->routeIs('assign.listPerformance')">
+                {{ __('Mualaf Performance') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.index-mentor')" :hover="request()->routeIs('attendance.index-daie')">
+                {{ __('Clock-in/Clock-out') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">
+                {{ __('List Clock-in/Clock-out') }}
+            </x-responsive-nav-link>
+            @endif
+
+            @if($selectedUserType === 'mualaf')
+            <x-responsive-nav-link :href="route('dailyprogress.index')" :hover="request()->routeIs('dailyprogress.index')">
+                {{ __('Progress Daily') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.index-mualaf')" :hover="request()->routeIs('attendance.index-daie')">
+                {{ __('Clock-in/Clock-out') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.list-user')" :hover="request()->routeIs('attendance.list-user')">
+                {{ __('List Clock-in/Clock-out') }}
+            </x-responsive-nav-link>            
+            <x-responsive-nav-link :href="route('event.index-user')" :hover="request()->routeIs('event.list')">
+                {{ __('Event Information') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('resources.index-user')" :hover="request()->routeIs('resources.list')">
+                {{ __('Resources Information') }}
             </x-responsive-nav-link>
 
-            {{-- <x-responsive-nav-link :href="route('add_mualaf')" :active="request()->routeIs('add_mualaf')">
-                        {{ __('Add New Mualaf') }}
-            </x-responsive-nav-link> --}}
-
-            <x-responsive-nav-link :href="route('journals.index')" :active="request()->routeIs('daie.journals.index')">
-                {{ __('Journal Management') }}
-            </x-responsive-nav-link>
             @endif
             @endauth
         </div>
