@@ -51,8 +51,9 @@
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
                                         <th class="px-2 py-3 text-left">Title</th>
-                                        <th class="px-2 py-3 text-left">Description</th>
                                         <th class="px-2 py-3 text-left">Date</th>
+                                        <th class="px-2 py-3 text-left">Writen By</th>
+                                        <th class="px-2 py-3 text-left">Status</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
                                 </thead>
@@ -62,9 +63,12 @@
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left" >{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $progressdailys->title }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $progressdailys->description }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $progressdailys->date }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $progressdailys->attachment }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $progressdailys->date->format('d-m-Y')}}</td>
+                                            <td class="px-2 py-3 text-left">{{ $progressdailys->user->name }}</td>
+                                            <td class="px-2 py-3 text-left">
+                                                <span class="@if($progressdailys->status== 'Moderate') bg-yellow-400 text-white text-sm rounded-full p-2.5 @elseif($progressdailys->status == 'Worst') bg-red-700 text-white text-sm rounded-full p-2.5 @elseif($progressdailys->status == 'Good') bg-green-500 text-white text-sm rounded-full p-2.5 @endif">
+                                                    {{ $progressdailys->status}}
+                                                </span></td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <x-button-view ><a href="{{ route('dailyprogress.view', $progressdailys->id) }}">View</a></x-button-view>

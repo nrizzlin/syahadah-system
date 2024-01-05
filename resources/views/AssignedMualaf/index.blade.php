@@ -28,6 +28,7 @@
                                             <th class="px-2 py-3 text-left">No</th>
                                             <th class="px-2 py-3 text-left">Name</th>
                                             <th class="px-2 py-3 text-left">Email</th>
+                                            <th class="px-2 py-3 text-left">Syahadah Date</th>
                                             <th class="px-2 py-3 text-left">Action</th>
                                         </tr>
                                     </thead>
@@ -38,6 +39,7 @@
                                                 <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                                 <td class="px-2 py-3 text-left" >{{ $users->name }}</td>
                                                 <td class="px-2 py-3 text-left">{{ $users->email }}</td>
+                                                <td class="px-2 py-3 text-left">{{ $users->syahadah_date }}</td>
                                                 <td class="px-2 py-3 text-left">
                                                     <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                         <div class="inline-flex items-center px-4 py-2">
@@ -74,7 +76,7 @@
                                     <tbody>
                                         @forelse($mentors as $mentor)
                                             <tr class="border-b-2">
-                                                <td class="px-2 py-3 text-left">{{ $mentor->id }}</td>
+                                                <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                                 <td class="px-2 py-3 text-left" >{{ $mentor->name }}</td>
                                                 <td class="px-2 py-3 text-left">{{ $mentor->email }}</td>
                                                 <td class="px-2 py-3 text-left">{{ optional($mentor->specialist)->category }}</td>

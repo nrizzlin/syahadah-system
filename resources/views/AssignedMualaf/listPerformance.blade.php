@@ -30,7 +30,10 @@
                                             <td class="px-2 py-3 text-left">{{$assignedMualaf->mualaf->name}}</td>
                                             <td class="px-2 py-3 text-left">{{$assignedMualaf->mentor->name }}</td>
                                             <td class="px-2 py-3 text-left">{{$assignedMualaf->evaluations->first()->date}}</td>
-                                            <td class="px-2 py-3 text-left">{{$assignedMualaf->evaluations->first()->result_status}}</td>
+                                            <td class="px-2 py-3 text-left">
+                                                <span class="@if($assignedMualaf->evaluations->first()->result_status == 'Good') bg-yellow-400 text-white text-sm rounded-full p-2.5 @elseif($assignedMualaf->evaluations->first()->result_status == 'Poor') bg-red-700 text-white text-sm rounded-full p-2.5 @elseif($assignedMualaf->evaluations->first()->result_status == 'Excellent') bg-green-500 text-white text-sm rounded-full p-2.5 @endif">
+                                                    {{$assignedMualaf->evaluations->first()->result_status}}
+                                                </span></td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">

@@ -107,8 +107,10 @@
                                 <!-- Status -->
                                 <div class="mt-4" id="status">
                                     <x-input-label for="status" :value="__('Status')" />
-                                    <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="$users->status" />
-                                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                    <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="status" name="status" required>
+                                        <option value="active">active</option>
+                                        <option value="unactive">unactive</option>
+                                    </select>
                                 </div>
 
                                 <div class="flex items-center mt-4">

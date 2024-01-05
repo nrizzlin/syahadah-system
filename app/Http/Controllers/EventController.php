@@ -12,14 +12,12 @@ class EventController extends Controller
 {
     public function index()
     {
-        // Retrieve journals for the logged-in Daie
         $events = Event::paginate(5);
         return view('ManageEvents.index', compact('events'));
     }
 
     public function indexUser()
     {
-        // Retrieve journals for the logged-in Daie
         $Events = Event::paginate(5);
         return view('ManageEvents.list', compact('Events'));
     }
@@ -41,7 +39,6 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',

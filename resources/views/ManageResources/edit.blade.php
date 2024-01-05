@@ -17,6 +17,15 @@
                             @csrf
                             @method('PUT')
                     
+                            <div class="mt-4">
+                                <x-input-label  for="category" :value="__('Category')" />
+                                    <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="category" name="category" required>
+                                        <option value="Doa">Doa</option>
+                                        <option value="Solat">Solat</option>
+                                        <option value="Haji">Haji</option>
+                                        <option value="News">News</option>
+                                    </select>
+                            </div>
 
                             <!-- Title of Journal -->
                             <div class="mt-4">

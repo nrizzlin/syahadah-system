@@ -28,6 +28,7 @@
 
         <!-- Sweet Alert-->
         <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-opacity-25 bg-indigo-200

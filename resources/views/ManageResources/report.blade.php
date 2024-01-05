@@ -39,7 +39,8 @@
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
                                         <th class="px-2 py-3 text-left">Title</th>
-                                        <th class="px-2 py-3 text-left">Description</th>
+                                        <th class="px-2 py-3 text-left">Category</th>
+                                        <th class="px-2 py-3 text-left">Date Publish</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
                                 </thead>
@@ -49,7 +50,8 @@
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $resource->title }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $resource->description }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $resource->category }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $resource->created_at->format('d-m-Y') }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">

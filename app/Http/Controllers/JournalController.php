@@ -14,7 +14,6 @@ class JournalController extends Controller
 {
     public function index()
     {
-        // Retrieve journals for the logged-in Daie
         $user = Auth::user();
         $journals = $user->journals()->paginate(5);
         return view('ManageJournal.index', compact('journals'));
@@ -22,7 +21,6 @@ class JournalController extends Controller
 
     public function ReportJournal()
     {
-        // Retrieve all users
         $journalsD = Journal::paginate(5);
         $Totaljournal = Journal::count();
         $TotalJournalMonth = Journal::whereMonth('created_at', Carbon::now()->month)->count();
@@ -37,7 +35,6 @@ class JournalController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',

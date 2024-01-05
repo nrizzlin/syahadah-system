@@ -15,6 +15,7 @@ class RoleAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
+        
 
         $selectedUserType = session('selected_user_type');
 

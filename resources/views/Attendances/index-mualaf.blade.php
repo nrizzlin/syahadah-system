@@ -25,44 +25,49 @@
 
                             <div class="flex justify-center ">
                                 <div class="inline-flex items-center">
-                                    <div class="table">
-                                        <div class="table-row-group">
-                                            <div class="table-row">
-                                                <form action="{{ route('clock-in') }}" method="post">
-                                                    @csrf
-                                                    <div class="flow-root px-4 py-2">
-                                                        <label>
-                                                            <input class="rounded" type="checkbox" name="tasks[]" value="Create Daily Progress">
-                                                            Create Daily Journal
-                                                        </label>
-                                                        <br>            
-                                                        <label>
-                                                            <input  class="rounded" type="checkbox" name="tasks[]" value="Meeting with Mentor">
-                                                            Meeting with Mentor 
-                                                        </label>
-                                                        <br>
-                                                        <label>
-                                                            <input  class="rounded" type="checkbox" name="tasks[]" value="Do the Quiz"> 
-                                                            Do the Quiz
-                                                        </label>
-                                                        <label>
-                                                            <input  class="rounded" type="checkbox" name="tasks[]" value="practice solat"> 
-                                                            practice solat
-                                                        </label>
-                                                        <label>
-                                                            <input  class="rounded" type="checkbox" name="tasks[]" value="practice zikir"> 
-                                                            practice zikir
-                                                        </label>
-                                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <form action="{{ route('clock-in') }}" method="post">
+                                                @csrf
+                                                <div class="flow-root px-4 py-2">
                                                     <x-button-green>{{ __('Clock In') }}</x-button-view>
-                                                </form>
-                                            </div>
-                                            <div class="table-row">
-                                                <form action="{{ route('clock-out') }}" method="post">
-                                                    @csrf
-                                                    <x-danger-button>{{ __('Clock Out') }}</x-button-delete>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div class="flow-root px-4 py-2">
+                                                    <label>
+                                                        <input class="rounded" type="checkbox" name="tasks[]" value="Create Daily Progress">
+                                                        Create Daily Journal
+                                                    </label>
+                                                    <br>            
+                                                    <label>
+                                                        <input  class="rounded" type="checkbox" name="tasks[]" value="Meeting with Mentor">
+                                                        Meeting with Mentor 
+                                                    </label>
+                                                    <br>
+                                                    <label>
+                                                        <input  class="rounded" type="checkbox" name="tasks[]" value="Do the Quiz"> 
+                                                        Do the Quiz
+                                                    </label>
+                                                    <br>
+                                                    <label>
+                                                        <input  class="rounded" type="checkbox" name="tasks[]" value="practice solat"> 
+                                                        practice solat
+                                                    </label>
+                                                    <br>
+                                                    <label>
+                                                        <input  class="rounded" type="checkbox" name="tasks[]" value="practice zikir"> 
+                                                        practice zikir
+                                                    </label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <form action="{{ route('clock-out') }}" method="post">
+                                                @csrf
+                                                <div class="flow-root px-4 py-2">
+                                                    <x-danger-button >{{ __('Clock Out') }}</x-button-delete>
+                                                        <x-input-error :messages="$errors->get('clockOut')" class="mt-2" />
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>  
                                 </div>

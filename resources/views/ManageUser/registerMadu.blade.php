@@ -55,7 +55,7 @@
                                     <!-- Country -->
                                     <div class="mt-4" id="country">
                                         <x-input-label for="country" :value="__('Country')" />
-                                        <select id="country" class="block mt-1 w-full" name="country" required onchange="toggleFields()">
+                                        <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="country" required onchange="toggleFields()">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
                                             <option value="{{ $country }}">{{ $country }}</option>
@@ -113,6 +113,7 @@
                                         <th class="px-2 py-3 text-left">Name</th>
                                         <th class="px-2 py-3 text-left">Phone Number</th>
                                         <th class="px-2 py-3 text-left">Issue</th>
+                                        <th class="px-2 py-3 text-left">Registered By</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
                                 </thead>
@@ -124,6 +125,7 @@
                                         <td class="px-2 py-3 text-left">{{ $madu->name }}</td>
                                         <td class="px-2 py-3 text-left">{{ $madu->phone }}</td>
                                         <td class="px-2 py-3 text-left">{{ $madu->issue }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $madu->user->name }}</td>
                                         <td class="px-2 py-3 text-left">
                                             <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                 <x-button-view><a href="{{ route('madu.detail', $madu->id) }}">View Detail</a></x-button-view>

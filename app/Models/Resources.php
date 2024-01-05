@@ -11,6 +11,11 @@ class Resources extends Model
 
     protected $fillable = ['title','description', 'attachment', 'user_id','category'];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

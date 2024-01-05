@@ -31,7 +31,7 @@
                                                 <td class="px-2 py-3 text-left">{{ $loop->iteration}}</td>
                                                 <td class="px-2 py-3 text-left">{{ $assignment->mentor->name }}</td>
                                                 <td class="px-2 py-3 text-left">{{ $assignment->mualaf->name }}</td>
-                                                <td class="px-2 py-3 text-left">{{ $assignment->created_at}}</td>
+                                                <td class="px-2 py-3 text-left">{{ $assignment->created_at->format('d-m-Y')}}</td>
                                                 <td class="px-2 py-3 text-left">
                                                     <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                         <div class="inline-flex items-center px-4 py-2">

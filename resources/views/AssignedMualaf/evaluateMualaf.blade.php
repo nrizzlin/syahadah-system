@@ -111,7 +111,6 @@
                                     </div>
 
                                     <div class="col-6">
-
                                         <div class="form-group row p-3">
                                             <x-input-label class="col-sm-3 col-form-label" for="note" :value="__('Note')" />
                                             <div class="col-sm-6">
@@ -122,6 +121,9 @@
                                 </div>
                                 <div class="flex items-center justify-end">
                                     <x-primary-button >{{ __('Submit') }}</x-primary-button>
+                                    <div class=" ml-2 flex items-center justify-end">
+                                        <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
+                                    </div>
                                 </div>
                             </form>
                         </div> 

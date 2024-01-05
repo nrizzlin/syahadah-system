@@ -9,17 +9,7 @@ class Madu extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'age',
-        'phone',
-        'country',
-        'city',
-        'religion',
-        'gender',
-        'issue',
-        'note',
-    ];
+    protected $fillable = ['name','age', 'phone','country','city','religion','gender','issue','note',];
 
     public function user()
     {

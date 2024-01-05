@@ -47,7 +47,7 @@
                                             <td class="px-2 py-3 text-left" >{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->description }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $journal->date }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $journal->date->format('d-m-Y')  }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->attachment }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">

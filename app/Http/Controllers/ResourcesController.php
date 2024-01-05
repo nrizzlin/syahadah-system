@@ -18,7 +18,6 @@ class ResourcesController extends Controller
 
     public function indexUser()
     {
-        // Retrieve journals for the logged-in Daie
         $Resources = Resources::paginate(5);
         return view('ManageResources.list', compact('Resources'));
     }
@@ -26,7 +25,6 @@ class ResourcesController extends Controller
 
     public function ReportResources()
     {
-        // Retrieve all users
         $resourcesD = Resources::paginate(5);
         $Totalresources = Resources::count();
 
@@ -60,7 +58,7 @@ class ResourcesController extends Controller
 
         Alert::success('Congrats','You have Added the data Successfully');
 
-        return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
+        return redirect()->route('resources.index');
     }
 
     public function edit($id)
@@ -76,6 +74,7 @@ class ResourcesController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'attachment' => 'nullable|file',
+            'category' => 'required|string'
         ]);
 
         $resources = Resources::findOrFail($id);
@@ -92,8 +91,9 @@ class ResourcesController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'attachment' => $filename,
+            'category' => $request->category,
         ]);
-        Alert::success('Congrats','You have Added the data Successfully');
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
     }
 

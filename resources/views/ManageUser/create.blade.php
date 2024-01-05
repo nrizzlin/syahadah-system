@@ -14,6 +14,7 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div class="table-responsive dash-social">
+
                             <div class="flex justify-end items-center">
                                 <form action="{{ route('search.user') }}" method="GET" class="px-4 py-2">
 
@@ -25,7 +26,7 @@
                                 </x-button-add>
                             </div>
 
-                            <x-modal name="add-user" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                            <x-modal name="add-user" :show="$errors->has('userDeletion') || $errors->has('name') || $errors->has('email') || $errors->has('usertype') || $errors->has('specialist_id') || $errors->has('gender') || $errors->has('age') || $errors->has('country') || $errors->has('city') || $errors->has('phone_number') || $errors->has('previous_religion') || $errors->has('syahadah_date') || $errors->has('facebook_page') || $errors->has('status') || $errors->has('password')" focusable>
                                 <form method="post" action="{{ route('user.add') }}" class="p-6">
                                     @csrf
                                     <!-- Name -->
@@ -235,7 +236,7 @@
         function toggleFields() {
             var userTypeCheckboxes = document.getElementsByName('usertype[]');
             var selectedUserTypes = Array.from(userTypeCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
-    
+            
             // Hide all fields first
             hideAllFields();
     

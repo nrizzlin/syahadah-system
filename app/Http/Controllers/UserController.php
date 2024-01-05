@@ -74,14 +74,6 @@ class UserController extends Controller
         return view('ManageUser.report', compact('Totalusers','usersD','Totalmentor','Totaldaie','Totalmualaf'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Validate and store the new journal entry
-    //     User::create($request->all());
-
-    //     return redirect()->back()->with('success', 'User added successfully');
-    // }
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([

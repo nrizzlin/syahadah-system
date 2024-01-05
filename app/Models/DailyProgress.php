@@ -10,7 +10,11 @@ class DailyProgress extends Model
 
     use HasFactory;
 
-    protected $fillable = ['title','description', 'date', 'place', 'status', 'attachment', 'question_topic', 'question_desc', 'user_id'];
+    protected $fillable = ['title','description', 'date', 'status', 'attachment', 'question_topic', 'question_desc', 'user_id'];
+
+    protected $casts = [
+        'date' => 'datetime',
+    ];
 
     public function user()
     {

@@ -38,8 +38,9 @@ class AssignedMualafController extends Controller
         $goodCount = EvaluatedMualaf::where('result_status', 'Good')->count();
         $excellentCount = EvaluatedMualaf::where('result_status', 'Excellent')->count();
     
-        // Fetch data for the table
-        $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations']) // Change 'mentors' to 'mentor'
+        // Fetch data for the table with evaluations
+        $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
+            ->whereHas('evaluations') // Ensure there are evaluations
             ->orderBy('created_at', 'desc')
             ->get();
     
@@ -144,7 +145,6 @@ class AssignedMualafController extends Controller
         return redirect()->route('assign.listMentor')->with('success', 'Evaluation stored successfully.');
     }
 
-
         public function listPerformance()
     {
         // Get the current mentor's ID
@@ -154,9 +154,10 @@ class AssignedMualafController extends Controller
         $assignedMualafIds = AssignedMualaf::where('mentor_id', $mentorId)
             ->pluck('mualaf_id');
 
-        // Fetch performances for all mentors associated with the same Mualaf IDs
-        $assignedMualafs = AssignedMualaf::with(['mentor', 'mualaf', 'evaluations'])
+        $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
         ->whereIn('mualaf_id', $assignedMualafIds)
+        ->whereHas('evaluations') // Ensure there are evaluations
+        ->orderBy('created_at', 'desc')
         ->get();
 
         // Pass the assigned Mualaf data to the view
