@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2024 at 04:16 PM
+-- Generation Time: Jan 06, 2024 at 04:35 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -138,13 +138,6 @@ CREATE TABLE `events` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `title`, `description`, `date`, `attachment`, `created_at`, `updated_at`, `user_id`) VALUES
-(1, 'Islamic Da’wah Conference 2024', 'Free event & siminars\r\nOnline & On-site\r\nAn amazing speaker line-up:\r\n– Shaykh Zahir Mahmood\r\n– Shaykh Bilal Bawa\r\n– Shaykh Saiful Islam\r\n– Shaykh Abdurrahim Limbada\r\nIf you’re attending in person, please save the following address.\r\nAl-Miraj Banqueting Suite\r\nWordsworth Rd\r\nBirmingham,\r\nB10 0ED\r\n(FREE PARKING)\r\nThis event will include lectures, Qur’an recitation, Nasheeds, Q&A, Food and\r\nStalls.', '2024-01-06 00:00:00', '1704542137.jpg', '2024-01-06 03:55:37', '2024-01-06 03:55:37', 3);
 
 -- --------------------------------------------------------
 
@@ -370,7 +363,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `usertype`, `gender`, `age`, `country`, `city`, `previous_religion`, `phone_number`, `facebook_page`, `syahadah_date`, `status`, `remember_token`, `created_at`, `updated_at`, `specialist_id`, `last_seen`) VALUES
-(3, 'Nur Izzlin', 'admin@gmail.com', '2024-01-06 01:45:57', '$2y$10$7HbllzP5.byr1p5T6B03k.jUZNocv.RDyoUsh8ny91XrpRp5lXQxK', 'admin', 'female', 27, 'Malaysia', 'Kuala Lumpur', NULL, '0174741431', 'MRM Volunteer', NULL, 'active', '3U16Yo1dJldSdKumvXBhSzNS3rcuQsl3uoD5cET7PN9ZT2kQdKh8G4C32bxU', '2024-01-06 01:45:57', '2024-01-06 04:16:42', 4, '2024-01-06 04:16:42'),
+(3, 'Nur Izzlin', 'admin@gmail.com', '2024-01-06 01:45:57', '$2y$10$7HbllzP5.byr1p5T6B03k.jUZNocv.RDyoUsh8ny91XrpRp5lXQxK', 'admin', 'female', 27, 'Malaysia', 'Kuala Lumpur', NULL, '0174741431', 'MRM Volunteer', NULL, 'active', '3U16Yo1dJldSdKumvXBhSzNS3rcuQsl3uoD5cET7PN9ZT2kQdKh8G4C32bxU', '2024-01-06 01:45:57', '2024-01-06 07:35:05', 4, '2024-01-06 07:35:05'),
 (4, 'Azlina Zainuddin', 'daie@gmail.com', '2024-01-06 01:45:57', '$2y$10$6T30ikf9snhxHmHq.BQT4ODZV0az/NQQToQLAxD6bRyy0e5dprbPq', 'daie', 'female', 40, 'Malaysia', 'Kuala Lumpur', NULL, '0187849536', 'azlinPage', NULL, 'active', 'it1mdP53T1phsdKyHG311UE1n67FIRFTSb2l5wbApxeWiEaq6VqnhTB8NLNh', '2024-01-06 01:45:57', '2024-01-06 02:26:19', 7, '2024-01-06 02:26:19'),
 (5, 'Zainul Abidin', 'mentor@gmail.com', '2024-01-06 01:45:58', '$2y$10$6MIfwxvk1JIutXnFp9.7/OFrSFgIlomi973WUx2I0xZZwP1Rp3oYW', 'mentor', 'male', 29, 'Malaysia', 'Kuala Lumpur', NULL, '0198734596', 'Bidin Zaifa', NULL, 'active', 'idYKA59ngiDafFl50S3rdKbyNZgf0uFtTHK57kzmacaf9G6guQbCCMRMxHOd', '2024-01-06 01:45:58', '2024-01-06 04:15:11', 10, '2024-01-06 04:15:11'),
 (6, 'Jeremy Lau', 'mualaf@gmail.com', '2024-01-06 01:45:58', '$2y$10$CQfqyY8J3bxzPrDLI7w45e/EksRCCHNmmOhDtU5Xdf3o7Rdox3S6y', 'mualaf', 'male', 30, 'Malaysia', 'Ampang', 'Christian', '0178495873', 'JLau Page', '2022-12-27', 'active', 'wOU1DHfOsCrnKcxylAuUwSt8VfOwMwOnjGaY0OWZFHKNmNUksR6EGUVIAfpF', '2024-01-06 01:45:58', '2024-01-06 03:34:54', NULL, '2024-01-06 03:34:54'),
@@ -576,13 +569,13 @@ ALTER TABLE `assigned_mualaf`
 -- Constraints for table `attendances`
 --
 ALTER TABLE `attendances`
-  ADD CONSTRAINT `attendances_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `attendances_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `daily_progress`
 --
 ALTER TABLE `daily_progress`
-  ADD CONSTRAINT `daily_progress_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `daily_progress_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `evaluated_mualafs`
