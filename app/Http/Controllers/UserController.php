@@ -264,7 +264,6 @@ class UserController extends Controller
     {
         $search = $request->input('search');
 
-
         // Check if there is a search query
         if ($search) {
             $usersD = User::where('name', 'like', "%$search%")->paginate(5);

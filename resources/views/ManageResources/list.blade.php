@@ -20,8 +20,8 @@
                                 <thead class="thead-light">
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
-                                        <th class="px-2 py-3 text-left">Title</th>
-                                        <th class="px-2 py-3 text-left">Description</th>
+                                        <th class="px-2 py-3 text-left w-1/4">Title</th>
+                                        <th class="px-2 py-3 text-left w-2/4">Description</th>
                                         <th class="px-2 py-3 text-left">Category</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>

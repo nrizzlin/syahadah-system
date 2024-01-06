@@ -35,7 +35,7 @@
 
                             <div class="mt-4">
                                 <x-input-label for="description" :value="__('Description')" />
-                                <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" required> {{ $resources->description }}</textarea>
+                                <textarea  class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" required> {{ $resources->description }}</textarea>
                             </div>
 
                             <div class="mt-4">

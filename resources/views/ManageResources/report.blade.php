@@ -61,7 +61,7 @@
                                     @forelse($resourcesD as $resource)
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $resource->title }}</td>
+                                            <td class="px-2 py-3 text-left w-2/4">{{ $resource->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $resource->category }}</td>
                                             <td class="px-2 py-3 text-left">{{ $resource->created_at->format('d-m-Y') }}</td>
                                             <td class="px-2 py-3 text-left">

@@ -28,8 +28,12 @@
                             <x-modal name="add-user" :show="$errors->userDeletion->isNotEmpty()" focusable>
                                 <form method="post" action="{{ route('mualaf.add') }}" class="p-6">
                                     @csrf
+
+                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
+                                        {{ __('Registration Mualaf') }}
+                                    </h2><hr>
                                     <!-- Name -->
-                                    <div>
+                                    <div class="mt-4" >
                                         <x-input-label for="name" :value="__('Name')" />
                                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -45,7 +49,7 @@
                                     <!-- User Type -->
                                     <div class="mt-4">
                                         <x-input-label for="usertype" :value="__('User Type')" />
-                                        <select id="usertype" class="block mt-1 w-full" name="usertype" required>
+                                        <select id="usertype" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="usertype" required>
                                             <option value="mualaf">Mualaf</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
@@ -74,7 +78,13 @@
                                     <!-- Country -->
                                     <div class="mt-4" id="country">
                                         <x-input-label for="country" :value="__('Country')" />
-                                        <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" />
+                                        <select id="country" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="country" required>
+                                            <option value="">Select Country</option>
+                                            @foreach ($countries as $country)
+                                            <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach
+                                        </select>
+
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
 
