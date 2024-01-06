@@ -11,32 +11,27 @@
 
 <div>
     <b>ADMIN</b>
-    <p>Email : admin@gmail.com
-       password : test12345</p>
+    <p>Email : admin@gmail.com / password : test12345</p>
 </div>
 
 <div>
     <b>DAIE</b>
-    <p>Email : daie@gmail.com</p>
-    <p>password : test12345</p>
+    <p>Email : daie@gmail.com / password : test12345</p>
 </div>
 
 <div>
     <b>MENTOR</b>
-    <p>Email : mentor@gmail.com</p>
-    <p>password : test12345</p>
+    <p>Email : mentor@gmail.com / password : test12345</p>
 </div>
 
 <div>
     <b>MUALAF</b>
-    <p>Email : mualaf@gmail.com</p>
-    <p>password : test12345</p>
+    <p>Email : mualaf@gmail.com / password : test12345</p>
 </div>
 
 <div>
     <b>MULTI ROLE </b>
-    <p>Email : daietest@gmail.com</p>
-    <p>password : test12345</p>
+    <p>Email : daietest@gmail.com / password : test12345</p>
 </div>
 
 
