@@ -27,8 +27,9 @@ class ResourcesController extends Controller
     {
         $resourcesD = Resources::paginate(5);
         $Totalresources = Resources::count();
+        $TotalResourcesMonth = Resources::whereMonth('created_at', Carbon::now()->month)->count();
 
-        return view('ManageResources.report', compact('Totalresources','resourcesD'));
+        return view('ManageResources.report', compact('Totalresources','resourcesD','TotalResourcesMonth'));
     }
 
     public function create()

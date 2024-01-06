@@ -21,6 +21,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-3 col-md-3 ml-4">
+                        <div class="card bg-purple-500 text-white mb-4">
+                            <div class="card-body text-sm">Total Event This Month
+                                <h2 class="text-6xl">{{$TotalResourcesMonth}}</h2>
+                                <h2 class="text-6xl"></h2>
+                            </div>
+                            <div class=" card-footer d-flex align-items-center justify-content-between">
+                                <a class=" text-xs text-white stretched-link text-end" href="#">View Details</a>
+                                <div class=" text-xs text-white"><i class="fas fa-angle-right"></i> </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="p-4 m-1 text-gray-900">

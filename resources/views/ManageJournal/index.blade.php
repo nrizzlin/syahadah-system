@@ -26,7 +26,6 @@
                                     <x-button-add><a href="{{ route('journals.create') }}">Add Journal</a></x-button-add>
                                 </div>
                             </div>
-                        {{-- <a href="{{ route('daie.journals.create') }}" class="btn btn-success">Add Journal</a> --}}
                         
                         <div class="table-responsive dash-social">
                             <table id="datatable" class="w-full bg-white">

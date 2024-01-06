@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                         <div class="w-full">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('User Management') }}</h2>
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
+                                {{ __('User Information') }}</h2><hr>
                             <form method="post"  class="p-6">
                                 @csrf
         

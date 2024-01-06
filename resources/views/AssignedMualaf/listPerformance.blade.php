@@ -24,27 +24,28 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($assignedMualafs as $assignedMualaf)
+                                    @forelse($performances as $performance)
                                         <tr class="border-b-2">
                                             <td class="px-2 py-3 text-left">{{$loop->iteration}}</td>
-                                            <td class="px-2 py-3 text-left">{{$assignedMualaf->mualaf->name}}</td>
-                                            <td class="px-2 py-3 text-left">{{$assignedMualaf->mentor->name }}</td>
-                                            <td class="px-2 py-3 text-left">{{$assignedMualaf->evaluations->first()->date}}</td>
+                                            <td class="px-2 py-3 text-left">{{$performance->assignedMualaf->mualaf->name}}</td>
+                                            <td class="px-2 py-3 text-left">{{$performance->assignedMualaf->mentor->name }}</td>
+                                            <td class="px-2 py-3 text-left">{{$performance->date}}</td>
                                             <td class="px-2 py-3 text-left">
-                                                <span class="@if($assignedMualaf->evaluations->first()->result_status == 'Good') bg-yellow-400 text-white text-sm rounded-full p-2.5 @elseif($assignedMualaf->evaluations->first()->result_status == 'Poor') bg-red-700 text-white text-sm rounded-full p-2.5 @elseif($assignedMualaf->evaluations->first()->result_status == 'Excellent') bg-green-500 text-white text-sm rounded-full p-2.5 @endif">
-                                                    {{$assignedMualaf->evaluations->first()->result_status}}
-                                                </span></td>
+                                                <span class="@if($performance->result_status == 'Good') bg-yellow-400 text-white text-sm rounded-full p-2.5 @elseif($performance->result_status == 'Poor') bg-red-700 text-white text-sm rounded-full p-2.5 @elseif($performance->result_status == 'Excellent') bg-green-500 text-white text-sm rounded-full p-2.5 @endif">
+                                                    {{$performance->result_status}}
+                                                </span>
+                                            </td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view> <a href="{{ route('assign.viewDetail', $assignedMualaf->id) }}">View</a></x-button-view>
+                                                        <x-button-view> <a href="{{ route('assign.viewDetail', $performance->assignedMualaf->id) }}">View</a></x-button-view>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8">No user found.</td>
+                                            <td colspan="6">No performance evaluations found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

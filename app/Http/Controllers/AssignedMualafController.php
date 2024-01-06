@@ -31,7 +31,7 @@ class AssignedMualafController extends Controller
         // Pass the assigned Mualaf data to the view
         return view('AssignedMualaf.indexMentor', compact('assignedMualaf'));
     }
-
+    
     public function reportPerformance()
     {
         $poorCount = EvaluatedMualaf::where('result_status', 'Poor')->count();
@@ -39,13 +39,28 @@ class AssignedMualafController extends Controller
         $excellentCount = EvaluatedMualaf::where('result_status', 'Excellent')->count();
     
         // Fetch data for the table with evaluations
-        $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
-            ->whereHas('evaluations') // Ensure there are evaluations
+        $assignedMualafs = EvaluatedMualaf::with(['assignedMualaf.mualaf', 'assignedMualaf.mentor'])
+            ->whereHas('assignedMualaf.evaluations') // Ensure there are evaluations
             ->orderBy('created_at', 'desc')
             ->get();
     
         return view('AssignedMualaf.report', compact('poorCount', 'goodCount', 'excellentCount', 'assignedMualafs'));
     }
+    
+    // public function reportPerformance()
+    // {
+    //     $poorCount = EvaluatedMualaf::where('result_status', 'Poor')->count();
+    //     $goodCount = EvaluatedMualaf::where('result_status', 'Good')->count();
+    //     $excellentCount = EvaluatedMualaf::where('result_status', 'Excellent')->count();
+    
+    //     // Fetch data for the table with evaluations
+    //     $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
+    //         ->whereHas('evaluations') // Ensure there are evaluations
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
+    
+    //     return view('AssignedMualaf.report', compact('poorCount', 'goodCount', 'excellentCount', 'assignedMualafs'));
+    // }
 
     public function storeAssigned(Request $request)
     {
@@ -145,24 +160,51 @@ class AssignedMualafController extends Controller
         return redirect()->route('assign.listMentor')->with('success', 'Evaluation stored successfully.');
     }
 
-        public function listPerformance()
+
+    public function listPerformance()
     {
         // Get the current mentor's ID
         $mentorId = Auth::id();
 
-        // Fetch the assigned Mualaf IDs for the current mentor
-        $assignedMualafIds = AssignedMualaf::where('mentor_id', $mentorId)
-            ->pluck('mualaf_id');
+        // Fetch all the performances for the assigned Mualaf IDs
+        $performances = EvaluatedMualaf::with(['assignedMualaf.mualaf', 'assignedMualaf.mentor'])
+            ->whereIn('assigned_id', function ($query) use ($mentorId) {
+                $query->select('id')
+                    ->from('assigned_mualaf')
+                    ->where('mentor_id', $mentorId);
+            })
+            ->orWhereHas('assignedMualaf', function ($query) use ($mentorId) {
+                $query->where('mualaf_id', function ($query) use ($mentorId) {
+                    $query->select('mualaf_id')
+                        ->from('assigned_mualaf')
+                        ->where('mentor_id', $mentorId);
+                });
+            })
+            ->orderBy('created_at')
+            ->get();
 
-        $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
-        ->whereIn('mualaf_id', $assignedMualafIds)
-        ->whereHas('evaluations') // Ensure there are evaluations
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        // Pass the assigned Mualaf data to the view
-        return view('AssignedMualaf.listPerformance', compact('assignedMualafs'));
+        // Pass the performance evaluations data to the view
+        return view('AssignedMualaf.listPerformance', compact('performances'));
     }
+
+    // public function listPerformance()
+    // {
+    //     // Get the current mentor's ID
+    //     $mentorId = Auth::id();
+
+    //     // Fetch the assigned Mualaf IDs for the current mentor
+    //     $assignedMualafIds = AssignedMualaf::where('mentor_id', $mentorId)
+    //         ->pluck('mualaf_id');
+
+    //     $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
+    //     ->whereIn('mualaf_id', $assignedMualafIds)
+    //     ->whereHas('evaluations') // Ensure there are evaluations
+    //     ->orderBy('created_at')
+    //     ->get();
+
+    //     // Pass the assigned Mualaf data to the view
+    //     return view('AssignedMualaf.listPerformance', compact('assignedMualafs'));
+    // }
 
 
     public function viewPerformanceDetail($id)

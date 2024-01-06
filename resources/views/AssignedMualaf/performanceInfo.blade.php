@@ -101,7 +101,7 @@
                                         <div class="form-group row p-3">
                                             <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Performance')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignedMualaf->evaluations->first()->performance" disabled />
+                                                <textarea class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" disabled> {{ $assignedMualaf->evaluations->first()->performance }}</textarea>
                                             </div>
                                         </div>
                                         
@@ -111,14 +111,18 @@
                                         <div class="form-group row p-3">
                                             <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Note')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignedMualaf->evaluations->first()->note" disabled />
+                                                <textarea class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="description" name="description" disabled> {{ $assignedMualaf->evaluations->first()->note }}</textarea>
+
+                                                {{-- <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignedMualaf->evaluations->first()->note" disabled /> --}}
                                             </div>
                                         </div>
 
                                         <div class="form-group row p-3">
                                             <x-input-label class="col-sm-3 col-form-label" for="title" :value="__('Status Performance')" />
                                             <div class="col-sm-6">
-                                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$assignedMualaf->evaluations->first()->result_status" disabled />
+                                                <span class="@if($assignedMualaf->evaluations->first()->result_status == 'Good') bg-yellow-400 text-white text-sm rounded-full p-2.5 @elseif($assignedMualaf->evaluations->first()->result_status == 'Poor') bg-red-700 text-white text-sm rounded-full p-2.5 @elseif($assignedMualaf->evaluations->first()->result_status == 'Excellent') bg-green-500 text-white text-sm rounded-full p-2.5 @endif">
+                                                    {{$assignedMualaf->evaluations->first()->result_status}}
+                                                </span>
                                             </div>
                                         </div>                                   
                                     </div>

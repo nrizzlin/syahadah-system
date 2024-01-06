@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('User Management') }}
+                            {{ __('Update User Information') }}
                         </h2>
                         <form method="post" action="{{ route('user.update', $users->id) }}" class="p-6">
                             @csrf
@@ -63,11 +63,11 @@
 
                             <div class="mt-4" id="specialist_id">
                                 <x-input-label for="specialist_id" :value="__('Specialist Category')" />
-                                <select id="specialist_id" class="block mt-1 w-full" name="specialist_id" required>
+                                <select id="specialist_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="specialist_id" required>
                                     <option value="">Select Specialist Category</option>
                                     @foreach ($specialists as $specialist)
-                                        <option value="{{ $specialist->id }}">{{ $specialist->category }}</option>
-                                    @endforeach
+                                        <option value="{{ $specialist->id }}" @if($users->specialist_id == $specialist->id) selected @endif>{{ $specialist->category }}</option>
+                                     @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('specialist_category')" class="mt-2" />
                             </div>
@@ -96,7 +96,7 @@
                             <!-- Country -->
                             <div class="mt-4" id="country">
                                 <x-input-label for="country" :value="__('Country')" />
-                                <select id="country" class="block mt-1 w-full" name="country" required>
+                                <select id="country" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="country" required>
                                     @foreach ($countries as $country)
                                     <option value="{{ $country }}" @if($users->country === $country) selected @endif>{{ $country }}</option>
                                     @endforeach
@@ -128,7 +128,7 @@
                             <!-- Syahadah Date (for Mualaf) -->
                             <div class="mt-4" id="syahadah_date">
                                 <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
-                                <input id="syahadah_date" class="block mt-1 w-full" type="date" name="syahadah_date" :value="$users->syahadah_date" />
+                                <input id="syahadah_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" type="date" name="syahadah_date" :value="$users->syahadah_date" />
                                 <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                             </div>
 

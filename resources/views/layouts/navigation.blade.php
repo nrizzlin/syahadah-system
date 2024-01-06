@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto ">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -290,8 +290,12 @@
                 </div>
             </div>
 
+            <div class="hidden sm:flex sm:items-center text-sm" >
+                <div id="currentDayTime" class=" bg-indigo-200 text-black text-sm rounded-full p-2.5 j"></div>
+            </div>
+
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="flex space-x-2 items-center text-sm">
                 @if(auth()->user()->usertype != 'admin')
                 <a href="{{ route('dashboard.choose') }}">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -476,4 +480,20 @@
             </div>
         </div>
     </div>
+    <script>
+        // Update day and time every second
+        function updateDayTime() {
+            var now = new Date();
+            var options = { weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: false };
+            var dayTimeString = now.toLocaleTimeString('en-US', options);
+            dayTimeString = dayTimeString.replace(' ', ' | ');
+            document.getElementById('currentDayTime').innerText = dayTimeString;
+        }
+    
+        // Initial call to set the initial day and time
+        updateDayTime();
+    
+        // Update day and time every second
+        setInterval(updateDayTime, 1000);
+    </script>
 </nav>

@@ -77,7 +77,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'email' => 'required|email|unique:users|max:255',
             'usertype' => 'required',
             'specialist_id'=>'required',
@@ -86,7 +86,7 @@ class UserController extends Controller
             'country' => 'required',
             'city' => 'required|string|max:255',
             'phone_number' => 'required|numeric|digits:10',
-            'previous_religion' => 'nullable|string|max:255',
+            'previous_religion' => ['nullable', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'syahadah_date' => 'nullable|date',
             'facebook_page' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
@@ -160,7 +160,7 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'usertype' => 'required',
             'specialist_id'=>'required',
             'gender' => 'required',
@@ -168,7 +168,7 @@ class UserController extends Controller
             'country' => 'required',
             'city' => 'required|string|max:255',
             'phone_number' => 'required|numeric|digits:10',
-            'previous_religion' => 'nullable|string|max:255',
+            'previous_religion' => ['nullable', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'syahadah_date' => 'nullable|date',
             'facebook_page' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',

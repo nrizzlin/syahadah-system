@@ -18,6 +18,11 @@
                             <x-modal name="add-madu" :show="$errors->userDeletion->isNotEmpty()" focusable>
                                 <form method="post" action="{{ route('madu.add') }}" class="p-6">
                                     @csrf
+
+                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
+                                        {{ __('Registration Mad u') }}
+                                    </h2><hr>
+
                                     <!-- Name -->
                                     <div class="mt-4" id="name">
                                         <x-input-label for="name" :value="__('Name')" />
@@ -141,7 +146,6 @@
                             </table>
                         </div>
                     </div>
-                    {{-- <div class="p-2">{{$users->links()}}</div> --}}
                 </div>
             </div>
         </div>
