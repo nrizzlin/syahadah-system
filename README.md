@@ -11,8 +11,8 @@
 
 <div>
     <b>ADMIN</b>
-    <p>Email : admin@gmail.com</p>
-    <p>password : test12345</p>
+    <p>Email : admin@gmail.com
+       password : test12345</p>
 </div>
 
 <div>
