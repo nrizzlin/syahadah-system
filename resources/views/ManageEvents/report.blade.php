@@ -67,7 +67,7 @@
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('view-event', $event->id) }}">View</a></x-button-view>
+                                                        <x-button-view ><a href="{{ route('event.view', $event->id) }}">View</a></x-button-view>
                                                     </div>
                                                 </div>
                                             </td>

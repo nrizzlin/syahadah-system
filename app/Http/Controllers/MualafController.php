@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MualafController extends Controller
@@ -66,9 +68,23 @@ class MualafController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
+        // Check if attachment is provided
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+
+            // Check if the file is valid
+            if ($attachment->isValid()) {
+                // Generate a unique filename and store the file
+                $filename = time() . '.' . $attachment->getClientOriginalName();
+                $attachment->move('assets', $filename);
+            } else {
+                return redirect()->back()->with('error', 'File upload failed.');
+            }
+        }
+
+        // Create the new user without explicitly validating the data
         User::create($request->all());
-        
+
         Alert::success('Congrats','You have Added the data Successfully');
 
         return redirect()->back()->with('success', 'User added successfully');
@@ -124,6 +140,24 @@ class MualafController extends Controller
     public function update(Request $request, $id)
     {
         $users = User::findOrFail($id);
+
+        // Check if attachment is provided
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+
+            // Check if the file is valid
+            if ($attachment->isValid()) {
+                // Generate a unique filename and store the file
+                $filename = time() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->move('assets', $filename);
+
+                // Update the user with the new attachment filename
+                $user->update(['attachment' => $filename]);
+            } else {
+                return redirect()->back()->with('error', 'File upload failed.');
+            }
+        }
+
         $users->update($request->all());
         Alert::success('Congrats','You have Updated the data Successfully');
 
@@ -136,11 +170,6 @@ class MualafController extends Controller
         return view('ManageMualaf.view_user', compact('users'));
     }
 
-    public function viewlist($id)
-    {
-        $users = User::findOrFail($id);
-        return view('ManageMualaf.view_list', compact('users'));
-    }
 
     public function destroy($id)
     {
@@ -148,6 +177,14 @@ class MualafController extends Controller
         $users->delete();
 
         return redirect()->back()->with('success', 'Journal deleted successfully');
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
     }
 
 

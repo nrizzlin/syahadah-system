@@ -97,6 +97,21 @@
                                     <input id="syahadah_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" type="date" name="syahadah_date" :value="$users->syahadah_date" />
                                     <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                                 </div>
+
+                                <!-- Supporting Documents -->
+                                <div class="mt-4" id="attachment">
+                                    <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                    <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
+                                </div>
+                                
+                                <!-- Current Supporting Documents -->
+                                <div class="mt-4" id="current_attachement">
+                                    <x-input-label for="current_attachement" :value="__('Supporting Documents')" />
+                                    <div class="block mt-1 w-full">
+                                        {{ $users->attachment}}
+                                        <x-button-view><a href="{{ route('viewfile', $users->attachment) }}">View</a></x-button-view>
+                                    </div>
+                                </div>                                  
         
                                 <!-- Facebook Page -->
                                 <div class="mt-4" id="facebook_page">

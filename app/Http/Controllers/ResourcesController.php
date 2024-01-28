@@ -112,12 +112,6 @@ class ResourcesController extends Controller
         return redirect()->route('resources.index')->with('success', 'Journal deleted successfully');
     }
 
-    public function viewlist($id)
-    {
-        $resources = Resources::findOrFail($id);
-        return view('ManageResources.view_list', compact('resources'));
-    }
-
     public function downloadFile(Request $request, $attachment){
         return response()->download (public_path('assets/'.$attachment));
     }

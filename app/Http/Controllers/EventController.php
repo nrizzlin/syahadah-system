@@ -109,12 +109,6 @@ class EventController extends Controller
         return redirect()->route('event.index')->with('success', 'Journal deleted successfully');
     }
 
-    public function eventInfo($id)
-    {
-        $events = Event::findOrFail($id);
-        return view('ManageEvents.view_eventInfo', compact('events'));
-    }
-
     public function downloadFile(Request $request, $attachment){
         return response()->download (public_path('assets/'.$attachment));
     }

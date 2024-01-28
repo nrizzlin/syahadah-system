@@ -11,8 +11,8 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div id="MualafList" class="p-6 text-gray-900">
-                            <h2 class="text-lg font-medium text-gray-900 text-center">{{ __('Listed Assigned Mualaf Detail') }}</h2>
-
+                            <h2 class="p-2 text-2xl font-bold text-gray-900 uppercase">{{ __('Listed Assigned Mualaf Detail') }}</h2>
+                            <hr>
                             <div class="table-responsive dash-social">
                                 <table id="datatable" class="w-full bg-white">
                                     <thead>

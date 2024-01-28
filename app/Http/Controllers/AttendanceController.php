@@ -95,9 +95,6 @@ class AttendanceController extends Controller
                     'clockOut' => trans('auth.clockOut'),
                 ]);
             }
-        // if (!$attendance) {
-        //     return redirect()->back()->with('error', 'You need to clock in first');
-        // }
 
         // Update the attendance record with the current time as clock out and the updated tasks
         $attendance->update([

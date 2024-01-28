@@ -116,6 +116,12 @@
                                         <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                                     </div>
 
+                                    <!-- Supporting Documents -->
+                                    <div class="mt-4" id="attachment">
+                                        <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                        <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
+                                    </div>                                    
+
                                     <!-- Facebook Page -->
                                     <div class="mt-4" id="facebook_page">
                                         <x-input-label for="facebook_page" :value="__('Facebook Page')" />

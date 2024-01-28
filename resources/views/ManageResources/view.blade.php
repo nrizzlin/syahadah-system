@@ -14,6 +14,12 @@
                                 {{ __('Resources Information') }}</h2>
                             <form method="post"  class="p-6">
                                 @csrf
+
+                                 <!-- Title of Journal -->
+                                 <div class="mt-4">
+                                    <x-input-label for="title" :value="__('Title')" />
+                                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$resources->category" disabled />
+                                </div>                               
         
                                 <!-- Title of Journal -->
                                 <div class="mt-4">

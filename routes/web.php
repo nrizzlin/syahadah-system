@@ -63,6 +63,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('/manage-user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/manage-user/{id}/show', [UserController::class, 'view'])->name('admin.view');
     Route::delete('/manage-user/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::match(['get', 'post'], '/manage-user/{id}/download', [UserController::class, 'downloadFile'])->name('download');
+    Route::match(['get', 'post'], '/manage-user/{id}/viewFile', [UserController::class, 'viewFile'])->name('viewfile');
 });
 
 Route::middleware(['auth', 'role'])->group(function () {
@@ -75,10 +77,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
     Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::put('/event/{id}', [EventController::class, 'update'])->name('event.update');
-    Route::get('/event/{id}/view', [EventController::class, 'view'])->name('event.view');
+    Route::get('/event/{id}/view-info', [EventController::class, 'view'])->name('event.view');
     Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
     Route::get('/event/event-list', [EventController::class, 'indexUser'])->name('event.index-user');
-    Route::get('/event/{id}/view-info', [EventController::class, 'eventInfo'])->name('view-event');
     Route::match(['get', 'post'], '/event/{id}/download', [EventController::class, 'downloadFile'])->name('event.download');
     Route::match(['get', 'post'], '/event/{id}/viewFile', [EventController::class, 'viewFile'])->name('event.viewfile');
 });
@@ -93,10 +94,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::post('/resources', [ResourcesController::class, 'store'])->name('resources.store');
     Route::get('/resources/{id}/edit', [ResourcesController::class, 'edit'])->name('resources.edit');
     Route::put('/resources/{id}', [ResourcesController::class, 'update'])->name('resources.update');
-    Route::get('/resources/{id}/view', [ResourcesController::class, 'view'])->name('resources.view');
+    Route::get('/resources/{id}/resources-info', [ResourcesController::class, 'view'])->name('resources.view');
     Route::delete('/resources/{id}', [ResourcesController::class, 'destroy'])->name('resources.destroy');
     Route::get('/resources/resources-list', [ResourcesController::class, 'indexUser'])->name('resources.index-user');
-    Route::get('/resources/{id}/view-info', [ResourcesController::class, 'viewlist'])->name('view-resources');
     Route::match(['get', 'post'], '/resources/{id}/download', [ResourcesController::class, 'downloadFile'])->name('resources.download');
     Route::match(['get', 'post'], '/resources/{id}/viewFile', [ResourcesController::class, 'viewFile'])->name('resources.viewfile');
 });
@@ -108,10 +108,11 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::post('/mualaf/create', [MualafController::class, 'store'])->name('mualaf.add');
     Route::get('/mualaf/{id}/edit', [MualafController::class, 'edit'])->name('mualaf.edit');
     Route::put('/mualaf/{id}', [MualafController::class, 'update'])->name('mualaf.update');
-    Route::get('/mualaf/{id}/show', [MualafController::class, 'view'])->name('mualaf.view');
+    Route::get('/mualaf/{id}/mualaf-info', [MualafController::class, 'view'])->name('mualaf.view');
     Route::delete('/mualaf/{id}', [MualafController::class, 'destroy'])->name('mualaf.delete');
     Route::get('/mualaf/list', [MualafController::class, 'Mualaflist'])->name('mualaf.list');
-    Route::get('/mualaf/{id}/mualaf-info', [MualafController::class, 'viewlist'])->name('mualaf.viewInfo');
+    Route::match(['get', 'post'], '/mualaf/{id}/download', [MualafController::class, 'downloadFile'])->name('download');
+    Route::match(['get', 'post'], '/mualaf/{id}/viewFile', [MualafController::class, 'viewFile'])->name('viewfile');
 });
 
 Route::middleware(['auth', 'role'])->group(function () {

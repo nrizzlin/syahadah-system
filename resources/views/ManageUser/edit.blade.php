@@ -13,7 +13,7 @@
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                             {{ __('Update User Information') }}
                         </h2>
-                        <form method="post" action="{{ route('user.update', $users->id) }}" class="p-6">
+                        <form method="post" action="{{ route('user.update', $users->id) }}" class="p-6"  enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -63,7 +63,7 @@
 
                             <div class="mt-4" id="specialist_id">
                                 <x-input-label for="specialist_id" :value="__('Specialist Category')" />
-                                <select id="specialist_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="specialist_id" required>
+                                <select id="specialist_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="specialist_id">
                                     <option value="">Select Specialist Category</option>
                                     @foreach ($specialists as $specialist)
                                         <option value="{{ $specialist->id }}" @if($users->specialist_id == $specialist->id) selected @endif>{{ $specialist->category }}</option>
@@ -132,6 +132,22 @@
                                 <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                             </div>
 
+
+                            <!-- Supporting Documents -->
+                            <div class="mt-4" id="attachment">
+                                <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
+                            </div>
+                            
+                            <!-- Current Supporting Documents -->
+                            <div class="mt-4" id="current_attachement">
+                                <x-input-label for="current_attachement" :value="__('Supporting Documents')" />
+                                <div class="block mt-1 w-full">
+                                    {{ $users->attachment}}
+                                    <x-button-view><a href="{{ route('viewfile', $users->attachment) }}">View</a></x-button-view>
+                                </div>
+                            </div>                               
+
                             <!-- Facebook Page -->
                             <div class="mt-4" id="facebook_page">
                                 <x-input-label for="facebook_page" :value="__('Facebook Page')" />
@@ -165,6 +181,11 @@
 
 
     <script>
+        // Trigger toggleFields when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleFields();
+        });
+    
         function toggleFields() {
             var userTypeCheckboxes = document.getElementsByName('usertype[]');
             var selectedUserTypes = Array.from(userTypeCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
@@ -174,7 +195,7 @@
     
             // Show fields based on selected user types
             if (selectedUserTypes.includes('mualaf')) {
-                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','attachment','current_attachement']);
             }
     
             if (selectedUserTypes.includes('mentor') || selectedUserTypes.includes('admin') || selectedUserTypes.includes('daie')) {
@@ -183,7 +204,7 @@
         }
     
         function hideAllFields() {
-            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id'];
+            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id','attachment','current_attachement'];
             hideFields(allFields);
         }
     

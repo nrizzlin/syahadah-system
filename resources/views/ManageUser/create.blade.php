@@ -27,7 +27,7 @@
                             </div>
 
                             <x-modal name="add-user" :show="$errors->has('userDeletion') || $errors->has('name') || $errors->has('email') || $errors->has('usertype') || $errors->has('specialist_id') || $errors->has('gender') || $errors->has('age') || $errors->has('country') || $errors->has('city') || $errors->has('phone_number') || $errors->has('previous_religion') || $errors->has('syahadah_date') || $errors->has('facebook_page') || $errors->has('status') || $errors->has('password')" focusable>
-                                <form method="post" action="{{ route('user.add') }}" class="p-6">
+                                <form method="post" action="{{ route('user.add') }}" class="p-6" enctype="multipart/form-data">
                                     @csrf
 
                                     <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
@@ -79,7 +79,7 @@
 
                                     <div class="mt-4" id="specialist_id">
                                         <x-input-label for="specialist_id" :value="__('Specialist Category')" />
-                                        <select id="specialist_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="specialist_id" required>
+                                        <select id="specialist_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="specialist_id">
                                             <option value="">Select Specialist Category</option>
                                             @foreach ($specialists as $specialist)
                                                 <option value="{{ $specialist->id }}">{{ $specialist->category }}</option>
@@ -147,6 +147,12 @@
                                         <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
                                         <input id="syahadah_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" type="date" name="syahadah_date" :value="old('syahadah_date')" />
                                         <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
+                                    </div>
+
+                                    <!-- Supporting Documents -->
+                                    <div class="mt-4" id="attachment">
+                                        <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                        <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
                                     </div>
 
                                     <!-- Facebook Page -->
@@ -247,7 +253,7 @@
     
             // Show fields based on selected user types
             if (selectedUserTypes.includes('mualaf')) {
-                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','attachment']);
             }
     
             if (selectedUserTypes.includes('mentor') || selectedUserTypes.includes('admin') || selectedUserTypes.includes('daie')) {
@@ -256,7 +262,7 @@
         }
     
         function hideAllFields() {
-            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id'];
+            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id','attachment'];
             hideFields(allFields);
         }
     

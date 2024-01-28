@@ -11,17 +11,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
-                            <div class="flex justify-between items-center mt-4">
-                                <button id="showMualafList" class="px-4 py-2 bg-blue-500 text-white rounded">Mualaf List</button>
-                                <button id="showMentorList" class="px-4 py-2 bg-blue-500 text-white rounded">Mentor List</button>
-                                <button id="showAssignForm" class="px-4 py-2 bg-blue-500 text-white rounded">Assign Mualaf</button>
-                            </div>
-
+                        <div class="flex justify-between items-center mt-4">
+                            <button id="showMualafList" class="px-4 py-2 bg-blue-500 text-white rounded">Mualaf List</button>
+                            <button id="showMentorList" class="px-4 py-2 bg-orange-400 text-white rounded">Mentor List</button>
+                            <button id="showAssignForm" class="px-4 py-2 bg-green-400 text-white rounded">Assign Mualaf</button>
+                        </div>
                         
+                        <br>
+                            
                         <div id="MualafList" class="toggleable p-6 text-gray-900">
-                            <h2 class="text-lg font-medium text-gray-900 text-center">{{ __('Mualaf List') }}</h2>
-
-                            <div class="table-responsive dash-social">
+                            <h2 class="p-2 text-2xl font-bold text-gray-900 text-center uppercase">{{ __('Mualaf List') }}</h2>
+                            <hr>
+                            <div class="p-2 table-responsive dash-social">
                                 <table id="datatable" class="w-full bg-white">
                                     <thead>
                                         <tr class="border-b-2">
@@ -43,7 +44,7 @@
                                                 <td class="px-2 py-3 text-left">
                                                     <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                         <div class="inline-flex items-center px-4 py-2">
-                                                            <x-button-view ><a href="{{ route('mualaf.viewInfo', $users->id) }}">View</a></x-button-view>
+                                                            <x-button-view ><a href="{{ route('mualaf.view', $users->id) }}">View</a></x-button-view>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -59,8 +60,8 @@
                         </div>
 
                         <div id="MentorList" class="toggleable p-6 text-gray-900">
-                            <h2 class="text-lg font-medium text-gray-900 text-center">{{ __('Mentor List') }}</h2>
-
+                            <h2 class="p-2 text-2xl font-bold text-gray-900 text-center uppercase">{{ __('Mentor List') }}</h2>
+                            <hr>
                             <div class="table-responsive dash-social">
                                 <table id="datatable" class="w-full bg-white">
                                     <thead>
@@ -99,12 +100,10 @@
                         </div>
 
                         <div id="assignMualaf" class="toggleable p-6 text-gray-900">
-                            <h2 class="text-lg font-medium text-gray-900 text-center">
-                                {{ __('Assigned Mualaf to Mentor') }}</h2>
-
+                            <h2 class="p-2 text-2xl font-bold text-gray-900 text-center uppercase">{{ __('Assigned Mualaf to Mentor') }}</h2>
+                            <hr>
                             <form id="assignForm" action="{{ route('admin.store-assign') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-    
                                 <div class="mt-4">
                                     <x-input-label for='mualaf' :value="__('Select Mualaf')"/>
                                     <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="mualaf" name="mualaf" required>

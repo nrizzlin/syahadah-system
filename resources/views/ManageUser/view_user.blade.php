@@ -93,19 +93,35 @@
                                 <x-input-label for="phone_number" :value="__('Phone Number')" />
                                 <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$users->phone_number" disabled />
                             </div>
-                                <!-- Previous Religion (for Mualaf) -->
-                                <div class="mt-4" id="previous_religion">
-                                    <x-input-label for="previous_religion" :value="__('Previous Religion')" />
-                                    <x-text-input id="previous_religion" class="block mt-1 w-full" type="text" name="previous_religion" :value="$users->previous_religion" disabled />
-                                    <x-input-error :messages="$errors->get('previous_religion')" class="mt-2" />
-                                </div>
 
-                                <!-- Syahadah Date (for Mualaf) -->
-                                <div class="mt-4" id="syahadah_date">
-                                    <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
-                                    <x-text-input id="syahadah_date" class="block mt-1 w-full" type="text" name="syahadah_date" :value="$users->syahadah_date" disabled />
-                                    <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
+                            <!-- Previous Religion (for Mualaf) -->
+                            <div class="mt-4" id="previous_religion">
+                                <x-input-label for="previous_religion" :value="__('Previous Religion')" />
+                                <x-text-input id="previous_religion" class="block mt-1 w-full" type="text" name="previous_religion" :value="$users->previous_religion" disabled />
+                                <x-input-error :messages="$errors->get('previous_religion')" class="mt-2" />
+                            </div>
+
+                            <!-- Syahadah Date (for Mualaf) -->
+                            <div class="mt-4" id="syahadah_date">
+                                <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
+                                <x-text-input id="syahadah_date" class="block mt-1 w-full" type="text" name="syahadah_date" :value="$users->syahadah_date" disabled />
+                                <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
+                            </div>
+
+                            <!--  Supporting Documents -->
+                            <div class="mt-4" id="attachement">
+                                <x-input-label for="attachement" :value="__('Supporting Documents')" />
+                                <div class="block mt-1 w-full">
+                                @if ($users->attachment)
+                                    {{ $users->attachment }}
+                                    <x-button-view><a href="{{ route('viewfile', $users->attachment) }}">View</a></x-button-view>
+                                    <x-button-view><a href="{{ route('download', $users->attachment) }}">Download</a></x-button-view>
+                                @else
+                                    <p class="text-red-600 font-bold">No supporting document</p>
+                                @endif
                                 </div>
+                            </div>
+
                             @endif
 
     

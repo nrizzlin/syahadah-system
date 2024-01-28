@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Specialist;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -80,7 +82,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'email' => 'required|email|unique:users|max:255',
             'usertype' => 'required',
-            'specialist_id'=>'required',
+            'specialist_id'=>'nullable',
             'gender' => 'required',
             'age' => 'required|numeric|min:0',
             'country' => 'required',
@@ -88,6 +90,7 @@ class UserController extends Controller
             'phone_number' => 'required|numeric|digits:10',
             'previous_religion' => ['nullable', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'syahadah_date' => 'nullable|date',
+            'attachment' => 'nullable|file',
             'facebook_page' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
             'password' => 'required|string|max:255',
@@ -96,6 +99,21 @@ class UserController extends Controller
         // Convert the 'usertype' array to a comma-separated string
         $validatedData['usertype'] = implode(',', $request->input('usertype'));
 
+
+        // Check if usertype is 'mualaf' and handle file upload
+        if (in_array('mualaf', $request->input('usertype')) && $request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+
+            // Check if the file is valid
+            if ($file->isValid()) {
+                $filename = time() . '.' . $file->getClientOriginalName();
+                $file->move('assets', $filename);
+                $validatedData['attachment'] = $filename;
+            } else {
+                return redirect()->back()->with('error', 'File upload failed.');
+            }
+        }
+
         // Create the new user
         User::create($validatedData);
 
@@ -103,7 +121,6 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User added successfully');
     }
-
 
     public function edit($id)
     {
@@ -162,7 +179,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255', 'regex:/^[^\d]+$/'],
             'usertype' => 'required',
-            'specialist_id'=>'required',
+            'specialist_id'=>'nullable',
             'gender' => 'required',
             'age' => 'required|numeric|min:0',
             'country' => 'required',
@@ -172,10 +189,25 @@ class UserController extends Controller
             'syahadah_date' => 'nullable|date',
             'facebook_page' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
+            'attachment' => 'nullable|file',
         ]);
 
         $validatedData['usertype'] = implode(',', $request->input('usertype'));
 
+
+            // Handle file upload for 'mualaf' usertype
+            if (in_array('mualaf', $request->input('usertype')) && $request->hasFile('attachment')) {
+                $file = $request->file('attachment');
+
+                // Check if the file is valid
+                if ($file->isValid()) {
+                    $filename = time() . '.' . $file->getClientOriginalName();
+                    $file->move('assets', $filename);
+                    $validatedData['attachment'] = $filename;
+                } else {
+                    return redirect()->back()->with('error', 'File upload failed.');
+                }
+            }
         
         $users->update($validatedData);
 
@@ -196,13 +228,19 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->delete();
 
-        return redirect()->back()->with('success', 'Journal deleted successfully');
+        return redirect()->back()->with('success', 'User deleted successfully');
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
     }
 
     public function search(Request $request)
     {
-        // $search = $request->input('search');
-        // $users = User::where('name', 'like', "%$search%")->get();
 
         $search = $request->input('search');
 

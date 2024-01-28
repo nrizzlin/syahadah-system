@@ -47,21 +47,6 @@ class AssignedMualafController extends Controller
         return view('AssignedMualaf.report', compact('poorCount', 'goodCount', 'excellentCount', 'assignedMualafs'));
     }
     
-    // public function reportPerformance()
-    // {
-    //     $poorCount = EvaluatedMualaf::where('result_status', 'Poor')->count();
-    //     $goodCount = EvaluatedMualaf::where('result_status', 'Good')->count();
-    //     $excellentCount = EvaluatedMualaf::where('result_status', 'Excellent')->count();
-    
-    //     // Fetch data for the table with evaluations
-    //     $assignedMualafs = AssignedMualaf::with(['mualaf', 'mentor', 'evaluations'])
-    //         ->whereHas('evaluations') // Ensure there are evaluations
-    //         ->orderBy('created_at', 'desc')
-    //         ->get();
-    
-    //     return view('AssignedMualaf.report', compact('poorCount', 'goodCount', 'excellentCount', 'assignedMualafs'));
-    // }
-
     public function storeAssigned(Request $request)
     {
         // Validate the request
