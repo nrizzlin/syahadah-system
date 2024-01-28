@@ -89,7 +89,7 @@
                                         <x-input-label  for="issue" :value="__('Issue ')" />
                                             <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="issue" name="issue" required>
                                                 <option value="Misunderstanding About Islam">Misunderstanding About Islam</option>
-                                                <option value="Good Existence">Good Existence</option>
+                                                <option value="God Existence">God Existence</option>
                                                 <option value="Fiqh">Fiqh</option>
                                                 <option value="Prophet">Prophet</option>
                                                 <option value="Sirah">Sirah</option>
