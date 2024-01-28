@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MualafController extends Controller
 {
@@ -12,7 +15,48 @@ class MualafController extends Controller
     {
         // Retrieve journals for the logged-in Daie
         $mualafUsers = User::where('usertype', 'mualaf')->paginate(5);
-        return view('ManageMualaf.create', compact('mualafUsers'));
+        $countries = [
+            'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
+            'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+            'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados',
+            'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+            'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei',
+            'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
+            'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile',
+            'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
+            'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Denmark',
+            'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt',
+            'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini',
+            'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon',
+            'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece',
+            'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
+            'Haiti', 'Holy See', 'Honduras', 'Hungary', 'Iceland',
+            'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+            'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan',
+            'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South',
+            'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia',
+            'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
+            'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia',
+            'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
+            'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco',
+            'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
+            'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand',
+            'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway',
+            'Oman', 'Pakistan', 'Palau', 'Palestine State', 'Panama',
+            'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland',
+            'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda',
+            'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino',
+            'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
+            'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
+            'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka',
+            'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria',
+            'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste',
+            'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey',
+            'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
+            'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu',
+            'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
+        ];
+        return view('ManageMualaf.create', compact('mualafUsers','countries'));
     }
 
     public function Mualaflist()
@@ -24,8 +68,24 @@ class MualafController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
+        // Check if attachment is provided
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+
+            // Check if the file is valid
+            if ($attachment->isValid()) {
+                // Generate a unique filename and store the file
+                $filename = time() . '.' . $attachment->getClientOriginalName();
+                $attachment->move('assets', $filename);
+            } else {
+                return redirect()->back()->with('error', 'File upload failed.');
+            }
+        }
+
+        // Create the new user without explicitly validating the data
         User::create($request->all());
+
+        Alert::success('Congrats','You have Added the data Successfully');
 
         return redirect()->back()->with('success', 'User added successfully');
     }
@@ -33,13 +93,73 @@ class MualafController extends Controller
     public function edit($id)
     {
         $users = User::findOrFail($id);
-        return view('ManageMualaf.edit', compact('users'));
+        $countries = [
+            'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
+            'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+            'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados',
+            'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+            'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei',
+            'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
+            'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile',
+            'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
+            'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Denmark',
+            'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt',
+            'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini',
+            'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon',
+            'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece',
+            'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
+            'Haiti', 'Holy See', 'Honduras', 'Hungary', 'Iceland',
+            'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+            'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan',
+            'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South',
+            'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia',
+            'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
+            'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia',
+            'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
+            'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco',
+            'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
+            'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand',
+            'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway',
+            'Oman', 'Pakistan', 'Palau', 'Palestine State', 'Panama',
+            'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland',
+            'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda',
+            'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino',
+            'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
+            'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
+            'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka',
+            'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria',
+            'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste',
+            'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey',
+            'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
+            'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu',
+            'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
+        ];
+        return view('ManageMualaf.edit', compact('users','countries'));
     }
 
     public function update(Request $request, $id)
     {
         $users = User::findOrFail($id);
+
+        // Check if attachment is provided
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+
+            // Check if the file is valid
+            if ($attachment->isValid()) {
+                // Generate a unique filename and store the file
+                $filename = time() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->move('assets', $filename);
+
+                // Update the user with the new attachment filename
+                $user->update(['attachment' => $filename]);
+            } else {
+                return redirect()->back()->with('error', 'File upload failed.');
+            }
+        }
+
         $users->update($request->all());
+        Alert::success('Congrats','You have Updated the data Successfully');
 
         return redirect()->route('mualaf.index')->with('success', 'User updated successfully');
     }
@@ -50,11 +170,6 @@ class MualafController extends Controller
         return view('ManageMualaf.view_user', compact('users'));
     }
 
-    public function viewlist($id)
-    {
-        $users = User::findOrFail($id);
-        return view('ManageMualaf.view_list', compact('users'));
-    }
 
     public function destroy($id)
     {
@@ -62,6 +177,14 @@ class MualafController extends Controller
         $users->delete();
 
         return redirect()->back()->with('success', 'Journal deleted successfully');
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
     }
 
 

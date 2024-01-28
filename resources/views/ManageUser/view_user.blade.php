@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                         <div class="w-full">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('User Management') }}</h2>
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
+                                {{ __('User Information') }}</h2><hr>
                             <form method="post"  class="p-6">
                                 @csrf
         
@@ -93,19 +93,35 @@
                                 <x-input-label for="phone_number" :value="__('Phone Number')" />
                                 <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="$users->phone_number" disabled />
                             </div>
-                                <!-- Previous Religion (for Mualaf) -->
-                                <div class="mt-4" id="previous_religion">
-                                    <x-input-label for="previous_religion" :value="__('Previous Religion')" />
-                                    <x-text-input id="previous_religion" class="block mt-1 w-full" type="text" name="previous_religion" :value="$users->previous_religion" disabled />
-                                    <x-input-error :messages="$errors->get('previous_religion')" class="mt-2" />
-                                </div>
 
-                                <!-- Syahadah Date (for Mualaf) -->
-                                <div class="mt-4" id="syahadah_date">
-                                    <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
-                                    <x-text-input id="syahadah_date" class="block mt-1 w-full" type="text" name="syahadah_date" :value="$users->syahadah_date" disabled />
-                                    <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
+                            <!-- Previous Religion (for Mualaf) -->
+                            <div class="mt-4" id="previous_religion">
+                                <x-input-label for="previous_religion" :value="__('Previous Religion')" />
+                                <x-text-input id="previous_religion" class="block mt-1 w-full" type="text" name="previous_religion" :value="$users->previous_religion" disabled />
+                                <x-input-error :messages="$errors->get('previous_religion')" class="mt-2" />
+                            </div>
+
+                            <!-- Syahadah Date (for Mualaf) -->
+                            <div class="mt-4" id="syahadah_date">
+                                <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
+                                <x-text-input id="syahadah_date" class="block mt-1 w-full" type="text" name="syahadah_date" :value="$users->syahadah_date" disabled />
+                                <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
+                            </div>
+
+                            <!--  Supporting Documents -->
+                            <div class="mt-4" id="attachement">
+                                <x-input-label for="attachement" :value="__('Supporting Documents')" />
+                                <div class="block mt-1 w-full">
+                                @if ($users->attachment)
+                                    {{ $users->attachment }}
+                                    <x-button-view><a href="{{ route('viewfile', $users->attachment) }}">View</a></x-button-view>
+                                    <x-button-view><a href="{{ route('download', $users->attachment) }}">Download</a></x-button-view>
+                                @else
+                                    <p class="text-red-600 font-bold">No supporting document</p>
+                                @endif
                                 </div>
+                            </div>
+
                             @endif
 
     
@@ -130,7 +146,7 @@
                         </div>
                         
                         <div class="flex items-center justify-end mt-4">
-                            <x-button-back><a href="{{ route('list_users') }}">BACK</a></x-button-back>
+                            <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                         </div>
                     </div>
                 </div>

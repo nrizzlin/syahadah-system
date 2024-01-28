@@ -7,13 +7,13 @@ use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Stroage;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class JournalController extends Controller
 {
     public function index()
     {
-        // Retrieve journals for the logged-in Daie
         $user = Auth::user();
         $journals = $user->journals()->paginate(5);
         return view('ManageJournal.index', compact('journals'));
@@ -21,7 +21,6 @@ class JournalController extends Controller
 
     public function ReportJournal()
     {
-        // Retrieve all users
         $journalsD = Journal::paginate(5);
         $Totaljournal = Journal::count();
         $TotalJournalMonth = Journal::whereMonth('created_at', Carbon::now()->month)->count();
@@ -36,7 +35,6 @@ class JournalController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
@@ -58,7 +56,7 @@ class JournalController extends Controller
             'status' => $request->status,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Added the data Successfully');
         return redirect()->route('journals.index')->with('success', 'Journal added successfully');
     }
 
@@ -97,7 +95,7 @@ class JournalController extends Controller
             'status' => $request->status,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('journals.index')->with('success', 'Journal updated successfully');
     }
 

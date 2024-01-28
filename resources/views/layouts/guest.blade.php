@@ -13,9 +13,22 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+    <style>
+        /* Define a custom class for the background image */
+        .bg-login {
+            background-image: url('/images/bgLogin.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Optional: Fixed background */
+            opacity: 0.85; /* Set the opacity to 25% */
+        }
+    </style>
+
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-login">
             <div>
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />

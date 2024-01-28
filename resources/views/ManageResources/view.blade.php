@@ -14,6 +14,12 @@
                                 {{ __('Resources Information') }}</h2>
                             <form method="post"  class="p-6">
                                 @csrf
+
+                                 <!-- Title of Journal -->
+                                 <div class="mt-4">
+                                    <x-input-label for="title" :value="__('Title')" />
+                                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$resources->category" disabled />
+                                </div>                               
         
                                 <!-- Title of Journal -->
                                 <div class="mt-4">
@@ -24,7 +30,7 @@
                                 <!-- Description of Journal -->
                                 <div class="mt-4">
                                     <x-input-label for="description" :value="__('Description')" />
-                                    <x-input-textarea id="description" name="description" disabled>{{ $resources->description }}</x-input-textarea>
+                                    <x-input-textarea id="description"  class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"  name="description" disabled>{{ $resources->description }}</x-input-textarea>
                                 </div>
 
                                 <!-- Attachment -->
@@ -36,7 +42,7 @@
                                 </div>
     
                             <div class="flex items-center justify-end mt-4">
-                                <x-button-back><a href="{{ route('resources.index') }}">BACK</a></x-button-back>
+                                <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                             </div>
                     </div>
                 </div>

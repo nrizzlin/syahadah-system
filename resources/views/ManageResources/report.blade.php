@@ -21,6 +21,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-3 col-md-3 ml-4">
+                        <div class="card bg-purple-500 text-white mb-4">
+                            <div class="card-body text-sm">Total Event This Month
+                                <h2 class="text-6xl">{{$TotalResourcesMonth}}</h2>
+                                <h2 class="text-6xl"></h2>
+                            </div>
+                            <div class=" card-footer d-flex align-items-center justify-content-between">
+                                <a class=" text-xs text-white stretched-link text-end" href="#">View Details</a>
+                                <div class=" text-xs text-white"><i class="fas fa-angle-right"></i> </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="p-4 m-1 text-gray-900">
@@ -39,7 +51,8 @@
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
                                         <th class="px-2 py-3 text-left">Title</th>
-                                        <th class="px-2 py-3 text-left">Description</th>
+                                        <th class="px-2 py-3 text-left">Category</th>
+                                        <th class="px-2 py-3 text-left">Date Publish</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
                                 </thead>
@@ -47,13 +60,14 @@
                                 <tbody>
                                     @forelse($resourcesD as $resource)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $resource->id }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $resource->title }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $resource->description }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
+                                            <td class="px-2 py-3 text-left w-2/4">{{ $resource->title }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $resource->category }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $resource->created_at->format('d-m-Y') }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('view-event', $resource->id) }}">View</a></x-button-view>
+                                                        <x-button-view ><a href="{{ route('resources.view', $resource->id) }}">View</a></x-button-view>
                                                     </div>
                                                 </div>
                                             </td>

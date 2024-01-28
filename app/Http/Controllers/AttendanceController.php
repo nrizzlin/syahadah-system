@@ -5,6 +5,9 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class AttendanceController extends Controller
 {
@@ -55,21 +58,30 @@ class AttendanceController extends Controller
 
         return view('Attendances.report', compact('attendancesD','clockInCount','clockOutCount','usersWithAttendanceCount','usersWithoutAttendanceCount'));
     }
-    
-
-    
 
     public function clockIn(Request $request)
     {
+        // Check the last clock-out time
+        $attendance = Attendance::where('user_id', Auth::user()->id)
+            ->whereNotNull('clockOut')
+            ->latest()
+            ->first();
+
+        // Create a new attendance record for clock in
         $attendance = Attendance::create([
             'user_id' => Auth::user()->id,
             'clockIn' => now(),
             'tasks' => $request->input('tasks') ?? [],
         ]);
 
+        Alert::success('Congrats', 'You have Clock-in your attendances');
         return redirect()->back()->with('success', 'Clock in successfully');
     }
-
+    /**
+     * Attempt to authenticate the request's credentials.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function clockOut(Request $request)
     {
         $attendance = Attendance::where('user_id', $request->user()->id)
@@ -77,15 +89,20 @@ class AttendanceController extends Controller
             ->latest()
             ->first();
 
-        if (!$attendance) {
-            // Update the attendance record with the current time as clock out
-            return redirect()->back()->with('error', 'You need to clock in first');
-        }
+            if (!$attendance) {
 
+                throw ValidationException::withMessages([
+                    'clockOut' => trans('auth.clockOut'),
+                ]);
+            }
+
+        // Update the attendance record with the current time as clock out and the updated tasks
         $attendance->update([
             'clockOut' => now(),
         ]);
 
+
+        Alert::success('Congrats', 'You have Clock-out your attendances');
         return redirect()->back()->with('success', 'Clock out successfully');
     }
 

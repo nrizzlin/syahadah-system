@@ -1,4 +1,6 @@
 <x-app-layout>
+    @include('sweetalert::alert')
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Mualaf Registration') }}
@@ -26,8 +28,12 @@
                             <x-modal name="add-user" :show="$errors->userDeletion->isNotEmpty()" focusable>
                                 <form method="post" action="{{ route('mualaf.add') }}" class="p-6">
                                     @csrf
+
+                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
+                                        {{ __('Registration Mualaf') }}
+                                    </h2><hr>
                                     <!-- Name -->
-                                    <div>
+                                    <div class="mt-4" >
                                         <x-input-label for="name" :value="__('Name')" />
                                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -43,7 +49,7 @@
                                     <!-- User Type -->
                                     <div class="mt-4">
                                         <x-input-label for="usertype" :value="__('User Type')" />
-                                        <select id="usertype" class="block mt-1 w-full" name="usertype" required>
+                                        <select id="usertype" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="usertype" required>
                                             <option value="mualaf">Mualaf</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
@@ -72,7 +78,13 @@
                                     <!-- Country -->
                                     <div class="mt-4" id="country">
                                         <x-input-label for="country" :value="__('Country')" />
-                                        <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" />
+                                        <select id="country" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="country" required>
+                                            <option value="">Select Country</option>
+                                            @foreach ($countries as $country)
+                                            <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach
+                                        </select>
+
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
 
@@ -104,6 +116,12 @@
                                         <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                                     </div>
 
+                                    <!-- Supporting Documents -->
+                                    <div class="mt-4" id="attachment">
+                                        <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                        <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
+                                    </div>                                    
+
                                     <!-- Facebook Page -->
                                     <div class="mt-4" id="facebook_page">
                                         <x-input-label for="facebook_page" :value="__('Facebook Page')" />
@@ -114,8 +132,10 @@
                                     <!-- Status -->
                                     <div class="mt-4" id="status">
                                         <x-input-label for="status" :value="__('Status')" />
-                                        <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="old('status')" />
-                                        <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                        <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="status" name="status" required>
+                                            <option value="active">active</option>
+                                            <option value="unactive">unactive</option>
+                                        </select>
                                     </div>
 
                                     <!-- Password -->
@@ -161,7 +181,7 @@
                                 <tbody>
                                     @forelse($mualafUsers as $users)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $users->id }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left" >{{ $users->name }}</td>
                                             <td class="px-2 py-3 text-left">{{ $users->email }}</td>
                                             <td class="px-2 py-3 text-left">
@@ -172,8 +192,8 @@
                                                     <x-button-view ><a href="{{ route('mualaf.view', $users->id) }}">View</a></x-button-view>
                                                     <form action="{{ route('mualaf.delete', $users->id) }}" method="POST" class="px-4 py-2">
                                                         @csrf
-                                                        @method('DELETE')
-                                                        <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                        <x-button-delete class="confirm-button">Delete</x-button-delete>
                                                     </form>
                                                 </div>
                                             </td>
@@ -194,4 +214,27 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+    
+        $('.confirm-button').click(function(event) {
+            var form =  $(this).closest("form");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this row?`,
+                text: "It will gone forevert",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+        });
+    
+    </script>
 </x-app-layout>

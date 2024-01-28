@@ -6,19 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EventController extends Controller
 {
     public function index()
     {
-        // Retrieve journals for the logged-in Daie
         $events = Event::paginate(5);
         return view('ManageEvents.index', compact('events'));
     }
 
     public function indexUser()
     {
-        // Retrieve journals for the logged-in Daie
         $Events = Event::paginate(5);
         return view('ManageEvents.list', compact('Events'));
     }
@@ -40,7 +39,6 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
@@ -58,7 +56,7 @@ class EventController extends Controller
             'date' => $request->date,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Added the data Successfully');
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
 
@@ -93,7 +91,7 @@ class EventController extends Controller
             'date' => $request->date,
             'attachment' => $filename,
         ]);
-
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('event.index')->with('success', 'Journal updated successfully');
     }
 
@@ -109,12 +107,6 @@ class EventController extends Controller
         $events->delete();
 
         return redirect()->route('event.index')->with('success', 'Journal deleted successfully');
-    }
-
-    public function eventInfo($id)
-    {
-        $events = Event::findOrFail($id);
-        return view('ManageEvents.view_eventInfo', compact('events'));
     }
 
     public function downloadFile(Request $request, $attachment){

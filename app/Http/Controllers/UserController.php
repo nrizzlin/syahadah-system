@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Specialist;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -12,6 +16,7 @@ class UserController extends Controller
     {
         // Retrieve journals for the logged-in Daie
         $users = User::paginate(5);
+        $specialists = Specialist::all();
 
         // Array of countries
         $countries = [
@@ -56,7 +61,7 @@ class UserController extends Controller
             'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
         ];
 
-        return view('ManageUser.create', compact('users','countries'));
+        return view('ManageUser.create', compact('users', 'countries','specialists'));
     }
 
     public function ReportUser()
@@ -64,17 +69,55 @@ class UserController extends Controller
         // Retrieve all users
         $usersD = User::paginate(5);
         $Totalusers = User::count();
-        $Totalmentor = User::where('usertype','mentor')->count();
-        $Totaldaie = User::where('usertype','daie')->count();
-        $Totalmualaf = User::where('usertype','mentor')->count();
+        $Totalmentor = User::where('usertype', 'like', '%mentor%')->count();
+        $Totaldaie = User::where('usertype', 'like', '%daie%')->count();
+        $Totalmualaf = User::where('usertype', 'like', '%mualaf%')->count();
 
         return view('ManageUser.report', compact('Totalusers','usersD','Totalmentor','Totaldaie','Totalmualaf'));
     }
 
     public function store(Request $request)
     {
-        // Validate and store the new journal entry
-        User::create($request->all());
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^\d]+$/'],
+            'email' => 'required|email|unique:users|max:255',
+            'usertype' => 'required',
+            'specialist_id'=>'nullable',
+            'gender' => 'required',
+            'age' => 'required|numeric|min:0',
+            'country' => 'required',
+            'city' => 'required|string|max:255',
+            'phone_number' => 'required|numeric|digits:10',
+            'previous_religion' => ['nullable', 'string', 'max:255', 'regex:/^[^\d]+$/'],
+            'syahadah_date' => 'nullable|date',
+            'attachment' => 'nullable|file',
+            'facebook_page' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'password' => 'required|string|max:255',
+        ]);
+
+        // Convert the 'usertype' array to a comma-separated string
+        $validatedData['usertype'] = implode(',', $request->input('usertype'));
+
+
+        // Check if usertype is 'mualaf' and handle file upload
+        if (in_array('mualaf', $request->input('usertype')) && $request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+
+            // Check if the file is valid
+            if ($file->isValid()) {
+                $filename = time() . '.' . $file->getClientOriginalName();
+                $file->move('assets', $filename);
+                $validatedData['attachment'] = $filename;
+            } else {
+                return redirect()->back()->with('error', 'File upload failed.');
+            }
+        }
+
+        // Create the new user
+        User::create($validatedData);
+
+        Alert::success('Congrats','You have Added the data Successfully');
 
         return redirect()->back()->with('success', 'User added successfully');
     }
@@ -83,6 +126,8 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         // Array of countries
+        $specialists = Specialist::all();
+        $userTypes = explode(',', $users->userType());
         $countries = [
             'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
             'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
@@ -125,13 +170,48 @@ class UserController extends Controller
             'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
         ];
 
-        return view('ManageUser.edit', compact('users', 'countries'));
+        return view('ManageUser.edit', compact('users', 'countries', 'userTypes','specialists'));
     }
 
     public function update(Request $request, $id)
     {
         $users = User::findOrFail($id);
-        $users->update($request->all());
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^\d]+$/'],
+            'usertype' => 'required',
+            'specialist_id'=>'nullable',
+            'gender' => 'required',
+            'age' => 'required|numeric|min:0',
+            'country' => 'required',
+            'city' => 'required|string|max:255',
+            'phone_number' => 'required|numeric|digits:10',
+            'previous_religion' => ['nullable', 'string', 'max:255', 'regex:/^[^\d]+$/'],
+            'syahadah_date' => 'nullable|date',
+            'facebook_page' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'attachment' => 'nullable|file',
+        ]);
+
+        $validatedData['usertype'] = implode(',', $request->input('usertype'));
+
+
+            // Handle file upload for 'mualaf' usertype
+            if (in_array('mualaf', $request->input('usertype')) && $request->hasFile('attachment')) {
+                $file = $request->file('attachment');
+
+                // Check if the file is valid
+                if ($file->isValid()) {
+                    $filename = time() . '.' . $file->getClientOriginalName();
+                    $file->move('assets', $filename);
+                    $validatedData['attachment'] = $filename;
+                } else {
+                    return redirect()->back()->with('error', 'File upload failed.');
+                }
+            }
+        
+        $users->update($validatedData);
+
+        Alert::success('Congrats','You have Updated the data Successfully');
 
         return redirect()->route('list_users')->with('success', 'User updated successfully');
     }
@@ -139,6 +219,7 @@ class UserController extends Controller
     public function view($id)
     {
         $users = User::findOrFail($id);
+        $specialists = Specialist::all();
         return view('ManageUser.view_user', compact('users'));
     }
 
@@ -147,88 +228,93 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->delete();
 
-        return redirect()->back()->with('success', 'Journal deleted successfully');
+        return redirect()->back()->with('success', 'User deleted successfully');
+    }
+
+    public function downloadFile(Request $request, $attachment){
+        return response()->download (public_path('assets/'.$attachment));
+    }
+
+    public function viewFile(Request $request, $attachment){
+        return response()->file (public_path('assets/'.$attachment));
     }
 
     public function search(Request $request)
-{
-    // $search = $request->input('search');
-    // $users = User::where('name', 'like', "%$search%")->get();
+    {
 
-    $search = $request->input('search');
+        $search = $request->input('search');
 
-    // Check if there is a search query
-    if ($search) {
-        $users = User::where('name', 'like', "%$search%")->paginate(5);
-    } else {
-        // If there's no search query, retrieve all users with pagination
-        $users = User::paginate(5);
+        // Check if there is a search query
+        if ($search) {
+            $users = User::where('name', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $users = User::paginate(5);
+        }
+        $specialists = Specialist::all();
+
+        $countries = [
+            'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
+            'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+            'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados',
+            'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+            'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei',
+            'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
+            'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile',
+            'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
+            'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Denmark',
+            'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt',
+            'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini',
+            'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon',
+            'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece',
+            'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
+            'Haiti', 'Holy See', 'Honduras', 'Hungary', 'Iceland',
+            'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+            'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan',
+            'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South',
+            'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia',
+            'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
+            'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia',
+            'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
+            'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco',
+            'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
+            'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand',
+            'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway',
+            'Oman', 'Pakistan', 'Palau', 'Palestine State', 'Panama',
+            'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland',
+            'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda',
+            'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino',
+            'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
+            'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
+            'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka',
+            'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria',
+            'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste',
+            'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey',
+            'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
+            'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu',
+            'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
+        ];
+
+        return view('ManageUser.create', compact('users', 'countries','specialists'));
     }
 
-    $countries = [
-        'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
-        'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
-        'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados',
-        'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
-        'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei',
-        'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
-        'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile',
-        'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
-        'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Denmark',
-        'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt',
-        'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini',
-        'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon',
-        'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece',
-        'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
-        'Haiti', 'Holy See', 'Honduras', 'Hungary', 'Iceland',
-        'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
-        'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan',
-        'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South',
-        'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia',
-        'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
-        'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia',
-        'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
-        'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco',
-        'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
-        'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand',
-        'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway',
-        'Oman', 'Pakistan', 'Palau', 'Palestine State', 'Panama',
-        'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland',
-        'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda',
-        'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino',
-        'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
-        'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
-        'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka',
-        'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria',
-        'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste',
-        'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey',
-        'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
-        'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu',
-        'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
-    ];
+    public function searchData(Request $request)
+    {
+        $search = $request->input('search');
 
-    return view('ManageUser.create', compact('users', 'countries'));
-}
+        // Check if there is a search query
+        if ($search) {
+            $usersD = User::where('name', 'like', "%$search%")->paginate(5);
+        } else {
+            // If there's no search query, retrieve all users with pagination
+            $usersD = User::paginate(5);
+        }
 
-public function searchData(Request $request)
-{
-    $search = $request->input('search');
+        $Totalusers = User::count();
+        $Totalmentor = User::where('usertype', 'mentor')->count();
+        $Totaldaie = User::where('usertype', 'daie')->count();
+        $Totalmualaf = User::where('usertype', 'mentor')->count();
 
-
-    // Check if there is a search query
-    if ($search) {
-        $usersD = User::where('name', 'like', "%$search%")->paginate(5);
-    } else {
-        // If there's no search query, retrieve all users with pagination
-        $usersD = User::paginate(5);
+        return view('ManageUser.report', compact('Totalusers', 'usersD', 'Totalmentor', 'Totaldaie', 'Totalmualaf'));
     }
-
-    $Totalusers = User::count();
-    $Totalmentor = User::where('usertype','mentor')->count();
-    $Totaldaie = User::where('usertype','daie')->count();
-    $Totalmualaf = User::where('usertype','mentor')->count();
-
-    return view('ManageUser.report', compact('Totalusers','usersD','Totalmentor','Totaldaie','Totalmualaf'));
-}
-    
 }

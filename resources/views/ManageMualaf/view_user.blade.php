@@ -103,6 +103,20 @@
                                     <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                                 </div>
 
+                                                            <!--  Supporting Documents -->
+                            <div class="mt-4" id="attachement">
+                                <x-input-label for="attachement" :value="__('Supporting Documents')" />
+                                <div class="block mt-1 w-full">
+                                @if ($users->attachment)
+                                    {{ $users->attachment }}
+                                    <x-button-view><a href="{{ route('viewfile', $users->attachment) }}">View</a></x-button-view>
+                                    <x-button-view><a href="{{ route('download', $users->attachment) }}">Download</a></x-button-view>
+                                @else
+                                    <p class="text-red-600 font-bold">No supporting document</p>
+                                @endif
+                                </div>
+                            </div>
+
                                 <div class="mt-4" id="facebook_page">
                                     <x-input-label for="facebook_page" :value="__('Facebook Page')" />
                                     <x-text-input id="facebook_page" class="block mt-1 w-full" type="text" name="facebook_page" :value="$users->facebook_page" disabled />
@@ -114,15 +128,9 @@
                                     <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="$users->status" disabled />
                                     <x-input-error :messages="$errors->get('status')" class="mt-2" />
                                 </div>
-
-                                <div class="mt-4">
-                                    <x-input-label for="password" :value="__('Password')" />
-                                    <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="$users->password" disabled />
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                </div>
                                 
                                 <div class="flex items-center justify-end mt-4">
-                                    <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
+                                    <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                 </div>
                             </form>
                         </div>

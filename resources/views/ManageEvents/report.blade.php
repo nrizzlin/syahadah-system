@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="row p-6 m-4 text-gray-900 ">
+                <div class="row p-6 m-4 text-gray-900 justify-center ">
                     {{-- {{ __("You're logged in as Admin!") }} --}}
                     <div class="col-xl-3 col-md-3 mr-4 sm:rounded-lg ">
                         <div class="card bg-primary text-white mb-4 l">
@@ -51,7 +51,7 @@
                                     <tr class="border-b-2">
                                         <th class="px-2 py-3 text-left">No</th>
                                         <th class="px-2 py-3 text-left">Title</th>
-                                        <th class="px-2 py-3 text-left">Description</th>
+                                        <th class="px-2 py-3 text-left ">Description</th>
                                         <th class="px-2 py-3 text-left">Date</th>
                                         <th class="px-2 py-3 text-left">Action</th>
                                     </tr>
@@ -60,14 +60,14 @@
                                 <tbody>
                                     @forelse($eventsD as $event)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $event->id }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $event->title }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $event->description }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $event->date }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
+                                            <td class="px-2 py-3 text-left w-1/4">{{ $event->title }}</td>
+                                            <td class="px-2 py-3 text-left w-2/4">{{ $event->description }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $event->date->format('d-m-Y') }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
                                                     <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-view ><a href="{{ route('view-event', $event->id) }}">View</a></x-button-view>
+                                                        <x-button-view ><a href="{{ route('event.view', $event->id) }}">View</a></x-button-view>
                                                     </div>
                                                 </div>
                                             </td>

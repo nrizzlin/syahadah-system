@@ -29,7 +29,6 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'usertype' => ['required', 'string'],
         ];
     }
 
@@ -48,7 +47,7 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
                 'password' => trans('auth.password'),
-                'usertype' => trans('auth.usertype'),
+
             ]);
         }
 

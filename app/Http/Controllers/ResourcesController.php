@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Resources;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ResourcesController extends Controller
 {
@@ -17,7 +18,6 @@ class ResourcesController extends Controller
 
     public function indexUser()
     {
-        // Retrieve journals for the logged-in Daie
         $Resources = Resources::paginate(5);
         return view('ManageResources.list', compact('Resources'));
     }
@@ -25,11 +25,11 @@ class ResourcesController extends Controller
 
     public function ReportResources()
     {
-        // Retrieve all users
         $resourcesD = Resources::paginate(5);
         $Totalresources = Resources::count();
+        $TotalResourcesMonth = Resources::whereMonth('created_at', Carbon::now()->month)->count();
 
-        return view('ManageResources.report', compact('Totalresources','resourcesD'));
+        return view('ManageResources.report', compact('Totalresources','resourcesD','TotalResourcesMonth'));
     }
 
     public function create()
@@ -43,6 +43,7 @@ class ResourcesController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'attachment' => 'nullable|file',
+            'category' => 'required|string',
         ]);
 
         $attachment = $request->file('attachment');
@@ -53,9 +54,12 @@ class ResourcesController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'attachment' => $filename,
+            'category' => $request->category,
         ]);
 
-        return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
+        Alert::success('Congrats','You have Added the data Successfully');
+
+        return redirect()->route('resources.index');
     }
 
     public function edit($id)
@@ -71,6 +75,7 @@ class ResourcesController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'attachment' => 'nullable|file',
+            'category' => 'required|string'
         ]);
 
         $resources = Resources::findOrFail($id);
@@ -87,8 +92,9 @@ class ResourcesController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'attachment' => $filename,
+            'category' => $request->category,
         ]);
-
+        Alert::success('Congrats','You have Updated the data Successfully');
         return redirect()->route('resources.index')->with('success', 'Journal updated successfully');
     }
 
@@ -104,12 +110,6 @@ class ResourcesController extends Controller
         $resources->delete();
 
         return redirect()->route('resources.index')->with('success', 'Journal deleted successfully');
-    }
-
-    public function viewlist($id)
-    {
-        $resources = Resources::findOrFail($id);
-        return view('ManageResources.view_list', compact('resources'));
     }
 
     public function downloadFile(Request $request, $attachment){

@@ -1,4 +1,7 @@
+
 <x-app-layout>
+    @include('sweetalert::alert')
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('User Management') }}
@@ -11,46 +14,78 @@
                 <div class="p-6 text-gray-900">
                     <div class="w-full">
                         <div class="table-responsive dash-social">
+
                             <div class="flex justify-end items-center">
                                 <form action="{{ route('search.user') }}" method="GET" class="px-4 py-2">
 
-                                    <x-text-input for="search" name="search"/>
+                                    <x-text-input for="search" name="search" />
                                     <x-primary-button>{{ __('Search') }}</x-primary-button>
 
                                 </form>
-                                <x-button-add x-data=""
-                                    x-on:click.prevent="$dispatch('open-modal', 'add-user')"
-                                    >{{ __('Add New User') }}
+                                <x-button-add x-data="" x-on:click.prevent="$dispatch('open-modal', 'add-user')">{{ __('Add New User') }}
                                 </x-button-add>
                             </div>
 
-                            <x-modal name="add-user" :show="$errors->userDeletion->isNotEmpty()" focusable>
-                                <form method="post" action="{{ route('user.add') }}" class="p-6">
+                            <x-modal name="add-user" :show="$errors->has('userDeletion') || $errors->has('name') || $errors->has('email') || $errors->has('usertype') || $errors->has('specialist_id') || $errors->has('gender') || $errors->has('age') || $errors->has('country') || $errors->has('city') || $errors->has('phone_number') || $errors->has('previous_religion') || $errors->has('syahadah_date') || $errors->has('facebook_page') || $errors->has('status') || $errors->has('password')" focusable>
+                                <form method="post" action="{{ route('user.add') }}" class="p-6" enctype="multipart/form-data">
                                     @csrf
+
+                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight p-2">
+                                        {{ __('Registration User') }}
+                                    </h2><hr>
+
                                     <!-- Name -->
-                                    <div>
+                                    <div class="mt-4" id="name">
                                         <x-input-label for="name" :value="__('Name')" />
                                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                     </div>
 
                                     <!-- Email Address -->
-                                    <div class="mt-4">
+                                    <div class="mt-4" id="email">
                                         <x-input-label for="email" :value="__('Email')" />
                                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                     </div>
 
                                     <!-- User Type -->
-                                    <div class="mt-4">
+                                    <div class="mt-4" id="usertype" >
                                         <x-input-label for="usertype" :value="__('User Type')" />
-                                        <select id="usertype" class="block mt-1 w-full" name="usertype" required onchange="toggleFields()">
-                                            <option value="mualaf">Mualaf</option>
-                                            <option value="daie">Daie</option>
-                                            <option value="mentor">Mentor</option>
-                                            <option value="admin">Admin</option>
+
+                                        <div class="grid grid-cols-2 gap-4 mt-1">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="mualaf" name="usertype[]" value="mualaf" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="mualaf" class="ml-2 text-sm font-medium text-gray-700">Mualaf</label>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="daie" name="usertype[]" value="daie" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="daie" class="ml-2 text-sm font-medium text-gray-700">Daie</label>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="mentor" name="usertype[]" value="mentor" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="mentor" class="ml-2 text-sm font-medium text-gray-700">Mentor</label>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="admin" name="usertype[]" value="admin" class="form-checkbox text-primary focus:ring-primary-dark h-4 w-4" onchange="toggleFields()">
+                                                <label for="admin" class="ml-2 text-sm font-medium text-gray-700">Admin</label>
+                                            </div>
+                                        </div>
+
+                                        <x-input-error :messages="$errors->get('usertype')" class="mt-2 text-red-500 text-sm" />
+                                    </div>
+
+                                    <div class="mt-4" id="specialist_id">
+                                        <x-input-label for="specialist_id" :value="__('Specialist Category')" />
+                                        <select id="specialist_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="specialist_id">
+                                            <option value="">Select Specialist Category</option>
+                                            @foreach ($specialists as $specialist)
+                                                <option value="{{ $specialist->id }}">{{ $specialist->category }}</option>
+                                            @endforeach
                                         </select>
-                                        <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('specialist_category')" class="mt-2" />
                                     </div>
 
                                     <!-- Gender -->
@@ -76,13 +111,13 @@
                                     <!-- Country -->
                                     <div class="mt-4" id="country">
                                         <x-input-label for="country" :value="__('Country')" />
-                                        <select id="country" class="block mt-1 w-full" name="country" required onchange="toggleFields()">
+                                        <select id="country" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="country" required onchange="toggleFields()">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country }}">{{ $country }}</option>
-                                            @endforeach 
+                                            <option value="{{ $country }}">{{ $country }}</option>
+                                            @endforeach
                                         </select>
-                                        
+
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
 
@@ -110,8 +145,14 @@
                                     <!-- Syahadah Date (for Mualaf) -->
                                     <div class="mt-4" id="syahadah_date">
                                         <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
-                                        <input id="syahadah_date" class="block mt-1 w-full" type="date" name="syahadah_date" :value="old('syahadah_date')" />
+                                        <input id="syahadah_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" type="date" name="syahadah_date" :value="old('syahadah_date')" />
                                         <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
+                                    </div>
+
+                                    <!-- Supporting Documents -->
+                                    <div class="mt-4" id="attachment">
+                                        <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                        <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
                                     </div>
 
                                     <!-- Facebook Page -->
@@ -124,17 +165,16 @@
                                     <!-- Status -->
                                     <div class="mt-4" id="status">
                                         <x-input-label for="status" :value="__('Status')" />
-                                        <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="old('status')" />
-                                        <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                        <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="status" name="status" required>
+                                            <option value="active">active</option>
+                                            <option value="unactive">unactive</option>
+                                        </select>
                                     </div>
 
                                     <!-- Password -->
                                     <div class="mt-4">
                                         <x-input-label for="password" :value="__('Password')" />
-                                        <x-text-input id="password" class="block mt-1 w-full"
-                                            type="password"
-                                            name="password"
-                                            required autocomplete="new-password" />
+                                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
 
                                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                     </div>
@@ -142,9 +182,7 @@
                                     <!-- Confirm Password -->
                                     <div class="mt-4">
                                         <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                        <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                                        type="password"
-                                                        name="password_confirmation" required autocomplete="new-password" />
+                                        <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
 
                                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
@@ -156,8 +194,8 @@
                                     </div>
                                 </form>
                             </x-modal>
-                            
-                            
+
+
                             <table id="datatable" class="w-full bg-white">
                                 <thead>
                                     <tr class="border-b-2">
@@ -170,30 +208,30 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($users  as $user)
-                                        <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $user->id }}</td>
-                                            <td class="px-2 py-3 text-left" >{{ $user->name }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $user->email }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
-                                            <td class="px-2 py-3 text-left">
-                                                <div class="flex justify-start inline-flex items-center px-4 py-2">
-                                                    <div class="inline-flex items-center px-4 py-2">
-                                                        <x-button-edit ><a href="{{ route('admin.edit', $user->id) }}">Edit</a></x-button-edit>
-                                                    </div>
-                                                    <x-button-view ><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
-                                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" class="px-4 py-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
-                                                    </form>
+                                    @forelse($users as $user)
+                                    <tr class="border-b-2">
+                                        <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $user->name }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $user->email }}</td>
+                                        <td class="px-2 py-3 text-left">{{ $user->usertype }}</td>
+                                        <td class="px-2 py-3 text-left">
+                                            <div class="flex justify-start inline-flex items-center px-4 py-2">
+                                                <div class="inline-flex items-center px-4 py-2">
+                                                    <x-button-edit><a href="{{ route('admin.edit', $user->id) }}">Edit</a></x-button-edit>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                                <x-button-view><a href="{{ route('admin.view', $user->id) }}">View</a></x-button-view>
+                                                <form action="{{ route('user.delete', $user->id) }}" method="POST" class="px-4 py-2">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <x-button-delete class="confirm-button">Delete</x-button-delete>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="8">No user found.</td>
-                                        </tr>
+                                    <tr>
+                                        <td colspan="8">No user found.</td>
+                                    </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -207,36 +245,60 @@
 
     <script>
         function toggleFields() {
-            var userType = document.getElementById('usertype').value;
-
+            var userTypeCheckboxes = document.getElementsByName('usertype[]');
+            var selectedUserTypes = Array.from(userTypeCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+            
             // Hide all fields first
             hideAllFields();
-
-            // Show fields based on user type
-            if (userType === 'mentor' || userType === 'admin' || userType === 'daie') {
-                showFields(['gender', 'age', 'country', 'city', 'email', 'phone_number', 'facebook_page', 'status']);
+    
+            // Show fields based on selected user types
+            if (selectedUserTypes.includes('mualaf')) {
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','attachment']);
             }
-
-            if (userType === 'mualaf') {
-                showFields(['gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status']);
+    
+            if (selectedUserTypes.includes('mentor') || selectedUserTypes.includes('admin') || selectedUserTypes.includes('daie')) {
+                showFields(['name','gender', 'age', 'country', 'city', 'email', 'phone_number', 'facebook_page', 'status','specialist_id']);
             }
         }
-
+    
         function hideAllFields() {
-            var allFields = ['gender', 'age', 'country', 'city', 'email', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status'];
+            var allFields = ['gender', 'age', 'country', 'city', 'phone_number', 'previous_religion', 'syahadah_date', 'facebook_page', 'status','specialist_id','attachment'];
             hideFields(allFields);
         }
-
+    
         function hideFields(fields) {
-            fields.forEach(function (field) {
+            fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'none';
             });
         }
-
+    
         function showFields(fields) {
-            fields.forEach(function (field) {
+            fields.forEach(function(field) {
                 document.getElementById(field).style.display = 'block';
             });
         }
     </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+    $('.confirm-button').click(function(event) {
+        var form =  $(this).closest("form");
+        event.preventDefault();
+        swal({
+            title: `Are you sure you want to delete this row?`,
+            text: "It will gone forevert",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
+
+</script>
 </x-app-layout>

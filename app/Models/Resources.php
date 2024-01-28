@@ -9,7 +9,12 @@ class Resources extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','description', 'attachment', 'user_id'];
+    protected $fillable = ['title','description', 'attachment', 'user_id','category'];
+
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
 
     public function user()
     {

@@ -15,6 +15,16 @@
 
                         <form action="{{ route('resources.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            
+                            <div class="mt-4">
+                                <x-input-label  for="category" :value="__('Category')" />
+                                    <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="category" name="category" required>
+                                        <option value="Doa">Doa</option>
+                                        <option value="Solat">Solat</option>
+                                        <option value="Haji">Haji</option>
+                                        <option value="News">News</option>
+                                    </select>
+                            </div>
 
                             <!-- Title of Journal -->
                             <div class="mt-4">
@@ -38,7 +48,7 @@
                             <div class="flex items-center mt-4">
                                 <x-primary-button >{{ __('Submit') }}</x-primary-button>
                                 <div class=" ml-2 flex items-center justify-end">
-                                    <x-button-back><a href="{{ route('resources.index') }}">BACK</a></x-button-back>
+                                    <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                 </div>
                             </div>
                         </form>     

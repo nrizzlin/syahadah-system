@@ -24,7 +24,7 @@
                             <!-- Description of Journal -->
                             <div class="mt-4">
                                 <x-input-label for="description" :value="__('Description')" />
-                                <x-input-textarea id="description" name="description" disabled>{{ $events->description }}</x-input-textarea>
+                                <x-input-textarea id="description" name="description" class="block p-2.5 h-24 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" disabled>{{ $events->description }}</x-input-textarea>
                             </div>
 
                             <!-- Date -->
@@ -42,7 +42,7 @@
                             </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            <x-button-back><a href="{{ route('event.index')}}">BACK</a></x-button-back>
+                            <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                         </div>
                     </div>
                 </div>

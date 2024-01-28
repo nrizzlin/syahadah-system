@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include('sweetalert::alert')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Journal Management') }}
@@ -25,7 +26,6 @@
                                     <x-button-add><a href="{{ route('journals.create') }}">Add Journal</a></x-button-add>
                                 </div>
                             </div>
-                        {{-- <a href="{{ route('daie.journals.create') }}" class="btn btn-success">Add Journal</a> --}}
                         
                         <div class="table-responsive dash-social">
                             <table id="datatable" class="w-full bg-white">
@@ -43,10 +43,10 @@
                                 <tbody>
                                     @forelse($journals as $journal)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left" >{{ $journal->id }}</td>
+                                            <td class="px-2 py-3 text-left" >{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->title }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->description }}</td>
-                                            <td class="px-2 py-3 text-left">{{ $journal->date }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $journal->date->format('d-m-Y')  }}</td>
                                             <td class="px-2 py-3 text-left">{{ $journal->attachment }}</td>
                                             <td class="px-2 py-3 text-left">
                                                 <div class="flex justify-start inline-flex items-center px-4 py-2">
@@ -56,8 +56,8 @@
                                                     <x-button-view ><a href="{{ route('journal.view', $journal->id) }}">View</a></x-button-view>
                                                     <form action="{{ route('journals.destroy', $journal->id) }}" method="POST" class="px-4 py-2">
                                                         @csrf
-                                                        @method('DELETE')
-                                                        <x-button-delete onclick="return confirm('Are you sure?')">Delete</x-button-delete>
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                        <x-button-delete class="confirm-button">Delete</x-button-delete>
                                                     </form>
                                                 </div>
                                             </td>
@@ -76,4 +76,27 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+
+        $('.confirm-button').click(function(event) {
+            var form =  $(this).closest("form");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this row?`,
+                text: "It will gone forevert",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+        });
+
+    </script>
 </x-app-layout>

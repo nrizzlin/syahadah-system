@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Report Attendances') }}
+            {{ __('List of Users Attendances') }}
         </h2>
     </x-slot>
 
@@ -33,12 +33,13 @@
                                 <tbody>
                                     @forelse($attendances as $attendance)
                                         <tr class="border-b-2">
-                                            <td class="px-2 py-3 text-left">{{ $attendance->id }}</td>
+                                            <td class="px-2 py-3 text-left">{{ $loop->iteration }}</td>
                                             <td class="px-2 py-3 text-left">{{ $attendance->user->name }}</td>
                                             <td class="px-2 py-3 text-left" >
+                                                
                                             @if(isset($attendance->tasks) && is_array($attendance->tasks))
                                                 @foreach($attendance->tasks as $task)
-                                                    {{ $task }}<br>
+                                                <span class="bg-purple-500 text-white text-sm rounded-full p-2.5">{{ $task }}</span>
                                                 @endforeach
                                             @endif
                                             </td>

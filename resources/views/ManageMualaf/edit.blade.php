@@ -33,11 +33,8 @@
                                 <!-- User Type -->
                                 <div class="mt-4">
                                     <x-input-label for="usertype" :value="__('User Type')" />
-                                    <select id="usertype" class="block mt-1 w-full" name="usertype" required onchange="toggleFields()">
+                                    <select id="usertype"class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="usertype" required>
                                         <option value="mualaf" @if($users->usertype === 'mualaf') selected @endif>Mualaf</option>
-                                        <option value="daie" @if($users->usertype === 'daie') selected @endif>Daie</option>
-                                        <option value="mentor" @if($users->usertype === 'mentor') selected @endif>Mentor</option>
-                                        <option value="admin" @if($users->usertype === 'admin') selected @endif>Admin</option>
                                     </select>
                                     <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
                                 </div>
@@ -65,9 +62,13 @@
                                 <!-- Country -->
                                 <div class="mt-4" id="country">
                                     <x-input-label for="country" :value="__('Country')" />
-                                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="$users->country" />
+                                    <select id="country" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" name="country" required>
+                                        @foreach ($countries as $country)
+                                        <option value="{{ $country }}" @if($users->country === $country) selected @endif>{{ $country }}</option>
+                                        @endforeach
+                                    </select>
                                     <x-input-error :messages="$errors->get('country')" class="mt-2" />
-                                </div>
+                                </div>    
         
                                 <!-- City -->
                                 <div class="mt-4" id="city">
@@ -93,9 +94,24 @@
                                 <!-- Syahadah Date (for Mualaf) -->
                                 <div class="mt-4" id="syahadah_date">
                                     <x-input-label for="syahadah_date" :value="__('Syahadah Date')" />
-                                    <input id="syahadah_date" class="block mt-1 w-full" type="date" name="syahadah_date" :value="$users->syahadah_date" />
+                                    <input id="syahadah_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" type="date" name="syahadah_date" :value="$users->syahadah_date" />
                                     <x-input-error :messages="$errors->get('syahadah_date')" class="mt-2" />
                                 </div>
+
+                                <!-- Supporting Documents -->
+                                <div class="mt-4" id="attachment">
+                                    <x-input-label for="attachment" :value="__('Supporting Documents')" />
+                                    <input id="attachment" type="file" class="block mt-1 w-full" name="attachment">
+                                </div>
+                                
+                                <!-- Current Supporting Documents -->
+                                <div class="mt-4" id="current_attachement">
+                                    <x-input-label for="current_attachement" :value="__('Supporting Documents')" />
+                                    <div class="block mt-1 w-full">
+                                        {{ $users->attachment}}
+                                        <x-button-view><a href="{{ route('viewfile', $users->attachment) }}">View</a></x-button-view>
+                                    </div>
+                                </div>                                  
         
                                 <!-- Facebook Page -->
                                 <div class="mt-4" id="facebook_page">
@@ -107,28 +123,16 @@
                                 <!-- Status -->
                                 <div class="mt-4" id="status">
                                     <x-input-label for="status" :value="__('Status')" />
-                                    <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="$users->status" />
-                                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
-                                </div>
-        
-                                <!-- Password -->
-                                <div class="mt-4">
-                                    <x-input-label for="password" :value="__('Password')" />
-                                    <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                </div>
-        
-                                <!-- Confirm Password -->
-                                <div class="mt-4">
-                                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                    <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                    <select class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" id="status" name="status" required>
+                                        <option value="active">active</option>
+                                        <option value="unactive">unactive</option>
+                                    </select>
                                 </div>
 
                                 <div class="flex items-center mt-4">
                                     <x-button-edit >{{ __('Update') }}</x-button-edit>
                                     <div class=" ml-2 flex items-center justify-end">
-                                        <x-button-back><a href="{{ route('mualaf.index') }}">BACK</a></x-button-back>
+                                        <x-button-back><a href="{{ url()->previous() }}">BACK</a></x-button-back>
                                     </div>
                                 </div>
                             </form>
